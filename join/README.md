@@ -7,6 +7,7 @@ Kurzfassung: Ziele und Arbeitsweise von „Join“. Figma dient nur zur Visualis
 ## Inhalt
 
 - Projektüberblick
+- Aktuelle Sprint‑Vorgaben (Stand 2025‑12‑04)
 - Screenshots
 - Features
 - Technischer Stack
@@ -18,6 +19,7 @@ Kurzfassung: Ziele und Arbeitsweise von „Join“. Figma dient nur zur Visualis
 - Konfiguration und Umgebungsvariablen
 - Qualität und Sicherheit
 - Roadmap
+- Zusätzliche Ressourcen
 - Lizenz
 
 ---
