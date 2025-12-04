@@ -1,11 +1,8 @@
 # README
 
-<aside>
-<img src="/icons/info-alternate_blue.svg" alt="/icons/info-alternate_blue.svg" width="40px" />
 
 Kurzfassung: Ziele und Arbeitsweise von „Join“. Figma dient nur zur Visualisierung; Inhalte wachsen mit dem Projektstand.
 
-</aside>
 
 ## Inhalt
 
