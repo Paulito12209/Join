@@ -1,3 +1,5 @@
+@use '../../../styles.scss' as *;
+
 .contacts-container {
   display: flex;
   height: 100%;
@@ -70,7 +72,7 @@
 .big {
   width: 120px;
   height: 120px;
-  font-size: 47px;
+  font-size: $h3;
   font-weight: 500;
   border: 4px solid #fff;
 }
@@ -84,7 +86,7 @@
 }
 
 .contact-info .email {
-  font-size: 16px;
+  font-size: $p;
   font-weight: 400;
   color: #007CEE;
 }
@@ -100,7 +102,7 @@
 }
 
 .contact-detail h2 {
-  font-size: 61px;
+  font-size: $h1;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -136,7 +138,7 @@
 }
 
 .detail-main .name {
-  font-size: 47px;
+  font-size: $h3;
   font-weight: 500;
 }
 

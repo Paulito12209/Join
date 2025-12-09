@@ -1,9 +1,6 @@
-@forward 'app/styles/variables';
-@forward 'app/styles/mixins';
-
-// /* ============================================
-//    COLOR PALETTE
-// ============================================ */
+/* ============================================
+   COLOR PALETTE
+============================================ */
 
 // Base colors (`black` | `white`) should be used directly in the code (not as variables).
 
@@ -50,68 +47,15 @@ $color-avatar-13: #fc71ff;
 $color-avatar-14: #c3ff2b;
 $color-avatar-15: #ffbb2b;
 
-/* ============================================
-   MIXINS
-============================================ */
-
-@mixin dFlex($fd: row, $jc: center, $ai: center, $g: 0px) {
-   display: flex;
-   flex-direction: $fd;
-   justify-content: $jc;
-   align-items: $ai;
-   gap: $g;
-}
 
 /* ============================================
-   GLOBAL STYLING
+   FONT SIZES
 ============================================ */
 
-* {
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
-   scroll-behavior: smooth;
-   font-family: 'Inter', sans-serif;
-}
-
-/* ============================================
-   FONTS
-============================================ */
-
-/*==== Einbindungen ====*/
-
-/* Fett (700) - h1 */
-@font-face {
-   font-family: "Inter-Bold";
-   src: url('../public/fonts/Inter_28pt-Bold.ttf') format('truetype');
-   font-weight: 700;
-   font-style: normal;
-   font-display: swap;
-}
-
-/* Semibold (600) - h2 */
-@font-face {
-   font-family: "Inter-Semibold";
-   src: url('../public/fonts/Inter_28pt-SemiBold.ttf') format('truetype');
-   font-weight: 600;
-   font-style: normal;
-   font-display: swap;
-}
-
-/* Regulär (500) - h3 */
-@font-face {
-   font-family: "Inter-Medium";
-   src: url('../public/fonts/Inter_24pt-Medium.ttf') format('truetype');
-   font-weight: 500;
-   font-style: normal;
-   font-display: swap;
-}
-
-/* Regulär (400) - p */
-@font-face {
-   font-family: "Inter";
-   src: url('../public/fonts/Inter_18pt-Regular.ttf') format('truetype');
-   font-weight: 400;
-   font-style: normal;
-   font-display: swap;
-}
+$h1: 61px; // "Contacts", "Privacy Policy"
+$h2: 64px; // "Sofia Müller", "Summary Zahlen: 1,2,5"
+$h3: 47px; // "Good Morning,"
+$h4: 27px; // "Better with a team"
+$btn-primary: 21px; // Dunkler Button bei "Add Contact" oder "Contacts"
+$btn-secondary: 20px; // Heller Button bei "Add Contact"
+$p: 16px; // p & nav-links
