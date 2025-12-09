@@ -1,1 +1,47 @@
-<p>contacts works!</p>
+<div class="contacts-container">
+
+  <!-- LEFT: CONTACT LIST -->
+  <div class="contacts-list">
+    <div *ngFor="let group of groupedContacts" class="letter-group">
+      <div class="group-letter">{{ group.letter }}</div>
+
+      <div *ngFor="let c of group.contacts" class="contact-entry" (click)="selectContact(c)">
+        <div class="circle">{{ getInitials(c.name) }}</div>
+        <div class="contact-info">
+          <div class="name">{{ c.name }}</div>
+          <div class="email">{{ c.email }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: DETAIL VIEW -->
+  <div class="contact-detail" *ngIf="selectedContact; else noSelect">
+    <h2>Contacts <span class="sub">Better with a team</span></h2>
+
+    <div class="detail-header">
+      <div class="circle big">{{ getInitials(selectedContact.name) }}</div>
+      <div class="detail-main">
+        <div class="name">{{ selectedContact.name }}</div>
+        <div class="actions">
+          <span>Edit</span> | <span>Delete</span>
+        </div>
+      </div>
+    </div>
+
+    <h3>Contact Information</h3>
+
+    <p class="label">Email</p>
+    <p>{{ selectedContact.email }}</p>
+
+    <p class="label">Phone</p>
+    <p>{{ selectedContact.phone }}</p>
+  </div>
+
+  <ng-template #noSelect>
+    <div class="contact-detail placeholder">
+      Select a contact to view details
+    </div>
+  </ng-template>
+
+</div>
