@@ -52,22 +52,22 @@
 // Icon-Swap (Hover + Active)
 .navigation li:nth-child(1) a:hover img,
 .navigation li:nth-child(1) a.active img {
-  content: url('../../../../../../public/img/Property\ 1=Summary-hover.svg');
+  content: url('../../../../../../public/img/icons/summary-active.svg');
 }
 
 .navigation li:nth-child(2) a:hover img,
 .navigation li:nth-child(2) a.active img {
-  content: url('../../../../../../public/img/Property\ 1=Add\ task-hover.svg');
+  content: url('../../../../../../public/img/icons/add_task-active.svg');
 }
 
 .navigation li:nth-child(3) a:hover img,
 .navigation li:nth-child(3) a.active img {
-  content: url('../../../../../../public/img/Property\ 1=Board-hover.svg');
+  content: url('../../../../../../public/img/icons/board-active.svg');
 }
 
 .navigation li:nth-child(4) a:hover img,
 .navigation li:nth-child(4) a.active img {
-  content: url('../../../../../../public/img/Property\ 1=Contacts-hover.svg');
+  content: url('../../../../../../public/img/icons/contacts-active.svg');
 }
 
 /* ===============================
