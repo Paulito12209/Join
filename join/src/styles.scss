@@ -1,1 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================
+   COLOR PALETTE
+============================================ */
+
+// Base colors (`black` | `white`) should be used directly in the code (not as variables).
+
+// --- BRAND COLORS ---
+$color-brand-primary: #2a3647; // Main brand blue (sidebar background)
+$color-brand-primary-hover: #2a3d59; // Hover state on dark surfaces (navigation hover)
+$color-brand-deep: #091931; // High contrast elements or dark layers (navigation active)
+$color-brand-highlight: #29abe2; // Accent blue
+
+// --- NEUTRAL COLORS ---
+$color-neutral-light: #d1d1d1; // Placeholder-text, standard borders, dividers
+$color-neutral-mid: #cdcdcd; // disabled states (navigation)
+$color-neutral-dark: #a8a8a8; // Secondary text (burger-menu, footer-links), icons on light background
+$color-neutral-user-bg: #e4e7ed; // Backgroundcolor user-initials
+
+// --- ERROR & EMAIL ---
+$color-error: #e60026;
+$color-email: #007cee;
+
+// --- PRIORITY COLORS (KANBAN) ---
+$color-priority-urgent: #ff3d00;
+$color-priority-medium: #ffa800;
+$color-priority-low: #7ae229;
+
+// --- BOARD COLORS (CATEGORY & PROGRESS BAR) ---
+$color-board-user-story: #0038ff;
+$color-board-tech-task: #1fd7c1;
+$color-board-progressbar: #4589ff;
+
+// --- AVATAR COLORS ---
+$color-avatar-01: #ff7a00;
+$color-avatar-02: #9327ff;
+$color-avatar-03: #ff745e;
+$color-avatar-04: #ffc701;
+$color-avatar-05: #ffe62b;
+$color-avatar-06: #ff5eb3;
+$color-avatar-07: #00bee8;
+$color-avatar-08: #ffa35e;
+$color-avatar-09: #0038ff; // Duplicate of $color-board-user-story → optional dedupe
+$color-avatar-10: #ff4646;
+$color-avatar-11: #6e52ff;
+$color-avatar-12: #1fd7c1; // Duplicate of $color-board-tech-task → optional dedupe
+$color-avatar-13: #fc71ff;
+$color-avatar-14: #c3ff2b;
+$color-avatar-15: #ffbb2b;
+
+/* ============================================
+   MIXINS
+============================================ */
+
+@mixin dFlex($fd: row, $jc: center, $ai: center, $g: 0px) {
+  display: flex;
+  flex-direction: $fd;
+  justify-content: $jc;
+  align-items: $ai;
+  gap: $g;
+}
+
+/* ============================================
+   GLOBAL STYLING
+============================================ */
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+

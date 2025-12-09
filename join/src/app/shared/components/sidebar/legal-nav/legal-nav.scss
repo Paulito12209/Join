@@ -1,0 +1,59 @@
+@use '../../../../../styles.scss' as *;
+
+/* ===============================
+   FOOTER / LEGAL NAVIGATION
+================================ */
+
+.sidebar-footer {
+  @include dFlex($fd: column, $ai: stretch, $g: 8px);
+
+  font-weight: 400;
+  font-size: 16px;
+  color: $color-neutral-dark;
+}
+
+.sidebar-footer ul {
+  @include dFlex($fd: column, $ai: stretch, $g: 2px);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-footer li {
+  width: 100%;
+}
+
+.sidebar-footer li a {
+  width: 100%;
+  display: block;
+  padding: 8px 0 8px 64px;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    font-weight: 700;
+    color: $color-brand-highlight;
+  }
+
+  &.active {
+    color: white;
+    font-weight: 700;
+  }
+}
+
+/* ===============================
+   RESPONSIVE (BOTTOM NAV)
+================================ */
+
+@media (max-width: 950px) {
+  .sidebar-footer li a {
+    padding: 8px 0 8px 32px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .sidebar-footer {
+    display: none;
+  }
+}

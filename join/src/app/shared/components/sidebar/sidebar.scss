@@ -1,0 +1,67 @@
+@use '../../../../styles.scss' as *;
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+/* ===============================
+   SIDEBAR WRAPPER
+================================ */
+
+.sidebar {
+  @include dFlex($fd: column, $jc: space-between, $ai: stretch);
+
+  width: 232px;
+  min-height: 100vh;
+  background-color: $color-brand-primary;
+  color: white;
+  padding: 64px 0;
+}
+
+.sidebar-top {
+  @include dFlex($fd: column, $jc: flex-start, $ai: stretch, $g: 104px);
+}
+
+.sidebar-logo {
+  width: 100px;
+  margin-left: 64px;
+}
+
+/* ===============================
+   RESPONSIVE (BOTTOM NAV LAYOUT)
+================================ */
+
+@media (max-width: 950px) {
+  .sidebar {
+    width: 164px;
+  }
+
+  .sidebar-logo {
+    margin-left: 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+    min-height: 80px;
+    padding: 0;
+    background-color: $color-brand-primary;
+
+    @include dFlex($fd: row, $jc: center, $ai: center);
+    z-index: 100;
+  }
+
+  .sidebar-top {
+    width: 100%;
+  }
+
+  .sidebar-logo {
+    display: none;
+  }
+}

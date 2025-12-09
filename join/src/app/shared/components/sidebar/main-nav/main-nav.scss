@@ -1,0 +1,123 @@
+@use '../../../../../styles.scss' as *;
+
+/* ===============================
+   MAIN NAVIGATION
+================================ */
+
+.navigation {
+  width: 100%;
+}
+
+.navigation ul {
+  @include dFlex($fd: column, $jc: flex-start, $ai: stretch, $g: 4px);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navigation li {
+  width: 100%;
+}
+
+.navigation li a {
+  @include dFlex($jc: flex-start, $g: 8px);
+  width: 100%;
+
+  font-weight: 400;
+  font-size: 16px;
+  color: $color-neutral-mid;
+
+  cursor: pointer;
+  padding: 8px 0;
+  padding-left: 64px;
+}
+
+.navigation li a img {
+  width: 30px;
+  height: 30px;
+}
+
+.navigation li a:hover {
+  background-color: $color-brand-primary-hover;
+  color: white;
+  border-radius: 8px;
+}
+
+.navigation li a.active {
+  background-color: $color-brand-deep;
+  color: white;
+  border-radius: 8px;
+}
+
+// Icon-Swap (Hover + Active)
+.navigation li:nth-child(1) a:hover img,
+.navigation li:nth-child(1) a.active img {
+  content: url('../../../../../../public/img/Property\ 1=Summary-hover.svg');
+}
+
+.navigation li:nth-child(2) a:hover img,
+.navigation li:nth-child(2) a.active img {
+  content: url('../../../../../../public/img/Property\ 1=Add\ task-hover.svg');
+}
+
+.navigation li:nth-child(3) a:hover img,
+.navigation li:nth-child(3) a.active img {
+  content: url('../../../../../../public/img/Property\ 1=Board-hover.svg');
+}
+
+.navigation li:nth-child(4) a:hover img,
+.navigation li:nth-child(4) a.active img {
+  content: url('../../../../../../public/img/Property\ 1=Contacts-hover.svg');
+}
+
+/* ===============================
+   RESPONSIVE (BOTTOM NAV)
+================================ */
+
+@media (max-width: 950px) {
+  .navigation li a {
+    padding-left: 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .navigation {
+    width: 100%;
+  }
+
+  .navigation ul {
+    @include dFlex($fd: row, $jc: space-between, $ai: center);
+    margin: 0;
+    padding: 0 16px;
+  }
+
+  .navigation li {
+    flex: 1;
+    @include dFlex();
+  }
+
+  .navigation li a {
+    @include dFlex($fd: column, $jc: center, $ai: center, $g: 4px);
+    padding: 8px 0;
+    width: 80px;
+    height: 76px;
+  }
+
+  .navigation li a:hover {
+    background-color: $color-brand-primary-hover;
+    color: white;
+    border-radius: 16px;
+  }
+
+  .navigation li a img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 350px) {
+  .navigation li a {
+    width: 70px;
+    font-size: 14px;
+  }
+}
