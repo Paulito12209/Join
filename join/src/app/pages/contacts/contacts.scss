@@ -1,5 +1,12 @@
 @use '../../../styles.scss' as *;
 
+:host {
+  height: 100vh;
+  // display: block;
+  // flex: 1;
+  // overflow: hidden;
+}
+
 .contacts-container {
   display: flex;
   height: 100%;
@@ -93,7 +100,7 @@
 
 .contact-detail {
   flex: 1;
-  padding: 24px;
+  // padding: 24px; // <- wieso existiert das hier?
   background-color: #F6F7F8;
   padding: 60px 60px;
   box-shadow:
