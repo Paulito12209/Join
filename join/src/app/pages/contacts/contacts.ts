@@ -1,42 +1,51 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { Component,inject } from '@angular/core';
+import { ContactsService, Contact as ContactModel } from '../../core/services/contacts.service';
+import { Router, RouterLink } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 interface Contact {
+  id?: string;
   name: string;
-  email: string;
-  phone: string;
+  email?: string;
+  phone?: string;
+  color?: string;
 }
 
 @Component({
   selector: 'app-contacts',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, AsyncPipe, RouterLink],
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
+
 export class Contacts {
-  contacts: Contact[] = [
-    { name: 'Anna Müller', email: 'anna@example.com', phone: '123456789' },
-    { name: 'Ben Schröder', email: 'ben@example.com', phone: '234567891' },
-    { name: 'Clara Neumann', email: 'clara@example.com', phone: '345678912' },
-    { name: 'Daniel Werner', email: 'daniel@example.com', phone: '987654321' },
-  ];
+  private readonly contactsSvc = inject(ContactsService);
+  private readonly router = inject(Router);
 
-  selectedContact: Contact | null = null;
+  contacts$ = this.contactsSvc.getContacts('name', 'asc');
 
-  get groupedContacts() {
-    const groups: { [letter: string]: Contact[] } = {};
-    this.contacts.forEach((c) => {
-      const letter = c.name.charAt(0).toUpperCase();
-      if (!groups[letter]) groups[letter] = [];
-      groups[letter].push(c);
-    });
-    return Object.keys(groups)
-      .sort()
-      .map((letter) => ({
-        letter,
-        contacts: groups[letter].sort((a, b) => a.name.localeCompare(b.name)),
-      }));
-  }
+    grouped$ = this.contacts$.pipe(
+    map((contacts: ContactModel[]) => {
+      const groups: Record<string, ContactModel[]> = {};
+      for (const c of contacts) {
+        const letter = (c.name?.charAt(0) || '').toUpperCase();
+        if (!letter) continue;
+        (groups[letter] ??= []).push(c);
+      }
+      return Object.keys(groups)
+        .sort()
+        .map((letter) => ({
+          letter,
+          contacts: groups[letter].sort((a, b) => a.name.localeCompare(b.name, 'de', { sensitivity: 'base' })),
+        }));
+    })
+  );
+
+
+selectedContact: Contact | null = null;
+
 
   selectContact(contact: Contact) {
     this.selectedContact = contact;
@@ -50,17 +59,19 @@ export class Contacts {
   }
 
   addContact() {
-    alert('Add Contact clicked!');
-    // später: Formular öffnen
+    this.router.navigate(['/contacts', 'add']);
   }
 
   editContact() {
-    console.log('Edit clicked');
-    // hier später: Router auf Edit-View oder Modal öffnen
+    const c = this.selectedContact;
+    if (!c || !('id' in c) || !c.id) return;
+    this.router.navigate(['/contacts', c.id, 'edit']);
   }
 
-  deleteContact() {
-    console.log('Delete clicked');
-    // hier später: Confirm-Dialog oder direkt löschen
+  async deleteContact() {
+   const c = this.selectedContact;
+    if (!c || !('id' in c) || !c.id) return;
+    await this.contactsSvc.deleteContact(c.id);
+    this.selectedContact = null;
   }
 }

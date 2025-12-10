@@ -4,24 +4,21 @@
     <button class="add-contact-btn" (click)="addContact()">
       Add new contact <img src="/img/icons/add_person.svg" alt="Add" class="icon" />
     </button>
-    <!-- <button class="add-contact-btn" [routerLink]="['/contacts', 'add']">
-      Add new contact
-      <img src="/img/icons/add_person.svg" alt="Add" class="icon" />
-    </button> -->
 
-    <div *ngFor="let group of groupedContacts" class="letter-group">
+    <div *ngIf="grouped$ | async as groups">
+      <div *ngFor="let group of groups" class="letter-group">
       <div class="group-letter">{{ group.letter }}</div>
-
-      <div
-        *ngFor="let c of group.contacts"
-        class="contact-entry"
-        (click)="selectContact(c)"
-        [ngClass]="{ active: selectedContact === c }"
-      >
-        <div class="circle">{{ getInitials(c.name) }}</div>
-        <div class="contact-info">
-          <div class="name">{{ c.name }}</div>
-          <div class="email">{{ c.email }}</div>
+        <div
+          *ngFor="let c of group.contacts"
+          class="contact-entry"
+          (click)="selectContact(c)"
+          [ngClass]="{ active: selectedContact === c }"
+        >
+          <div class="circle" [style.background-color]="c.color || '#ccc'">{{ getInitials(c.name) }}</div>
+          <div class="contact-info">
+            <div class="name">{{ c.name }}</div>
+            <div class="email">{{ c.email }}</div>
+          </div>
         </div>
       </div>
     </div>
