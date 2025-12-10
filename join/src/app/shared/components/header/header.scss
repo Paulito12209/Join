@@ -123,45 +123,50 @@
 
 @use '../../../../styles.scss' as *;
 
-* {
-  font-family: 'Inter', sans-serif; // später raus
-}
+// * {
+//   font-family: 'Inter', sans-serif; // später raus
+// }
 
 /* ===============================
    HEADER
 ================================ */
 
 .header {
-  @include dFlex($jc: space-between);
-  height: 96px;
-  padding: 0 40px 0 100px;
-  background-color: white;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    @include dFlex($jc: space-between);
+    height: 96px;
+    padding: 0 40px 0 100px;
+    background-color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 
-  position: sticky;
-  top: 0;
-  z-index: 20;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.max-width-container {
+    @include dFlex($jc: space-between);
+    width: 1208px;
 }
 
 .header-left {
-  @include dFlex($jc: flex-start, $ai: center, $g: 16px);
+    @include dFlex($jc: flex-start, $ai: center, $g: 16px);
 }
 
 .header-right {
-  position: relative;
-  @include dFlex($g: 16px);
+    position: relative;
+    @include dFlex($g: 16px);
 }
 
 .header-logo {
-  display: none;
-  width: 32px;
+    display: none;
+    width: 32px;
 }
 
 .header-title {
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 1.2;
-  color: black;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.2;
+    color: black;
 }
 
 /* ===============================
@@ -169,25 +174,25 @@
 ================================ */
 
 .header-help {
-  @include dFlex();
-  cursor: pointer;
-
-  .header-help-icon {
     @include dFlex();
-    width: 32px;
-    height: 32px;
+    cursor: pointer;
 
-    img {
-      max-width: 100%;
-      max-height: 100%;
-    }
-  }
+    .header-help-icon {
+        @include dFlex();
+        width: 32px;
+        height: 32px;
 
-  &:hover {
-    .header-help-icon img {
-      content: url('../../../../../public/img/icons/help-hover.svg');
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
     }
-  }
+
+    &:hover {
+        .header-help-icon img {
+            content: url('../../../../../public/img/icons/help-hover.svg');
+        }
+    }
 }
 
 /* ===============================
@@ -195,23 +200,23 @@
 ================================ */
 
 .header-user {
-  @include dFlex();
-  width: 56px;
-  height: 56px;
-  border: 3px $color-brand-primary solid;
-  border-radius: 50%;
-  background-color: white;
-  cursor: pointer;
+    @include dFlex();
+    width: 56px;
+    height: 56px;
+    border: 3px $color-brand-primary solid;
+    border-radius: 50%;
+    background-color: white;
+    cursor: pointer;
 
-  &:hover {
-    background-color: $color-neutral-user-bg;
-  }
+    &:hover {
+        background-color: $color-neutral-user-bg;
+    }
 }
 
 .header-user-initials {
-  font-size: 24px;
-  font-weight: 700;
-  color: $color-brand-highlight;
+    font-size: 24px;
+    font-weight: 700;
+    color: $color-brand-highlight;
 }
 
 /* ===============================
@@ -219,39 +224,39 @@
 ================================ */
 
 .user-menu {
-  @include dFlex($fd: column, $jc: flex-start, $ai: flex-start);
+    @include dFlex($fd: column, $jc: flex-start, $ai: flex-start);
 
-  position: absolute;
-  top: 76px;
-  right: -20px;
+    position: absolute;
+    top: 76px;
+    right: -20px;
 
-  background-color: $color-brand-primary;
-  width: 150px;
-  padding: 16px;
+    background-color: $color-brand-primary;
+    width: 150px;
+    padding: 16px;
 
-  border-top-left-radius: 20px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 20px;
-  border-bottom-left-radius: 20px;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1); // Figma: X0 Y0 Blur4 Spread0 Opacity10%
+    border-top-left-radius: 20px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1); // Figma: X0 Y0 Blur4 Spread0 Opacity10%
 }
 
 .user-menu-item {
-  color: $color-neutral-mid;
-  font-size: 16px;
-  text-decoration: none;
-//   padding: 16px 8px;
-  cursor: pointer;
+    color: $color-neutral-mid;
+    font-size: 16px;
+    text-decoration: none;
+    //   padding: 16px 8px;
+    cursor: pointer;
 
-  &:hover {
-    color: white; // ja?
-    background-color: $color-brand-primary-hover;
-  }
+    &:hover {
+        color: white; // ja?
+        background-color: $color-brand-primary-hover;
+    }
 }
 
 /* Mobile-only Version von „Help“ */
 .mobile-only {
-  display: none;
+    display: none;
 }
 
 /* ===============================
@@ -259,56 +264,56 @@
 ================================ */
 
 @media (max-width: 950px) {
-  .header {
-    padding: 0 20px 0 40px;
-  }
+    .header {
+        padding: 0 20px 0 40px;
+    }
 
-  .header-title {
-    font-size: 18px;
-  }
+    .header-title {
+        font-size: 18px;
+    }
 
-  .user-menu {
-    right: -10px;
-  }
+    .user-menu {
+        right: -10px;
+    }
 }
 
 @media (max-width: 600px) {
-  .header {
-    height: 80px;
-    padding: 0 20px;
-  }
+    .header {
+        height: 80px;
+        padding: 0 20px;
+    }
 
-  .header-title {
-    display: none;
-  }
+    .header-title {
+        display: none;
+    }
 
-  .header-logo {
-    display: block;
-  }
+    .header-logo {
+        display: block;
+    }
 
-  .header-help {
-    display: none;
-  }
+    .header-help {
+        display: none;
+    }
 
-  /* User Avatar kleiner */
-  .header-user {
-    width: 40px;
-    height: 40px;
-    border: 2px $color-brand-primary solid;
-  }
+    /* User Avatar kleiner */
+    .header-user {
+        width: 40px;
+        height: 40px;
+        border: 2px $color-brand-primary solid;
+    }
 
-  .header-user-initials {
-    font-size: 20px;
-  }
+    .header-user-initials {
+        font-size: 20px;
+    }
 
-  /* Mobile: Help soll im Menü angezeigt werden */
-  .mobile-only {
-    display: block;
-  }
+    /* Mobile: Help soll im Menü angezeigt werden */
+    .mobile-only {
+        display: block;
+    }
 
-  /* Menü leicht versetzen, damit es nicht zu dicht am Rand klebt */
-  .user-menu {
-    top: 40px;
-    right: -10px;
-  }
+    /* Menü leicht versetzen, damit es nicht zu dicht am Rand klebt */
+    .user-menu {
+        top: 40px;
+        right: -10px;
+    }
 }

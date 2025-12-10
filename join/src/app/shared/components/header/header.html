@@ -1,29 +1,31 @@
 <header class="header">
-  <div class="header-left">
-    <img class="header-logo" src="img/Logo-dark.svg" alt="Join logo" />
-    <p class="header-title">Kanban Project Management Tool</p>
-  </div>
+    <div class="max-width-container">
+        <div class="header-left">
+            <img class="header-logo" src="img/Logo-dark.svg" alt="Join logo" />
+            <p class="header-title">Kanban Project Management Tool</p>
+        </div>
 
-  <div class="header-right">
-    <a routerLink="/help" routerLinkActive="active" class="header-help" aria-label="Open help">
-      <div class="header-help-icon">
-        <img src="img/icons/help.svg" alt="Help" />
-      </div>
-    </a>
+        <div class="header-right">
+            <a routerLink="/help" routerLinkActive="active" class="header-help" aria-label="Open help">
+                <div class="header-help-icon">
+                    <img src="img/icons/help.svg" alt="Help" />
+                </div>
+            </a>
 
-    <button class="header-user" type="button" aria-label="Open user menu" (click)="isUserMenuOpen = !isUserMenuOpen">
-      <span class="header-user-initials">G</span>
-    </button>
+            <button class="header-user" type="button" aria-label="Open user menu"
+                (click)="isUserMenuOpen = !isUserMenuOpen">
+                <span class="header-user-initials">G</span>
+            </button>
 
-    @if (isUserMenuOpen) {
-      <div class="user-menu">
-        <a routerLink="/help" class="user-menu-item mobile-only">Help</a>
-        <a routerLink="/legal-notice" class="user-menu-item">Legal Notice</a>
-        <a routerLink="/privacy-policy" class="user-menu-item">Privacy Policy</a>
-        <a routerLink="/logout" class="user-menu-item">Log out</a>
-      </div>
-    }
-  </div>
+            @if (isUserMenuOpen) {
+            <div class="user-menu">
+                <a routerLink="/help" class="user-menu-item mobile-only">Help</a>
+                <a routerLink="/legal-notice" class="user-menu-item">Legal Notice</a>
+                <a routerLink="/privacy-policy" class="user-menu-item">Privacy Policy</a>
+                <a routerLink="/logout" class="user-menu-item">Log out</a>
+            </div>
+            }
+        </div>
+    </div>
+
 </header>
-
-
