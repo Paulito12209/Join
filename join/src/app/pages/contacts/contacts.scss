@@ -138,6 +138,26 @@
   color: #2A3547;
 }
 
+.detail-content {
+  opacity: 0;
+  transform: translateX(400px);
+  transition: 0.35s ease-out;
+  pointer-events: none; // verhindert Klicks wenn leer
+}
+
+.detail-content.visible {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: all;
+}
+
+.placeholder {
+  margin-top: 40px;
+  font-size: 18px;
+  color: #777;
+}
+
+
 .detail-header {
   display: flex;
   align-items: center;

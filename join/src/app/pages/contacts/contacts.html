@@ -28,42 +28,53 @@
   </div>
 
   <!-- RIGHT: DETAIL VIEW -->
-  <div class="contact-detail" *ngIf="selectedContact; else noSelect">
+  <div class="contact-detail">
+
+    <!-- ALWAYS visible -->
     <h2>
       Contacts
       <span class="divider"></span>
       <span class="sub">Better with a team</span>
     </h2>
 
-    <div class="detail-header">
-      <div class="circle big">{{ getInitials(selectedContact.name) }}</div>
-      <div class="detail-main">
-        <div class="name">{{ selectedContact.name }}</div>
+    <!-- Slide-in content -->
+    <div
+      class="detail-content"
+      [class.visible]="selectedContact"
+    >
+      <ng-container *ngIf="selectedContact; else noSelect">
+        <div class="detail-header">
+          <div class="circle big">{{ getInitials(selectedContact.name) }}</div>
+          <div class="detail-main">
+            <div class="name">{{ selectedContact.name }}</div>
 
-        <div class="actions">
-          <button class="action-btn edit" (click)="editContact()">
-            <img src="/img/icons/edit.svg" alt="Edit" class="action-icon" />
-            <span>Edit</span>
-          </button>
+            <div class="actions">
+              <button class="action-btn edit" (click)="editContact()">
+                <img src="/img/icons/edit.svg" class="action-icon" />
+                <span>Edit</span>
+              </button>
 
-          <button class="action-btn delete" (click)="deleteContact()">
-            <img src="/img/icons/delete.svg" alt="Delete" class="action-icon" />
-            <span>Delete</span>
-          </button>
+              <button class="action-btn delete" (click)="deleteContact()">
+                <img src="/img/icons/delete.svg" class="action-icon" />
+                <span>Delete</span>
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <h3>Contact Information</h3>
+
+        <p class="label">Email</p>
+        <p class="email-detail">{{ selectedContact.email }}</p>
+
+        <p class="label">Phone</p>
+        <p>{{ selectedContact.phone }}</p>
+      </ng-container>
     </div>
 
-    <h3>Contact Information</h3>
+    <ng-template #noSelect>
+      <p class="placeholder">Select a contact to view details</p>
+    </ng-template>
 
-    <p class="label">Email</p>
-    <p class="email-detail">{{ selectedContact.email }}</p>
-
-    <p class="label">Phone</p>
-    <p>{{ selectedContact.phone }}</p>
   </div>
-
-  <ng-template #noSelect>
-    <div class="contact-detail placeholder">Select a contact to view details</div>
-  </ng-template>
 </div>
