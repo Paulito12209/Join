@@ -17,6 +17,17 @@ export const routes: Routes = [{
         { path: "privacy-policy", component: PrivacyPolicy },
         { path: "legal-notice", component: LegalNotes },
         { path: "help", component: Help },
-        { path: "", redirectTo: "contacts", pathMatch: "full" }
+        { path: "", redirectTo: "contacts", pathMatch: "full" },
+
+            {
+      path: 'contacts/add',
+      loadComponent: () => import('./pages/contacts/dialog-contact').then(m => m.DialogContact),
+    },
+    {
+      path: 'contacts/:id/edit',
+      loadComponent: () => import('./pages/contacts/dialog-contact').then(m => m.DialogContact),
+    },
+
+    { path: '', redirectTo: 'contacts', pathMatch: 'full' },
     ]
 }];
