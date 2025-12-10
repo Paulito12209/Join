@@ -1,172 +1,44 @@
-// @use '../../../../styles.scss' as *;
-
-// * {
-//   font-family: 'Inter', sans-serif; // später raus
-// }
-
-// .header {
-//   @include dFlex($jc: space-between);
-//   height: 96px;
-//   padding: 0 40px 0 100px;
-//   background-color: white;
-//   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-
-//   position: sticky;
-//   top: 0;
-//   z-index: 10;
-// }
-
-// .header-left {
-//   @include dFlex($jc: flex-start, $ai: center, $g: 16px);
-// }
-
-// .header-right {
-//   @include dFlex($g: 16px);
-// }
-
-// .header-logo {
-//   display: none;
-//   width: 32px;
-// }
-
-// .header-title {
-//   font-weight: 400;
-//   font-size: 20px;
-//   line-height: 1.2;
-//   color: black;
-// }
-
-// .header-help {
-//   @include dFlex();
-//   cursor: pointer;
-
-//   .header-help-icon {
-//     @include dFlex();
-//     width: 32px;
-//     height: 32px;
-
-//     img {
-//       max-width: 100%;
-//       max-height: 100%;
-//     }
-//   }
-
-//   &:hover {
-//     .header-help-icon img {
-//       content: url('../../../../../public/img/icons/help-hover.svg');
-//     }
-//   }
-// }
-
-// .header-user {
-//   @include dFlex();
-//   width: 56px;
-//   height: 56px;
-//   border: 3px $color-brand-primary solid;
-//   border-radius: 50%;
-//   background-color: white;
-//   cursor: pointer;
-
-//   &:hover {
-//     background-color: $color-neutral-user-bg;
-//   }
-// }
-
-// .header-user-initials {
-//   font-size: 24px;
-//   font-weight: 700;
-//   color: $color-brand-highlight;
-// }
-
-// /* ===============================
-//    RESPONSIVE
-// ================================ */
-
-// @media (max-width: 950px) {
-//   .header {
-//     padding: 0 20px 0 40px;
-//   }
-
-//   .header-title {
-//     font-size: 18px;
-//   }
-// }
-
-// @media (max-width: 600px) {
-//   .header {
-//     height: 80px;
-//     padding: 0 20px;
-//   }
-
-//   .header-title {
-//     display: none;
-//   }
-
-//   .header-logo {
-//     display: block;
-//   }
-
-//   .header-help {
-//     display: none;
-//   }
-
-//   .header-user {
-//     width: 40px;
-//     height: 40px;
-//     border: 2px $color-brand-primary solid;
-//   }
-
-//   .header-user-initials {
-//     font-size: 20px;
-//   }
-// }
-
 @use '../../../../styles.scss' as *;
-
-// * {
-//   font-family: 'Inter', sans-serif; // später raus
-// }
 
 /* ===============================
    HEADER
 ================================ */
 
 .header {
-    @include dFlex($jc: space-between);
-    height: 96px;
-    padding: 0 40px 0 100px;
-    background-color: white;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-
-    position: sticky;
-    top: 0;
-    z-index: 20;
+  @include dFlex($jc: flex-start);
+  height: 96px;
+  padding: 0 40px 0 100px;
+  background-color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
 .max-width-container {
-    @include dFlex($jc: space-between);
-    width: 1208px;
+  @include dFlex($jc: space-between);
+  width: 1208px;
 }
 
 .header-left {
-    @include dFlex($jc: flex-start, $ai: center, $g: 16px);
+  @include dFlex($jc: flex-start, $ai: center, $g: 16px);
 }
 
 .header-right {
-    position: relative;
-    @include dFlex($g: 16px);
+  @include dFlex($g: 16px);
+  position: relative;
 }
 
 .header-logo {
-    display: none;
-    width: 32px;
+  display: none;
+  width: 32px;
 }
 
 .header-title {
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 1.2;
-    color: black;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 1.2;
+  color: black;
 }
 
 /* ===============================
@@ -174,25 +46,20 @@
 ================================ */
 
 .header-help {
-    @include dFlex();
-    cursor: pointer;
+  @include dFlex();
+  cursor: pointer;
 
-    .header-help-icon {
-        @include dFlex();
-        width: 32px;
-        height: 32px;
-
-        img {
-            max-width: 100%;
-            max-height: 100%;
-        }
+  &:hover {
+    .header-help-icon img {
+      content: url('../../../../../public/img/icons/help-hover.svg');
     }
+  }
+}
 
-    &:hover {
-        .header-help-icon img {
-            content: url('../../../../../public/img/icons/help-hover.svg');
-        }
-    }
+.header-help-icon {
+  @include dFlex();
+  width: 32px;
+  height: 32px;
 }
 
 /* ===============================
@@ -200,63 +67,69 @@
 ================================ */
 
 .header-user {
-    @include dFlex();
-    width: 56px;
-    height: 56px;
-    border: 3px $color-brand-primary solid;
-    border-radius: 50%;
-    background-color: white;
-    cursor: pointer;
+  @include dFlex();
+  width: 56px;
+  height: 56px;
+  border: 3px $color-brand-primary solid;
+  border-radius: 50%;
+  background-color: white;
+  cursor: pointer;
 
-    &:hover {
-        background-color: $color-neutral-user-bg;
-    }
+  &:hover {
+    background-color: $color-neutral-user-bg;
+  }
 }
 
 .header-user-initials {
-    font-size: 24px;
-    font-weight: 700;
-    color: $color-brand-highlight;
+  font-size: 24px;
+  font-weight: 700;
+  color: $color-brand-highlight;
 }
 
 /* ===============================
-   USER MENU 
+   USER MENU
 ================================ */
 
 .user-menu {
-    @include dFlex($fd: column, $jc: flex-start, $ai: flex-start);
+  @include dFlex($fd: column, $ai: center);
+  position: absolute;
+  top: 76px;
+  right: -20px;
+  width: 150px;
+  padding: 8px;
+  background-color: $color-brand-primary;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+}
 
-    position: absolute;
-    top: 76px;
-    right: -20px;
-
-    background-color: $color-brand-primary;
-    width: 150px;
-    padding: 16px;
-
-    border-top-left-radius: 20px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1); // Figma: X0 Y0 Blur4 Spread0 Opacity10%
+.user-menu.is-open {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .user-menu-item {
-    color: $color-neutral-mid;
-    font-size: 16px;
-    text-decoration: none;
-    //   padding: 16px 8px;
-    cursor: pointer;
+  @include dFlex($jc: flex-start);
+  width: 130px;
+  height: 46px;
+  color: $color-neutral-mid;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 8px;
+  cursor: pointer;
 
-    &:hover {
-        color: white; // ja?
-        background-color: $color-brand-primary-hover;
-    }
+  &:hover {
+    color: white;
+    background-color: $color-brand-primary-hover;
+  }
 }
 
-/* Mobile-only Version von „Help“ */
 .mobile-only {
-    display: none;
+  display: none;
 }
 
 /* ===============================
@@ -264,56 +137,68 @@
 ================================ */
 
 @media (max-width: 950px) {
-    .header {
-        padding: 0 20px 0 40px;
-    }
+  .header {
+    padding: 0 16px 0 32px;
+  }
 
-    .header-title {
-        font-size: 18px;
-    }
+  .max-width-container {
+    width: 1276px;
+  }
 
-    .user-menu {
-        right: -10px;
-    }
+  .header-title {
+    font-size: 18px;
+  }
+
+  .user-menu {
+    right: -10px;
+  }
 }
 
 @media (max-width: 600px) {
-    .header {
-        height: 80px;
-        padding: 0 20px;
-    }
+  .header {
+    height: 80px;
+    padding: 0 20px;
+  }
 
-    .header-title {
-        display: none;
-    }
+  .header-title {
+    display: none;
+  }
 
-    .header-logo {
-        display: block;
-    }
+  .header-logo {
+    display: block;
+  }
 
-    .header-help {
-        display: none;
-    }
+  .header-help {
+    display: none;
+  }
 
-    /* User Avatar kleiner */
-    .header-user {
-        width: 40px;
-        height: 40px;
-        border: 2px $color-brand-primary solid;
-    }
+  .header-user {
+    width: 40px;
+    height: 40px;
+    border: 2px $color-brand-primary solid;
+  }
 
-    .header-user-initials {
-        font-size: 20px;
-    }
+  .header-user-initials {
+    font-size: 20px;
+  }
 
-    /* Mobile: Help soll im Menü angezeigt werden */
-    .mobile-only {
-        display: block;
-    }
+  .mobile-only {
+    @include dFlex($jc: flex-start);
+  }
 
-    /* Menü leicht versetzen, damit es nicht zu dicht am Rand klebt */
-    .user-menu {
-        top: 40px;
-        right: -10px;
-    }
+  .user-menu {
+    top: 40px;
+    right: -10px;
+
+    transform: translateX(120%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 200ms ease-out, opacity 200ms ease-out;
+  }
+
+  .user-menu.is-open {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
 }

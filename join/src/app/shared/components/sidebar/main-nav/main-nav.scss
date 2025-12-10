@@ -17,57 +17,70 @@
 
 .navigation li {
   width: 100%;
-}
 
-.navigation li a {
-  @include dFlex($jc: flex-start, $g: 8px);
-  width: 100%;
-  font-weight: 400;
-  font-size: 16px;
-  color: $color-neutral-mid;
-  text-decoration: none;
+  a {
+    @include dFlex($jc: flex-start, $g: 8px);
+    width: 100%;
+    font-weight: 400;
+    font-size: 16px;
+    color: $color-neutral-mid;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 8px 0;
+    padding-left: 64px;
 
-  cursor: pointer;
-  padding: 8px 0;
-  padding-left: 64px;
-}
+    img {
+      width: 30px;
+      height: 30px;
+    }
 
-.navigation li a img {
-  width: 30px;
-  height: 30px;
-}
+    &:hover {
+      background-color: $color-brand-primary-hover;
+      color: white;
+      border-radius: 8px;
+    }
 
-.navigation li a:hover {
-  background-color: $color-brand-primary-hover;
-  color: white;
-  border-radius: 8px;
-}
+    &.active {
+      background-color: $color-brand-deep;
+      color: white;
+    }
+  }
 
-.navigation li a.active {
-  background-color: $color-brand-deep;
-  color: white;
-  border-radius: 8px;
-}
+  &:nth-child(1) {
+    a {
+      &:hover img,
+      &.active img {
+        content: url('../../../../../../public/img/icons/summary-active.svg');
+      }
+    }
+  }
 
-// Icon-Swap (Hover + Active)
-.navigation li:nth-child(1) a:hover img,
-.navigation li:nth-child(1) a.active img {
-  content: url('../../../../../../public/img/icons/summary-active.svg');
-}
+  &:nth-child(2) {
+    a {
+      &:hover img,
+      &.active img {
+        content: url('../../../../../../public/img/icons/add_task-active.svg');
+      }
+    }
+  }
 
-.navigation li:nth-child(2) a:hover img,
-.navigation li:nth-child(2) a.active img {
-  content: url('../../../../../../public/img/icons/add_task-active.svg');
-}
+  &:nth-child(3) {
+    a {
+      &:hover img,
+      &.active img {
+        content: url('../../../../../../public/img/icons/board-active.svg');
+      }
+    }
+  }
 
-.navigation li:nth-child(3) a:hover img,
-.navigation li:nth-child(3) a.active img {
-  content: url('../../../../../../public/img/icons/board-active.svg');
-}
-
-.navigation li:nth-child(4) a:hover img,
-.navigation li:nth-child(4) a.active img {
-  content: url('../../../../../../public/img/icons/contacts-active.svg');
+  &:nth-child(4) {
+    a {
+      &:hover img,
+      &.active img {
+        content: url('../../../../../../public/img/icons/contacts-active.svg');
+      }
+    }
+  }
 }
 
 /* ===============================
@@ -101,17 +114,22 @@
     padding: 8px 0;
     width: 80px;
     height: 76px;
-  }
 
-  .navigation li a:hover {
-    background-color: $color-brand-primary-hover;
-    color: white;
-    border-radius: 16px;
-  }
+    &:hover {
+      background-color: $color-brand-primary-hover;
+      color: white;
+      border-radius: 16px;
+    }
 
-  .navigation li a img {
-    width: 24px;
-    height: 24px;
+    &.active {
+      border-radius: 16px;
+      background-color: $color-brand-deep;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
   }
 }
 

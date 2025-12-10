@@ -6,7 +6,6 @@
 
 .sidebar-footer {
   @include dFlex($fd: column, $ai: stretch, $g: 8px);
-
   font-weight: 400;
   font-size: 16px;
   color: $color-neutral-dark;
@@ -24,26 +23,25 @@
 }
 
 .sidebar-footer li {
-  width: 100%;
-}
+  a {
+    width: 100%;
+    display: block;
+    padding: 8px 0 8px 64px;
+    text-align: left;
+    color: $color-neutral-mid;
+    text-decoration: none;
+    cursor: pointer;
 
-.sidebar-footer li a {
-  width: 100%;
-  display: block;
-  padding: 8px 0 8px 64px;
-  text-align: left;
-  color: $color-neutral-mid;
-  text-decoration: none;
-  cursor: pointer;
+    &:hover {
+      font-weight: 700;
+      color: $color-brand-highlight;
+    }
 
-  &:hover {
-    font-weight: 700;
-    color: $color-brand-highlight;
-  }
-
-  &.active {
-    color: white;
-    font-weight: 700;
+    &.active {
+      background-color: $color-brand-deep;
+      font-weight: 400;
+      color: $color-neutral-mid;
+    }
   }
 }
 
@@ -56,7 +54,6 @@
     padding: 8px 0 8px 32px;
   }
 }
-
 
 @media (max-width: 600px) {
   .sidebar-footer {
