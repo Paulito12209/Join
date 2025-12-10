@@ -6,6 +6,7 @@ import { Board } from './pages/board/board';
 import { AddTask } from './pages/add-task/add-task';
 import { PrivacyPolicy } from './pages/privacy-policy/privacy-policy';
 import { LegalNotes } from './pages/legal-notes/legal-notes';
+import { Help } from './pages/help/help';
 
 export const routes: Routes = [{
     path: "", component: MainLayout, children: [
@@ -15,6 +16,7 @@ export const routes: Routes = [{
         { path: "add-task", component: AddTask },
         { path: "privacy-policy", component: PrivacyPolicy },
         { path: "legal-notice", component: LegalNotes },
+        { path: "help", component: Help },
         { path: "", redirectTo: "contacts", pathMatch: "full" }
     ]
 }];
