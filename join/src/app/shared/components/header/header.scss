@@ -1,5 +1,30 @@
-p {
-    height: 64px;
-    width: 100%;
-    background-color: aquamarine;
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 64px;
+    background-color: #FFF;
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    .profile-initials {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 48px;
+        height: 48px;
+        border: 2px solid #2a3647;
+        border-radius: 50%;
+
+        p {
+            font-family: "Inter-Bold";
+            font-size: 16px;
+            color: blue;
+        }
+    }
 }
