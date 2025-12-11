@@ -128,16 +128,12 @@ export class Contacts {
   }
 
   onContactCreated(contact: ContactModel) {
-    // 1. Detail-Animation einmalig deaktivieren
+   
     this.disableDetailAnimation = true;
-
-    // 2. Kontakt direkt setzen (ohne selectContact-Animation)
     this.selectedContact = contact;
-
-    // 3. Auf Mobile sicherstellen, dass das Detail-Panel sichtbar ist
     document.querySelector('.contact-detail')?.classList.add('visible');
 
-    // 4. Toast anzeigen (wie gehabt)
+    
     console.log('Toast ON');
     this.showCreateToast = true;
     this.cdr.detectChanges();
@@ -155,13 +151,11 @@ export class Contacts {
 
   onContactUpdated(contact: ContactModel) {
     if (!contact?.id) return;
-    // Wenn der aktuell ausgewählte Kontakt betroffen ist, direkt ersetzen/mergen
     if (this.selectedContact && this.selectedContact.id === contact.id) {
       this.selectedContact = {
         ...this.selectedContact,
         ...contact,
       } as Contact;
-      // Sichtbarkeit des Detailbereichs sicherstellen (mobil)
       document.querySelector('.contact-detail')?.classList.add('visible');
       this.cdr.detectChanges();
     }

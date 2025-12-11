@@ -106,7 +106,7 @@
 .dialog__content {
   display: flex;
   align-items: center;
-  gap: 24px;
+  // gap: 24px;
   width: 100%;
   max-width: 560px;
 }
@@ -114,7 +114,7 @@
 .dialog__content .form {
   flex: 1;
   max-width: none;
-  gap: 32px;
+  // gap: 32px;
  right: 45.5px;
   margin-left: 5.5px;
 }
@@ -254,6 +254,10 @@
   color: #2a3647;
   border: 4px solid #fff;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  img{
+    height: 42.67px;
+    width: 42.67px;
+  }
 }
 
 /**

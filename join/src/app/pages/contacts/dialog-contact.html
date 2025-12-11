@@ -19,8 +19,7 @@
       <div class="dialog__content">
         <div class="avatar" [style.background]="(contact?.color || '#e4e7ed')">
           <span class="initials" *ngIf="mode==='edit' && contact">{{ getInitials(contact.name || '') }}</span>
-          <img *ngIf="mode==='create'" src="/img/icons/person.svg" alt="Person"
-            style="width:32px;height:32px;opacity:0.8;" />
+          <img *ngIf="mode==='create'" src="/img/icons/person.svg" alt="Person">
         </div>
 
         <form [formGroup]="form" (ngSubmit)="submit()" class="form">

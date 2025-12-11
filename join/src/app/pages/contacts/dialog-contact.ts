@@ -38,7 +38,7 @@ export class DialogContact {
   /** Emits when a new contact was created (immediate UI update). */
   @Output() created = new EventEmitter<Contact>();
   /** Emits when an existing contact was updated (immediate UI update). */
-  @Output() updated = new EventEmitter<Contact>();
+  @Output('contact-updated') updated = new EventEmitter<Contact>();
 
   mode: Mode = 'create';
   contactId: string | null = null;
