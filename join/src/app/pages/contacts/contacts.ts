@@ -163,4 +163,8 @@ export class Contacts {
       this.cdr.detectChanges();
     }
   }
+
+  closeActionsPanel() {
+    this.showActions = false;
+  }
 }

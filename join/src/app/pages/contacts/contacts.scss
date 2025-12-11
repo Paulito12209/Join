@@ -2,7 +2,7 @@
  * @fileoverview Contacts Page Styles
  * @description Styles for the contacts list page, including contact entries,
  *              detail view, letter groups, and mobile-specific UI elements.
- * 
+ *
  * @section z-index Hierarchy (Mobile Only)
  * Mobile floating action buttons use incrementing z-index values:
  *   - Header:              z-index: 1 (base navigation layer)
@@ -12,7 +12,7 @@
  *   - Mobile FAB Actions:  z-index: 5 (three-dot menu button)
  *   - Mobile Actions Panel: z-index: 6 (edit/delete slide-in menu)
  *   - Mobile Back Button:  z-index: 7 (return to list button)
- * 
+ *
  * @see dialog-contact.scss - Dialog overlay z-index: 3
  * @see header.scss - Header z-index: 1
  * @see sidebar.scss - Sidebar z-index: 2
@@ -505,6 +505,16 @@
     transition: transform 0.35s ease-out, opacity 0.3s ease-out;
 
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  }
+
+  .mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 4;
   }
 
   .mobile-actions-panel.open {
