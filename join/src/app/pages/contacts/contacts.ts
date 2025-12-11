@@ -137,7 +137,6 @@ export class Contacts {
     this.selectedContact = contact;
     document.querySelector('.contact-detail')?.classList.add('visible');
 
-    console.log('Toast ON');
     this.showCreateToast = true;
     this.cdr.detectChanges();
 
@@ -146,7 +145,6 @@ export class Contacts {
     }
 
     this.toastTimeoutId = setTimeout(() => {
-      console.log('Toast OFF');
       this.showCreateToast = false;
       this.cdr.detectChanges();
     }, 2000);

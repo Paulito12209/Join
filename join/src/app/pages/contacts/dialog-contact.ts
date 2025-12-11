@@ -110,7 +110,7 @@ export class DialogContact {
         };
         this.updated.emit(merged);
       } else {
-        const created = await this.contacts.createContact(payload); // muss Contact zurückgeben
+        const created = await this.contacts.createContact(payload); 
         this.created.emit(created);
       }
       this.cancel();

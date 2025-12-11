@@ -37,7 +37,7 @@
   </div>
 
   <!-- RIGHT: DETAIL VIEW -->
-  <div class="contact-detail">
+  <div class="contact-detail" [style.transition]="disableDetailAnimation ? 'none' : '0.35s ease-out'">
     <!-- ALWAYS visible -->
     <h2 class="contact-header">
       <span class="title">Contacts</span>
@@ -51,7 +51,7 @@
     </h2>
 
     <!-- Slide-in content -->
-    <div class="detail-content" [class.visible]="selectedContact">
+    <div class="detail-content" [class.visible]="selectedContact" [class.no-animation]="disableDetailAnimation">
       <ng-container *ngIf="selectedContact; else noSelect">
         <div class="detail-header">
           <div class="circle big" [style.background]="selectedContact.color || '#ccc'">
@@ -104,6 +104,11 @@
     <button *ngIf="selectedContact" class="mobile-fab-actions" (click)="toggleActions()">
       <div class="dots"></div>
     </button>
+
+    <!-- Slide-in contact successfully created -->
+    <div class="create-contact-success" [class.visible]="showCreateToast">
+      Contact successfully created
+    </div>
   </div>
 </div>
 
