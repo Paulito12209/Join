@@ -68,7 +68,7 @@ export class ContactsService {
    * @param input Minimum contact data with required `name`.
    * @returns The document ID of the created contact.
    */
-  async createContact(input: Pick<Contact, 'name'> & Partial<Contact>): Promise<string> {
+  async createContact(input: Pick<Contact, 'name'> & Partial<Contact>): Promise<Contact> {
     const fixedName = this.capitalizeName(input.name);
     const snap = await getDocs(this.colRef as any);
     const index = snap.size % this.avatarPalette.length;
@@ -79,7 +79,11 @@ export class ContactsService {
       color: this.avatarPalette[index]
     };
     const ref = await addDoc(this.colRef, payload as any);
-    return ref.id;
+
+    return {
+      id: ref.id,
+      ...payload,
+    };
   }
 
   /**
@@ -94,7 +98,7 @@ export class ContactsService {
     const cleaned = {
       ...(newName ? { name: newName } : {}),
       ...(patch.email ? { email: patch.email.trim() } : {}),
-      ...(patch.phone ? { phone: patch.phone.trim() } : {})
+      ...(patch.phone ? { phone: patch.phone.trim() } : {}),
     };
     await updateDoc(d, cleaned as any);
   }

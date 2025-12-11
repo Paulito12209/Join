@@ -1,6 +1,12 @@
 import { Component, inject, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormBuilder,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+} from '@angular/forms';
 import { ContactsService, Contact } from '../../core/services/contacts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -13,7 +19,7 @@ type Mode = 'create' | 'edit';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './dialog-contact.html',
-  styleUrls: ['./dialog-contact.scss']
+  styleUrls: ['./dialog-contact.scss'],
 })
 export class DialogContact {
   private fb = inject(FormBuilder);
@@ -22,10 +28,17 @@ export class DialogContact {
   private router = inject(Router);
 
   /** Contact to edit (passed from parent). If null, creates new contact. */
-  @Input() contact: Contact | { id?: string; name: string; email?: string; phone?: string; color?: string } | null = null;
+  @Input() contact:
+    | Contact
+    | { id?: string; name: string; email?: string; phone?: string; color?: string }
+    | null = null;
 
   /** Emits when dialog should be closed (cancel or after save) */
   @Output() closed = new EventEmitter<void>();
+
+  /** Emits the created contact to the parent */
+  @Output() created = new EventEmitter<Contact>();
+  // @Output() created = new EventEmitter<void>();
 
   mode: Mode = 'create';
   contactId: string | null = null;
@@ -34,7 +47,7 @@ export class DialogContact {
   form = this.fb.nonNullable.group({
     name: ['', [Validators.required, fullNameValidator, Validators.minLength(2)]],
     email: ['', [Validators.email]],
-    phone: ['', [Validators.pattern(/^\d{8,}$/)]]
+    phone: ['', [Validators.pattern(/^\d{8,}$/)]],
   });
 
   async ngOnInit() {
@@ -45,7 +58,7 @@ export class DialogContact {
       this.form.patchValue({
         name: this.contact.name || '',
         email: this.contact.email || '',
-        phone: this.contact.phone || ''
+        phone: this.contact.phone || '',
       });
       return;
     }
@@ -57,15 +70,15 @@ export class DialogContact {
       this.contactId = id;
       try {
         const list = await firstValueFrom(this.contacts.getContacts('name', 'asc'));
-        const found = (list || []).find(c => c.id === id) || null;
+        const found = (list || []).find((c) => c.id === id) || null;
         if (found) {
           this.form.patchValue({
             name: found.name || '',
             email: found.email || '',
-            phone: found.phone || ''
+            phone: found.phone || '',
           });
         }
-      } catch { }
+      } catch {}
     } else {
       this.mode = 'create';
     }
@@ -83,13 +96,14 @@ export class DialogContact {
     const payload = {
       name: v.name.trim(),
       email: v.email.trim() || undefined,
-      phone: v.phone.trim() || undefined
+      phone: v.phone.trim() || undefined,
     };
     try {
       if (this.mode === 'edit' && this.contactId) {
         await this.contacts.updateContact(this.contactId, payload);
       } else {
-        await this.contacts.createContact(payload);
+        const created = await this.contacts.createContact(payload); // muss Contact zurückgeben
+        this.created.emit(created);
       }
       this.cancel();
     } finally {

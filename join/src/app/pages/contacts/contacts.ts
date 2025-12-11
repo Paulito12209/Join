@@ -1,5 +1,5 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ContactsService, Contact as ContactModel } from '../../core/services/contacts.service';
 import { Router, RouterLink } from '@angular/router';
 import { map } from 'rxjs/operators';
@@ -24,7 +24,11 @@ interface Contact {
 export class Contacts {
   private readonly contactsSvc = inject(ContactsService);
   private readonly router = inject(Router);
+  private readonly cdr = inject(ChangeDetectorRef);
   private _sub = new Subscription();
+  showCreateToast = false;
+  private toastTimeoutId: any;
+  disableDetailAnimation = false;
 
   /** Controls whether the dialog modal is visible */
   showDialog = false;
@@ -61,6 +65,8 @@ export class Contacts {
   }
 
   selectContact(contact: Contact) {
+    this.disableDetailAnimation = false;
+
     this.selectedContact = contact;
 
     document.querySelector('.contact-detail')?.classList.add('visible');
@@ -119,5 +125,31 @@ export class Contacts {
     this.showActions = false;
     const detailEl = document.querySelector('.contact-detail');
     detailEl?.classList.remove('visible');
+  }
+
+  onContactCreated(contact: ContactModel) {
+    // 1. Detail-Animation einmalig deaktivieren
+    this.disableDetailAnimation = true;
+
+    // 2. Kontakt direkt setzen (ohne selectContact-Animation)
+    this.selectedContact = contact;
+
+    // 3. Auf Mobile sicherstellen, dass das Detail-Panel sichtbar ist
+    document.querySelector('.contact-detail')?.classList.add('visible');
+
+    // 4. Toast anzeigen (wie gehabt)
+    console.log('Toast ON');
+    this.showCreateToast = true;
+    this.cdr.detectChanges();
+
+    if (this.toastTimeoutId) {
+      clearTimeout(this.toastTimeoutId);
+    }
+
+    this.toastTimeoutId = setTimeout(() => {
+      console.log('Toast OFF');
+      this.showCreateToast = false;
+      this.cdr.detectChanges();
+    }, 2000);
   }
 }

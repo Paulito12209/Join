@@ -8,8 +8,12 @@
     <div *ngIf="grouped$ | async as groups">
       <div *ngFor="let group of groups" class="letter-group">
         <div class="group-letter">{{ group.letter }}</div>
-        <div *ngFor="let c of group.contacts" class="contact-entry" (click)="selectContact(c)"
-          [ngClass]="{ active: selectedContact === c }">
+        <div
+          *ngFor="let c of group.contacts"
+          class="contact-entry"
+          (click)="selectContact(c)"
+          [ngClass]="{ active: selectedContact === c }"
+        >
           <div class="circle" [style.background-color]="c.color || '#ccc'">
             {{ getInitials(c.name) }}
           </div>
@@ -42,7 +46,11 @@
     </h2>
 
     <!-- Slide-in content -->
-    <div class="detail-content" [class.visible]="selectedContact">
+    <div
+      class="detail-content"
+      [class.visible]="selectedContact"
+      [class.no-animation]="disableDetailAnimation"
+    >
       <ng-container *ngIf="selectedContact; else noSelect">
         <div class="detail-header">
           <div class="circle big" [style.background]="selectedContact.color || '#ccc'">
@@ -93,9 +101,18 @@
     <button *ngIf="selectedContact" class="mobile-fab-actions" (click)="toggleActions()">
       <div class="dots"></div>
     </button>
+
+    <!-- Slide-in contact successfully created -->
+    <div class="create-contact-success" [class.visible]="showCreateToast">
+      Contact successfully created
+    </div>
   </div>
 </div>
 
 <!-- Dialog Overlay - renders on top of contacts content -->
-<app-dialog-contact *ngIf="showDialog" [contact]="editingContact" (closed)="onDialogClose()">
-</app-dialog-contact>
+<app-dialog-contact
+  *ngIf="showDialog"
+  [contact]="editingContact"
+  (closed)="onDialogClose()"
+  (created)="onContactCreated($event)"
+></app-dialog-contact>
