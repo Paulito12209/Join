@@ -98,6 +98,8 @@
   }
 }
 
+
+
 /**
  * Right content inner container: avatar + form with constrained width.
  */
@@ -459,6 +461,21 @@
  * - Hides the logo to save space
  * - Hides 'Cancel' button (User requirement)
  */
+
+ /**
+ * Mobile slide-up animation: used under 768px.
+ */
+@keyframes dialogSlideUp {
+  from {
+    transform: translateY(72px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 @media (max-width: 768px) {
   .dialog {
     flex-direction: column;
@@ -479,6 +496,9 @@
     width: calc(100vw - 32px);
     height: calc(100vh - 180px);
     max-width: none;
+    /* Override desktop slide-in: slide from bottom on mobile */
+    transform: translateY(72px);
+    animation: dialogSlideUp 480ms ease-out forwards;
   }
 
   .dialog__left {
