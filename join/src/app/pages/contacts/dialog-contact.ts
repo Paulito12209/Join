@@ -10,7 +10,7 @@ import {
 import { ContactsService, Contact } from '../../core/services/contacts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+// AsyncPipe not needed here
 
 type Mode = 'create' | 'edit';
 
@@ -35,10 +35,10 @@ export class DialogContact {
 
   /** Emits when dialog should be closed (cancel or after save) */
   @Output() closed = new EventEmitter<void>();
-
-  /** Emits the created contact to the parent */
+  /** Emits when a new contact was created (immediate UI update). */
   @Output() created = new EventEmitter<Contact>();
-  // @Output() created = new EventEmitter<void>();
+  /** Emits when an existing contact was updated (immediate UI update). */
+  @Output() updated = new EventEmitter<Contact>();
 
   mode: Mode = 'create';
   contactId: string | null = null;
@@ -62,8 +62,6 @@ export class DialogContact {
       });
       return;
     }
-
-    // Priority 2: Check route params (standalone route mode - legacy support)
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.mode = 'edit';
@@ -101,6 +99,16 @@ export class DialogContact {
     try {
       if (this.mode === 'edit' && this.contactId) {
         await this.contacts.updateContact(this.contactId, payload);
+        const merged: Contact = {
+          id: this.contactId,
+          name: payload.name,
+          email: payload.email,
+          phone: payload.phone,
+          color:
+            (this.contact && 'color' in this.contact ? this.contact.color : undefined) ||
+            undefined,
+        };
+        this.updated.emit(merged);
       } else {
         const created = await this.contacts.createContact(payload); // muss Contact zurückgeben
         this.created.emit(created);

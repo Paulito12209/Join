@@ -1,4 +1,4 @@
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ContactsService, Contact as ContactModel } from '../../core/services/contacts.service';
 import { Router, RouterLink } from '@angular/router';
@@ -17,7 +17,7 @@ interface Contact {
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [CommonModule, AsyncPipe, DialogContact],
+  imports: [CommonModule, DialogContact],
   templateUrl: './contacts.html',
   styleUrl: './contacts.scss',
 })
@@ -151,5 +151,19 @@ export class Contacts {
       this.showCreateToast = false;
       this.cdr.detectChanges();
     }, 2000);
+  }
+
+  onContactUpdated(contact: ContactModel) {
+    if (!contact?.id) return;
+    // Wenn der aktuell ausgewählte Kontakt betroffen ist, direkt ersetzen/mergen
+    if (this.selectedContact && this.selectedContact.id === contact.id) {
+      this.selectedContact = {
+        ...this.selectedContact,
+        ...contact,
+      } as Contact;
+      // Sichtbarkeit des Detailbereichs sicherstellen (mobil)
+      document.querySelector('.contact-detail')?.classList.add('visible');
+      this.cdr.detectChanges();
+    }
   }
 }

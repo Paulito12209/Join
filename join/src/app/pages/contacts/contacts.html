@@ -97,5 +97,10 @@
 </div>
 
 <!-- Dialog Overlay - renders on top of contacts content -->
-<app-dialog-contact *ngIf="showDialog" [contact]="editingContact" (closed)="onDialogClose()">
-</app-dialog-contact>
+<app-dialog-contact
+  *ngIf="showDialog"
+  [contact]="editingContact"
+  (closed)="onDialogClose()"
+  (created)="onContactCreated($event)"
+  (updated)="onContactUpdated($event)"
+></app-dialog-contact>
