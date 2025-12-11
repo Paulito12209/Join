@@ -43,6 +43,10 @@
    RESPONSIVE (BOTTOM NAV LAYOUT)
 ================================ */
 
+/**
+ * @breakpoint 950px - Intermediate Desktop
+ * Reduces sidebar width to 164px to save space.
+ */
 @media (max-width: 950px) {
   .sidebar {
     width: 164px;
@@ -53,6 +57,14 @@
   }
 }
 
+/**
+ * @breakpoint 768px - Mobile Bottom Navigation
+ * Completely changes layout from vertical sidebar to horizontal bottom bar.
+ * - Position: Fixed at bottom
+ * - Width: 100%
+ * - Height: 80px relative min-height
+ * - Z-Index: 2 (sits above content but below dialogs)
+ */
 @media (max-width: 768px) {
   .sidebar {
     position: fixed;

@@ -22,7 +22,7 @@ export class DialogContact {
   private router = inject(Router);
 
   /** Contact to edit (passed from parent). If null, creates new contact. */
-  @Input() contact: any = null; // Simplification to avoid strict type errors for now, or use (Contact & { color?: string }) | null
+  @Input() contact: Contact | { id?: string; name: string; email?: string; phone?: string; color?: string } | null = null;
 
   /** Emits when dialog should be closed (cancel or after save) */
   @Output() closed = new EventEmitter<void>();

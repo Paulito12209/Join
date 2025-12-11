@@ -152,6 +152,14 @@
    RESPONSIVE
 ================================ */
 
+/* ===============================
+   RESPONSIVE
+================================ */
+
+/**
+ * @breakpoint 950px - Intermediate Desktop
+ * Squeezes padding slightly to fit smaller screens before the mobile break.
+ */
 @media (max-width: 950px) {
   .header {
     padding: 0 16px 0 32px;
@@ -170,6 +178,15 @@
   }
 }
 
+/**
+ * @breakpoint 768px - Mobile Header
+ * Switches to mobile layout:
+ * - Reduces height to 80px
+ * - Shows Logo (instead of Title)
+ * - Hides Help icon
+ * - Adjusts user avatar size
+ * - Mobile menu logic moves here (slide-in from right)
+ */
 @media (max-width: 768px) {
   .header {
     height: 80px;

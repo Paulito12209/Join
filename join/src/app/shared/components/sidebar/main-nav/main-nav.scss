@@ -97,6 +97,13 @@
   }
 }
 
+/**
+ * @breakpoint 768px - Mobile Navigation Icons
+ * Styles for the bottom navigation bar items.
+ * - Flex logic changes to row (distributed evenly)
+ * - Items become centered icons with text below
+ * - Active state changes style (no longer left-border/bg fill in same way)
+ */
 @media (max-width: 768px) {
   .navigation {
     width: 100%;

@@ -55,6 +55,11 @@
   }
 }
 
+/**
+ * @breakpoint 768px - Mobile Hidden
+ * Legal links are hidden in the bottom navigation to save space.
+ * (Usually accessible via profile menu or separate route).
+ */
 @media (max-width: 768px) {
   .sidebar-footer {
     display: none;
