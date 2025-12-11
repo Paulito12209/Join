@@ -29,12 +29,14 @@
 
 .contacts-container {
   display: flex;
+  flex-grow: 1;
   height: 100%;
+  max-width: 1208px;
 }
 
 .contacts-list {
-  width: 40%;
-  padding: 40px;
+  min-width: 40%;
+  padding: 40px 40px 120px 40px;
   border-right: 1px solid #ddd;
   overflow-y: auto;
 }
@@ -123,9 +125,9 @@
   // padding: 24px; // <- wieso existiert das hier?
   background-color: #F6F7F8;
   padding: 60px 60px;
-  box-shadow:
-    inset 4px 0 8px rgba(0, 0, 0, 0.12),
-    inset 0 4px 8px rgba(0, 0, 0, 0.12);
+  // box-shadow:
+  // inset 4px 0 8px rgba(0, 0, 0, 0.12),
+  // inset 0 4px 8px rgba(0, 0, 0, 0.12);
 }
 
 .contact-detail h2 {

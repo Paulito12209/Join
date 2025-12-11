@@ -1,12 +1,14 @@
 <div class="dialog-overlay" (click)="cancel()">
   <section class="dialog dialog--animated" (click)="$event.stopPropagation()">
     <button class="close" type="button" (click)="cancel()">
-      <img class="icon-close icon-close--desktop" src="/img/icons/close_black.svg" alt="Close" width="13.5" height="13.5" />
-      <img class="icon-close icon-close--mobile" src="/img/icons/close_white.svg" alt="Close" width="13.5" height="13.5" />
+      <img class="icon-close icon-close--desktop" src="/img/icons/close_black.svg" alt="Close" width="13.5"
+        height="13.5" />
+      <img class="icon-close icon-close--mobile" src="/img/icons/close_white.svg" alt="Close" width="13.5"
+        height="13.5" />
     </button>
     <div class="dialog__left">
       <div class="brand">
-        <img src="img/Logo-white.svg" alt="Join" class="dialog__logo" />
+        <img src="img/logo-white.svg" alt="Join" class="dialog__logo" />
         <div class="title">{{ mode === 'edit' ? 'Edit contact' : 'Add contact' }}</div>
         <div class="subtitle" *ngIf="mode === 'create'">Tasks are better with a team!</div>
         <div class="title-underline"></div>
@@ -57,14 +59,16 @@
             <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid || loading">
               Create contact
-              <img src="img/icons/check.svg" alt="Check" width="15.49" height="11.22" style="margin-left:8px; vertical-align:middle;" />
+              <img src="img/icons/check.svg" alt="Check" width="15.49" height="11.22"
+                style="margin-left:8px; vertical-align:middle;" />
             </button>
           </div>
           <div class="actions" *ngIf="mode==='edit'">
             <button type="button" class="btn btn-secondary" (click)="remove()">Delete</button>
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid || loading">
               Save
-              <img src="img/icons/check.svg" alt="Check" width="15.49" height="11.22" style="margin-left:8px; vertical-align:middle;" />
+              <img src="img/icons/check.svg" alt="Check" width="15.49" height="11.22"
+                style="margin-left:8px; vertical-align:middle;" />
             </button>
           </div>
         </form>
