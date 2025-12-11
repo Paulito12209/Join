@@ -112,6 +112,9 @@
 .dialog__content .form {
   flex: 1;
   max-width: none;
+  gap: 32px;
+ right: 45.5px;
+  margin-left: 5.5px;
 }
 
 .dialog--fullscreen {
@@ -172,6 +175,7 @@
 .logo {
   font-size: 32px;
   font-weight: 800;
+  left: 45.5px
 }
 
 .title {
@@ -201,7 +205,7 @@
  */
 .dialog__right {
   position: relative;
-  padding: 24px;
+  padding: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -210,13 +214,24 @@
 
 .close {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 45.5px;
+  right: 45.5px;
   border: none;
   background: transparent;
   font-size: 20px;
   z-index: 4;
   cursor: pointer;
+}
+
+/* Close icon variants (default: desktop visible) */
+.icon-close {
+  width: 13.5px;
+  height: 13.5px;
+  display: inline-block;
+}
+
+.icon-close--mobile {
+  display: none;
 }
 
 /**
@@ -245,13 +260,14 @@
 .form {
   width: 100%;
   max-width: 360px;
+  top: 137px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 .form label {
-  position: static;
+  position: relative;
   display: block;
 }
 
@@ -262,11 +278,12 @@
 
 .form input {
   width: 100%;
-  padding: 12px 40px 12px 12px;
+  padding: 8px 16px;
   border: 1px solid #d1d1d1;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: border-color 120ms ease, box-shadow 120ms ease;
   caret-color: $color-brand-highlight;
+  font-size: 20px;
 }
 
 .form input::placeholder {
@@ -314,12 +331,12 @@
  */
 .actions {
   display: flex;
-  gap: 12px;
+  gap: 24px;
   justify-content: flex-start;
 }
 
 .btn {
-  padding: 10px 16px;
+  padding: 15px 24px;
   border-radius: 8px;
   border: 1px solid transparent;
   cursor: pointer;
@@ -327,13 +344,21 @@
 
 .btn-secondary {
   background: #fff;
-  border-color: #2a3647;
-  color: #2a3647;
+  border-color: $color-brand-deep;
+  color: $color-brand-deep;
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 120%;
+  letter-spacing: 0%;
 }
 
 .btn-primary {
-  background: #2a3647;
+  background: $color-brand-deep;
   color: #fff;
+  font-weight: 400;
+  font-size: 21px;
+  line-height: 120%;
+  letter-spacing: 0%;
 }
 
 /**
@@ -515,9 +540,13 @@
   .close {
     color: #fff;
     z-index: 4;
-    top: 12px;
-    right: 12px;
+    top: 24px;
+    right: 24px;
   }
+
+  /* Swap close icon to white on mobile */
+  .icon-close--desktop { display: none; }
+  .icon-close--mobile { display: inline-block; }
 
   .avatar {
     position: absolute;
