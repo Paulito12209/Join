@@ -55,7 +55,7 @@
           </label>
 
           <div class="actions" *ngIf="mode==='create'">
-            <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+            <button type="button" class="btn  btn-secondary btn-secondary-cancel" (click)="cancel()">Cancel</button>
             <button type="submit" class="btn btn-primary" [disabled]="form.invalid || loading">
               Create contact
               <img src="img/icons/check.svg" alt="Check" width="15.49" height="11.22"
