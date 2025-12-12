@@ -82,6 +82,7 @@ export class Contacts {
   }
 
   addContact() {
+    this.showActions = false;  // <- hinzugefügt
     this.editingContact = null;
     this.showDialog = true;
   }
@@ -89,6 +90,7 @@ export class Contacts {
   editContact() {
     const c = this.selectedContact;
     if (!c || !('id' in c) || !c.id) return;
+    this.showActions = false;  // <- hinzugefügt
     this.editingContact = c;
     this.showDialog = true;
   }
