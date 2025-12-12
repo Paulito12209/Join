@@ -43,6 +43,7 @@ export class DialogContact {
   mode: Mode = 'create';
   contactId: string | null = null;
   loading = false;
+  isClosing = false;
 
   form = this.fb.nonNullable.group({
     name: ['', [Validators.required, fullNameValidator, Validators.minLength(2)]],
@@ -84,7 +85,12 @@ export class DialogContact {
 
   cancel() {
     this.form.reset({ name: '', email: '', phone: '' });
-    this.closed.emit();
+    // Trigger closing animation; emit after 1000ms to match CSS duration
+    this.isClosing = true;
+    setTimeout(() => {
+      this.isClosing = false;
+      this.closed.emit();
+    }, 400);
   }
 
   async submit() {

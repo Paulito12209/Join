@@ -1,5 +1,5 @@
 <div class="dialog-overlay" (click)="cancel()">
-  <section class="dialog dialog--animated" (click)="$event.stopPropagation()">
+  <section class="dialog dialog--animated" [class.dialog--closing]="isClosing" (click)="$event.stopPropagation()">
     <button class="close" type="button" (click)="cancel()">
       <img class="icon-close icon-close--desktop" src="/img/icons/close_black.svg" alt="Close" width="13.5"
         height="13.5" />
