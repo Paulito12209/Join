@@ -81,24 +81,35 @@
   max-width: 1200px;
   height: 600px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.16);
-  transform: translateX(72px);
-  opacity: 0;
-  animation: dialogSlideIn 480ms ease-out forwards;
+  transform: translateX(0);
+  animation: dialogSlideIn 400ms ease-out forwards;
 }
 
 @keyframes dialogSlideIn {
   from {
-    transform: translateX(72px);
-    opacity: 0;
+    transform: translateX(100%);
   }
 
   to {
     transform: translateX(0);
-    opacity: 1;
   }
 }
 
+/* Desktop slide-out (closing) */
+@keyframes dialogSlideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Move fully beyond viewport to ensure 100% out */
+    transform: translateX(110vw);
+  }
+}
 
+/* Apply closing animation on desktop */
+.dialog--animated.dialog--closing {
+  animation: dialogSlideOut 400ms ease-out forwards;
+}
 
 /**
  * Right content inner container: avatar + form with constrained width.
@@ -468,17 +479,7 @@
 /**
  * Mobile slide-up animation: used under 768px.
  */
-@keyframes dialogSlideUp {
-  from {
-    transform: translateY(72px);
-    opacity: 0;
-  }
 
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 
 @media (max-width: 768px) {
   .dialog {
@@ -501,8 +502,31 @@
     height: calc(100vh - 180px);
     max-width: none;
     /* Override desktop slide-in: slide from bottom on mobile */
-    transform: translateY(72px);
-    animation: dialogSlideUp 480ms ease-out forwards;
+  
+    animation: dialogSlideUp 400ms ease-out forwards;
+  }
+
+  @keyframes dialogSlideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }}
+
+  /* Mobile slide-out (closing) */
+  @keyframes dialogSlideDown {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+
+  .dialog--animated.dialog--closing {
+    animation: dialogSlideDown 400ms ease-out forwards;
   }
 
   .dialog__left {
