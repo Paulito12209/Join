@@ -124,7 +124,6 @@
 .dialog__content .form {
   flex: 1;
   max-width: none;
-  // gap: 32px;
   right: 45.5px;
 }
 
@@ -279,7 +278,7 @@
   top: 137px;
   display: flex;
   flex-direction: column;
-  // gap: 32px;
+  gap: 8px;
 }
 
 .form label {
@@ -345,7 +344,6 @@
   font-size: 16px;
   line-height: 1.2;
   color: $color-error;
-  height: 32px;
   visibility: hidden;
 }
 
