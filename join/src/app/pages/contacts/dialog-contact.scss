@@ -308,6 +308,17 @@
   font-weight: 200;
 }
 
+/* Remove browser autofill background (Chrome / Safari) */
+.form input:-webkit-autofill,
+.form input:-webkit-autofill:hover,
+.form input:-webkit-autofill:focus,
+.form input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: inherit !important;
+  caret-color: $color-brand-highlight;
+  transition: background-color 9999s ease-out;
+}
+
 .form label:focus-within input,
 .form input:focus,
 .form input:focus-visible,
