@@ -280,7 +280,7 @@
   top: 137px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 32px;
 }
 
 .form label {
@@ -331,8 +331,8 @@
 .error {
   display: block;
   margin-top: 6px;
-  font-size: 12px;
-  line-height: 1.3;
+  font-size: 16px;
+  line-height: 1.2;
   color: $color-error;
 }
 
