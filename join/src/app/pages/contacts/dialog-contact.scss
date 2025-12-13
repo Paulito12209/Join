@@ -344,6 +344,7 @@
   font-size: 16px;
   line-height: 1.2;
   color: $color-error;
+  min-height: calc(16px * 1.2);
   visibility: hidden;
 }
 
