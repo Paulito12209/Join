@@ -94,7 +94,9 @@ export class DialogContact {
   }
 
   async submit() {
-    if (this.form.invalid || this.loading) return;
+    if (this.loading) return;
+    this.form.markAllAsTouched();
+    if (this.form.invalid) return;
     this.loading = true;
     const v = this.form.getRawValue();
     const payload = {
