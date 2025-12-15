@@ -1,0 +1,60 @@
+<div class="overlay">
+  <div class="dialog">
+
+    <div class="header">
+      <h2>Add Task</h2>
+      <button class="close" (click)="onClose()">✕</button>
+    </div>
+
+    <form [formGroup]="taskForm" class="content">
+
+      <div class="left">
+        <label>Title<span>*</span></label>
+        <input formControlName="title" placeholder="Enter a title" />
+
+        <label>Description</label>
+        <textarea formControlName="description"></textarea>
+
+        <label>Due date<span>*</span></label>
+        <input type="date" formControlName="dueDate" />
+      </div>
+
+      <div class="right">
+        <label>Priority</label>
+        <div class="priority">
+          <button
+            type="button"
+            *ngFor="let p of priorities"
+            [class.active]="taskForm.value.priority === p"
+            (click)="taskForm.patchValue({ priority: p })">
+            {{ p }}
+          </button>
+        </div>
+
+        <label>Assigned to</label>
+        <input formControlName="assignedTo" placeholder="Select contacts" />
+
+        <label>Category<span>*</span></label>
+        <select formControlName="category">
+          <option value="">Select task category</option>
+          <option *ngFor="let c of categories">{{ c }}</option>
+        </select>
+
+        <label>Subtasks</label>
+        <input formControlName="subtask" placeholder="Add new subtask" />
+      </div>
+
+    </form>
+
+    <div class="actions">
+      <button class="cancel" (click)="onClose()">Cancel</button>
+      <button
+        class="submit"
+        [disabled]="taskForm.invalid"
+        (click)="onSubmit()">
+        Create Task
+      </button>
+    </div>
+
+  </div>
+</div>
