@@ -26,6 +26,12 @@
   min-height: 0;
 }
 
+h3 {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
 .contacts-container {
   display: flex;
   flex-grow: 1;
@@ -254,7 +260,7 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   font-size: 16px;
   font-weight: 400;
   color: #2a3647;
