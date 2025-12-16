@@ -18,6 +18,7 @@
         </div>
     </div>
     <div class="board-content">
+        <!-- TO DO -->
         <div class="status-container">
             <div class="status-header">
                 <h2>To do</h2>
@@ -25,15 +26,23 @@
                     <img src="img/icons/add_board_button.svg" alt="Add task">
                 </button>
             </div>
-            <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
+            <div cdkDropList id="todoList" #todoList="cdkDropList" [cdkDropListData]="todo"
                 [cdkDropListConnectedTo]="[progressList, feedbackList, doneList]" class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                @for (item of todo; track item) {
-                <div class="example-box" cdkDrag>{{item}}</div>
-                }
+                <div class="example-box" *ngFor="let task of todo" cdkDrag>
+                    <!-- Task Content -->
+                    <div class="task-category"
+                        [ngClass]="{'user-story': task.category === 'user-story', 'technical-task': task.category === 'technical-task'}">
+                        {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
+                    </div>
+                    <div class="task-title">{{ task.title }}</div>
+                    <div class="task-description">{{ task.description }}</div>
+                    <!-- Placeholder for Subtaks/Assignees/Priority if needed later -->
+                </div>
             </div>
         </div>
 
+        <!-- IN PROGRESS -->
         <div class="status-container">
             <div class="status-header">
                 <h2>In progress</h2>
@@ -41,16 +50,21 @@
                     <img src="img/icons/add_board_button.svg" alt="Add task">
                 </button>
             </div>
-
-            <div cdkDropList #progressList="cdkDropList" [cdkDropListData]="progress"
+            <div cdkDropList id="progressList" #progressList="cdkDropList" [cdkDropListData]="inProgress"
                 [cdkDropListConnectedTo]="[todoList, feedbackList, doneList]" class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                @for (item of progress; track item) {
-                <div class="example-box" cdkDrag>{{item}}</div>
-                }
+                <div class="example-box" *ngFor="let task of inProgress" cdkDrag>
+                    <div class="task-category"
+                        [ngClass]="{'user-story': task.category === 'user-story', 'technical-task': task.category === 'technical-task'}">
+                        {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
+                    </div>
+                    <div class="task-title">{{ task.title }}</div>
+                    <div class="task-description">{{ task.description }}</div>
+                </div>
             </div>
         </div>
 
+        <!-- AWAIT FEEDBACK -->
         <div class="status-container">
             <div class="status-header">
                 <h2>Await feedback</h2>
@@ -58,27 +72,37 @@
                     <img src="img/icons/add_board_button.svg" alt="Add task">
                 </button>
             </div>
-
-            <div cdkDropList #feedbackList="cdkDropList" [cdkDropListData]="feedback"
+            <div cdkDropList id="feedbackList" #feedbackList="cdkDropList" [cdkDropListData]="awaitFeedback"
                 [cdkDropListConnectedTo]="[todoList, progressList, doneList]" class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                @for (item of feedback; track item) {
-                <div class="example-box" cdkDrag>{{item}}</div>
-                }
+                <div class="example-box" *ngFor="let task of awaitFeedback" cdkDrag>
+                    <div class="task-category"
+                        [ngClass]="{'user-story': task.category === 'user-story', 'technical-task': task.category === 'technical-task'}">
+                        {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
+                    </div>
+                    <div class="task-title">{{ task.title }}</div>
+                    <div class="task-description">{{ task.description }}</div>
+                </div>
             </div>
         </div>
 
+        <!-- DONE -->
         <div class="status-container">
             <div class="status-header">
                 <h2>Done</h2>
             </div>
 
-            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+            <div cdkDropList id="doneList" #doneList="cdkDropList" [cdkDropListData]="done"
                 [cdkDropListConnectedTo]="[todoList, progressList, feedbackList]" class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                @for (item of done; track item) {
-                <div class="example-box" cdkDrag>{{item}}</div>
-                }
+                <div class="example-box" *ngFor="let task of done" cdkDrag>
+                    <div class="task-category"
+                        [ngClass]="{'user-story': task.category === 'user-story', 'technical-task': task.category === 'technical-task'}">
+                        {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
+                    </div>
+                    <div class="task-title">{{ task.title }}</div>
+                    <div class="task-description">{{ task.description }}</div>
+                </div>
             </div>
         </div>
     </div>

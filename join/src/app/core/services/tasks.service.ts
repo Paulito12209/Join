@@ -1,20 +1,18 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Firestore } from '@angular/fire/firestore';
-import { collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy, onSnapshot } from 'firebase/firestore'; // Add onSnapshot
 import { Task } from '../../pages/add-task/task';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
   private firestore = inject(Firestore);
 
- 
   private readonly collectionPath = 'tasks';
 
   /**
    * Stream all tasks ordered by `createdAt`.
-   * Uses `window.firebaseOnSnapshot` for live updates when available;
-   * otherwise emits an empty list once and completes.
+   * Uses `onSnapshot` for live updates.
    *
    * @returns Observable that emits arrays of `Task` objects.
    */
@@ -22,27 +20,22 @@ export class TasksService {
     return new Observable<Task[]>(observer => {
       const colRef = collection(this.firestore, this.collectionPath);
       const q = query(colRef, orderBy('createdAt'));
-      // Live updates via onSnapshot
-      const unsub = (window as any).firebaseOnSnapshot
-        ? (window as any).firebaseOnSnapshot(q, (snap: any) => {
-            const items: Task[] = [];
-            snap.forEach((doc: any) => {
-              const data = doc.data() as Task;
-              items.push({ id: doc.id, ...data });
-            });
-            observer.next(items);
-          })
-        : null;
 
-      // Fallback without onSnapshot — emit once
-      if (!unsub) {
-        // Optional: could use getDocs; keep it simple here
-        observer.next([]);
-        observer.complete();
-      }
+      // Live updates via onSnapshot
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const items: Task[] = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data() as Task;
+          items.push({ id: doc.id, ...data });
+        });
+        observer.next(items);
+      }, (error) => {
+        console.error("Firestore Error:", error);
+        observer.error(error);
+      });
 
       return () => {
-        if (unsub) unsub();
+        unsubscribe();
       };
     });
   }

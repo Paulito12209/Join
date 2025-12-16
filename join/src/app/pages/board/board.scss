@@ -163,7 +163,7 @@
         @include dFlex($fd: column, $jc: start, $ai: space-between, $g: 16px);
 
         .example-box {
-            @include dFlex($jc: space-between, $g: 16px);
+            @include dFlex($fd: column, $ai: start, $jc: start, $g: 10px); // Content stapeln
             padding: 16px;
             border-radius: 24px;
             box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08); // Weicher Schatten
@@ -174,6 +174,35 @@
             background: white;
             font-size: 16px;
             font-family: 'Inter', sans-serif;
+
+            .task-category {
+                padding: 4px 16px;
+                border-radius: 8px;
+                color: white;
+                font-size: 16px;
+                align-self: flex-start;
+
+                &.user-story {
+                    background-color: #0038FF;
+                }
+
+                &.technical-task {
+                    background-color: #1FD7C1;
+                }
+            }
+
+            .task-title {
+                font-weight: 700;
+                color: #2A3647; // Dark brand color
+            }
+
+            .task-description {
+                color: #A8A8A8;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2; // Max 2 Zeilen
+                -webkit-box-orient: vertical;
+            }
 
             &:last-child {
                 border: none; // irrelevant, wenn Karten getrennt sind
