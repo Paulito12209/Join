@@ -1,1 +1,85 @@
-<img src="img/board-preview.png" alt="Board Preview">
+<div class="board-container">
+    <div class="board-header">
+        <div class="header-left">
+            <h1>Board</h1>
+            <button class="add-task-btn">
+                <img src="img/icons/add.svg" alt="Add task">
+            </button>
+        </div>
+        <div class="header-right">
+            <div class="search-field">
+                <input type="text" placeholder="Find Task">
+                <div class="search-separator"></div>
+                <img src="img/icons/search.svg" alt="Search" class="search-icon">
+            </div>
+            <button class="add-task-btn">
+                <span>Add task</span> <img src="img/icons/add.svg" alt="Add task">
+            </button>
+        </div>
+    </div>
+    <div class="board-content">
+        <div class="status-container">
+            <div class="status-header">
+                <h2>To do</h2>
+                <button>
+                    <img src="img/icons/add_board_button.svg" alt="Add task">
+                </button>
+            </div>
+            <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
+                [cdkDropListConnectedTo]="[progressList, feedbackList, doneList]" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                @for (item of todo; track item) {
+                <div class="example-box" cdkDrag>{{item}}</div>
+                }
+            </div>
+        </div>
+
+        <div class="status-container">
+            <div class="status-header">
+                <h2>In progress</h2>
+                <button>
+                    <img src="img/icons/add_board_button.svg" alt="Add task">
+                </button>
+            </div>
+
+            <div cdkDropList #progressList="cdkDropList" [cdkDropListData]="progress"
+                [cdkDropListConnectedTo]="[todoList, feedbackList, doneList]" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                @for (item of progress; track item) {
+                <div class="example-box" cdkDrag>{{item}}</div>
+                }
+            </div>
+        </div>
+
+        <div class="status-container">
+            <div class="status-header">
+                <h2>Await feedback</h2>
+                <button>
+                    <img src="img/icons/add_board_button.svg" alt="Add task">
+                </button>
+            </div>
+
+            <div cdkDropList #feedbackList="cdkDropList" [cdkDropListData]="feedback"
+                [cdkDropListConnectedTo]="[todoList, progressList, doneList]" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                @for (item of feedback; track item) {
+                <div class="example-box" cdkDrag>{{item}}</div>
+                }
+            </div>
+        </div>
+
+        <div class="status-container">
+            <div class="status-header">
+                <h2>Done</h2>
+            </div>
+
+            <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+                [cdkDropListConnectedTo]="[todoList, progressList, feedbackList]" class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                @for (item of done; track item) {
+                <div class="example-box" cdkDrag>{{item}}</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

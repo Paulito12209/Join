@@ -1,6 +1,309 @@
-img {
+@use '../../../styles.scss' as *;
+
+.board-container {
+    @include dFlex($fd: column, $ai: start, $g: 16px);
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    max-width: 1208px;
+    padding: 0 64px; // Padding hinzufügen, um dem Screenshot zu entsprechen
+    box-sizing: border-box;
+
+    .board-header {
+        width: 100%;
+        padding-top: 64px;
+        padding-bottom: 32px;
+        @include dFlex($ai: center, $jc: space-between);
+
+        .header-left {
+            @include dFlex($ai: center, $g: 16px);
+
+            h1 {
+                font-family: 'Inter-Bold';
+                font-size: 61px;
+                font-weight: 700;
+                margin: 0;
+                color: black;
+            }
+
+            // Mobile Button (hidden by default)
+            .add-task-btn {
+                display: none; // Hidden on desktop
+                padding: 8px; // Smaller padding for icon only
+
+                img {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+        }
+
+        .header-right {
+            @include dFlex($g: 32px);
+
+            .search-field {
+                // ... existing styles ...
+                @include dFlex($jc: space-between, $ai: center);
+                background-color: white;
+                border: 1px solid $color-neutral-dark; // oder hellgrau
+                border-radius: 10px;
+                padding: 8px 12px;
+                width: 312px;
+                height: 48px;
+                box-sizing: border-box;
+
+                input {
+                    border: none;
+                    outline: none;
+                    font-size: 20px;
+                    width: 100%;
+
+                    &::placeholder {
+                        color: $color-neutral-light;
+                    }
+                }
+
+                .search-separator {
+                    width: 1px;
+                    height: 32px;
+                    background-color: $color-neutral-light;
+                    margin: 0 12px;
+                }
+
+                .search-icon {
+                    width: 32px;
+                    height: 32px;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: $color-neutral-user-bg;
+                        border-radius: 50%;
+                    }
+
+                    // Filter, wenn gedrückt wird
+                    &:active {
+                        background-color: white;
+                        content: url("../../../../public/img/icons/search-active.svg");
+                    }
+                }
+            }
+
+            // Desktop Button
+            .add-task-btn {
+                background-color: $color-brand-primary;
+                color: white;
+                font-size: 21px;
+                font-weight: 700;
+                border-radius: 10px;
+                padding: 8px 16px;
+                border: none;
+                cursor: pointer;
+                @include dFlex($g: 16px);
+                height: 48px;
+                transition: all 100ms ease-in-out;
+
+                &:hover {
+                    background-color: $color-brand-highlight;
+                    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+                }
+
+                img {
+                    width: 18px;
+                    height: 18px;
+                    filter: brightness(0) invert(1); // Icon weiß färben
+                }
+            }
+        }
+    }
+
+    .board-content {
+        width: 100%;
+        @include dFlex($ai: start, $jc: space-between, $g: 16px); // vergrößerter Abstand
+        flex-wrap: wrap; // Ermöglicht das Wrapen auf kleinen Bildschirmen
+    }
+}
+
+// Gehört zu BOARD_CONTENT
+.status-container {
+    @include dFlex($ai: space-between, $jc: start, $fd: column, $g: 16px);
+    width: 22%;
+    max-width: 300px;
+
+    .status-header {
+        @include dFlex($ai: center, $jc: space-between);
+
+        h2 {
+            font-family: 'Inter-Bold';
+            font-size: 20px;
+            font-weight: 700;
+            color: $color-brand-primary; // oder dunkle Markenfarbe
+        }
+
+        button {
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+
+            img {
+                width: 24px;
+                height: 24px;
+
+                &:hover {
+                    content: url("../../../../public/img/icons/add_board-button-hover.svg");
+                }
+            }
+        }
+    }
+
+    .example-list {
+        min-height: 100px; // Sicherstellen der Größe des Ablagebereichs
+
+        // Hintergrund/Rahmen vom Listencontainer entfernen, damit es wie Spalten aussieht
+        background: transparent;
+        border: none;
+
+        @include dFlex($fd: column, $jc: start, $ai: space-between, $g: 16px);
+
+        .example-box {
+            @include dFlex($jc: space-between, $g: 16px);
+            padding: 16px;
+            border-radius: 24px;
+            box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08); // Weicher Schatten
+            border: none;
+            color: black;
+            box-sizing: border-box;
+            cursor: move;
+            background: white;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+
+            &:last-child {
+                border: none; // irrelevant, wenn Karten getrennt sind
+            }
+        }
+    }
+}
+
+
+
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+    border: none;
+}
+
+
+@media (max-width: 1200px) {
+    .board-container {
+        padding: 0 32px;
+    }
+}
+
+@media (max-width: 1080px) {
+    .board-container {
+
+        .status-container {
+            width: 48%; // 2 Spalten pro Zeile
+            max-width: none;
+            margin-bottom: 24px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .board-container {
+        padding: 0 16px;
+
+        .board-header {
+            @include dFlex($ai: center, $jc: space-between, $fd: column, $g: 40px);
+            flex-wrap: wrap; // Umbruch erlauben, falls nötig
+            padding-bottom: 16px;
+
+            h1 {
+                font-size: 47px;
+            }
+
+            .header-left {
+                width: 100%;
+                @include dFlex($jc: space-between);
+
+                // Den mobilen Button anzeigen
+                .add-task-btn {
+                    display: flex; // Zurück zu flex
+                    background-color: $color-brand-primary;
+                    border-radius: 10px;
+                    border: none;
+
+                    img {
+                        filter: brightness(0) invert(1);
+                    }
+                }
+            }
+
+            .header-right {
+                gap: 16px;
+                width: 100%;
+
+                // Den Desktop-Button ausblenden
+                .add-task-btn {
+                    display: none;
+                }
+
+                .search-field {
+                    // Auf dem Handy muss die Suchleiste schrumpfen oder sich anpassen
+                    width: auto;
+                    flex-grow: 1;
+                }
+            }
+        }
+
+        .board-content {
+            flex-direction: column;
+            align-items: stretch; // Spalten in voller Breite
+        }
+
+        .status-container {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 32px;
+
+            .example-list {
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                gap: 16px;
+                padding-bottom: 16px; // Platz für Scrollbar
+
+                // Scrollbar ausblenden
+                -ms-overflow-style: none; // IE und Edge
+                scrollbar-width: none; // Firefox
+
+                &::-webkit-scrollbar {
+                    display: none; // Chrome, Safari und Opera
+                }
+
+                .example-box {
+                    min-width: 250px; // Mindestbreite
+                    width: 250px; // Definierte Breite (fix)
+                    height: 200px; // Feste Höhe für mobile Karten
+                    flex-shrink: 0; // Verhindert Schrumpfen
+                    margin-bottom: 4px; // Platz für Schatten unten
+                    margin-right: 4px; // Platz für Schatten rechts
+                    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.15);
+                }
+            }
+        }
+    }
 }
