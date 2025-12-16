@@ -6,10 +6,13 @@ import {
   CdkDrag,
   CdkDropList,
 } from "@angular/cdk/drag-drop";
+import { TasksService } from '../../core/services/tasks.service';
+import { CommonModule } from '@angular/common';
+import { ContactsService } from '../../core/services/contacts.service';
 
 @Component({
   selector: "app-board",
-  imports: [CdkDropList, CdkDrag],
+  imports: [CdkDropList, CdkDrag, CommonModule],
   templateUrl: "./board.html",
   styleUrl: "./board.scss",
 })
