@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, NgZone } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Firestore } from '@angular/fire/firestore';
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy, onSnapshot } from 'firebase/firestore'; // Add onSnapshot
@@ -7,6 +7,7 @@ import { Task } from '../../pages/add-task/task';
 @Injectable({ providedIn: 'root' })
 export class TasksService {
   private firestore = inject(Firestore);
+  private ngZone = inject(NgZone); // Inject NgZone
 
   private readonly collectionPath = 'tasks';
 
@@ -28,7 +29,11 @@ export class TasksService {
           const data = doc.data() as Task;
           items.push({ id: doc.id, ...data });
         });
-        observer.next(items);
+
+        // Run inside Angular Zone to trigger Change Detection
+        this.ngZone.run(() => {
+          observer.next(items);
+        });
       }, (error) => {
         console.error("Firestore Error:", error);
         observer.error(error);

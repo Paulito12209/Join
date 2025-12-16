@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core'; // Update imports
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -9,7 +9,7 @@ import {
 import { TasksService } from '../../core/services/tasks.service';
 import { CommonModule } from '@angular/common';
 import { ContactsService } from '../../core/services/contacts.service';
-import { Task } from '../add-task/task'; // Import Task interface
+import { Task } from '../add-task/task';
 
 @Component({
   selector: "app-board",
@@ -19,6 +19,7 @@ import { Task } from '../add-task/task'; // Import Task interface
 })
 export class Board {
   private tasksService = inject(TasksService);
+  private cdr = inject(ChangeDetectorRef); // Inject CDR
 
   // Separate arrays for each status
   todo: Task[] = [];
@@ -28,11 +29,12 @@ export class Board {
 
   constructor() {
     this.tasksService.list().subscribe((tasks) => {
-      // Clear arrays to avoid duplicates on update (or use a smarter diffing if performance matters later)
       this.todo = tasks.filter(t => t.status === 'todo');
       this.inProgress = tasks.filter(t => t.status === 'in-progress');
       this.awaitFeedback = tasks.filter(t => t.status === 'awaiting-feedback');
       this.done = tasks.filter(t => t.status === 'done');
+
+      this.cdr.detectChanges(); // Force update manually
     });
   }
 
