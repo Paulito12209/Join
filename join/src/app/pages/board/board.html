@@ -8,7 +8,7 @@
         </div>
         <div class="header-right">
             <div class="search-field">
-                <input type="text" placeholder="Find Task">
+                <input type="text" placeholder="Find Task" [(ngModel)]="searchQuery" (ngModelChange)="filterTasks()">
                 <div class="search-separator"></div>
                 <img src="img/icons/search.svg" alt="Search" class="search-icon">
             </div>
@@ -106,6 +106,11 @@
             </div>
         </div>
     </div>
+</div>
+
+<div *ngIf="searchQuery && !todo.length && !inProgress.length && !awaitFeedback.length && !done.length"
+    class="no-results">
+    <span>No tasks found matching "{{searchQuery}}"</span>
 </div>
 
 <router-outlet></router-outlet>

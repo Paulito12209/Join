@@ -1,20 +1,21 @@
-import { Component, inject, ChangeDetectorRef } from '@angular/core'; // Update imports
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
   CdkDrag,
   CdkDropList,
-} from '@angular/cdk/drag-drop';
+} from "@angular/cdk/drag-drop";
 import { TasksService } from '../../core/services/tasks.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // Add FormsModule
 import { ContactsService } from '../../core/services/contacts.service';
 import { Task } from '../add-task/task';
 import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-board',
-  imports: [CdkDropList, CdkDrag, CommonModule, RouterOutlet],
+  imports: [CdkDropList, CdkDrag, CommonModule, RouterOutlet, FormsModule], // Add FormsModule
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })
@@ -23,7 +24,13 @@ export class Board {
   private cdr = inject(ChangeDetectorRef); // Inject CDR
   private router = inject(Router);
 
-  // Separate arrays for each status
+  // All tasks (unfiltered)
+  private allTasks: Task[] = [];
+
+  // Search query
+  searchQuery: string = '';
+
+  // Displayed arrays
   todo: Task[] = [];
   inProgress: Task[] = [];
   awaitFeedback: Task[] = [];
@@ -31,13 +38,28 @@ export class Board {
 
   constructor() {
     this.tasksService.list().subscribe((tasks) => {
-      this.todo = tasks.filter((t) => t.status === 'todo');
-      this.inProgress = tasks.filter((t) => t.status === 'in-progress');
-      this.awaitFeedback = tasks.filter((t) => t.status === 'awaiting-feedback');
-      this.done = tasks.filter((t) => t.status === 'done');
-
-      this.cdr.detectChanges(); // Force update manually
+      this.allTasks = tasks; // Store all tasks
+      this.filterTasks(); // Initial filter (shows all if query is empty)
+      this.cdr.detectChanges();
     });
+  }
+
+  // Filter tasks based on searchQuery
+  filterTasks() {
+    let filtered = this.allTasks;
+
+    if (this.searchQuery.trim().length > 0) {
+      const query = this.searchQuery.toLowerCase();
+      filtered = this.allTasks.filter(t =>
+        t.title.toLowerCase().includes(query) ||
+        (t.description && t.description.toLowerCase().includes(query))
+      );
+    }
+
+    this.todo = filtered.filter(t => t.status === 'todo');
+    this.inProgress = filtered.filter(t => t.status === 'in-progress');
+    this.awaitFeedback = filtered.filter(t => t.status === 'awaiting-feedback');
+    this.done = filtered.filter(t => t.status === 'done');
   }
 
   drop(event: CdkDragDrop<Task[]>) {
