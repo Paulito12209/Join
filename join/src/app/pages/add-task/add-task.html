@@ -1,14 +1,11 @@
 <!-- <img src="img/add_task-preview.png" alt="Add Task Preview"> -->
 
-<div class="overlay">
-  <div class="dialog">
+<div class="add-task-page">
+  <header class="page-header">
+    <h1>Add Task</h1>
+  </header>
 
-    <div class="header">
-      <h2>Add Task</h2>
-      <button class="close" (click)="onClose()">✕</button>
-    </div>
-
-    <form [formGroup]="taskForm" class="content">
+  <form [formGroup]="taskForm" class="content">
 
       <div class="left">
         <label>Title<span>*</span></label>
@@ -34,29 +31,56 @@
         </div>
 
         <label>Assigned to</label>
-        <input formControlName="assignedTo" placeholder="Select contacts" />
+        <div class="assignee-field" (click)="toggleAssigneeDropdown(true)" tabindex="0" (blur)="toggleAssigneeDropdown(false)">
+          <div class="chips">
+            <span class="chip" *ngFor="let uid of (taskForm.value.assignedTo || [])">
+              <span class="avatar" [style.background]="getContactColor(uid)">
+                {{ (getContactName(uid) || '?').slice(0,1).toUpperCase() }}
+              </span>
+              <span class="label">{{ getContactName(uid) }}</span>
+              <button type="button" class="remove" (click)="toggleAssignee(uid, false)">×</button>
+            </span>
+            <span class="placeholder" *ngIf="!(taskForm.value.assignedTo || []).length">Select contacts to assign</span>
+          </div>
+          <span class="caret">▾</span>
+        </div>
+        <div class="assigned-list dropdown" *ngIf="assigneeOpen">
+          <label class="assigned-item" *ngFor="let person of contacts" (mousedown)="toggleAssignee(person.id!, !(taskForm.value.assignedTo || []).includes(person.id!))">
+            <span
+              class="avatar"
+              aria-hidden="true"
+              [style.background]="person.color || '#6c63ff'"
+            >{{ (person.name || '?').slice(0,1).toUpperCase() }}</span>
+            <span class="name">{{ person.name }}</span>
+            <span class="checkmark" [class.on]="(taskForm.value.assignedTo || []).includes(person.id!)">✔</span>
+          </label>
+        </div>
 
         <label>Category<span>*</span></label>
         <select formControlName="category">
           <option value="">Select task category</option>
-          <option *ngFor="let c of categories">{{ c }}</option>
+           <option value="user-story">User story</option>
+           <option value="technical-task">Technical task</option>
         </select>
 
         <label>Subtasks</label>
         <input formControlName="subtask" placeholder="Add new subtask" />
       </div>
 
-    </form>
+  </form>
 
-    <div class="actions">
-      <button class="cancel" (click)="onClose()">Cancel</button>
-      <button
-        class="submit"
-        [disabled]="taskForm.invalid"
-        (click)="onSubmit()">
-        Create Task
-      </button>
-    </div>
-
-  </div>
+  <footer class="actions">
+    <button
+      class="submit"
+      [disabled]="taskForm.invalid"
+      (click)="createTask()">
+      Create Task
+    </button>
+    <button
+      class="clear"
+      type="button"
+      (click)="clearForm()">
+      Clear
+    </button>
+  </footer>
 </div>
