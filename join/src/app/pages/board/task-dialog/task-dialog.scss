@@ -15,12 +15,12 @@
 }
 
 .dialog {
-  @include dFlex($fd: column, $g: 24px);
+  @include dFlex($fd: column, $ai: stretch, $g: 24px);
   position: relative;
 
-  width: 90%;
+  width: 95%;
   max-width: 520px;
-  max-height: 85vh;
+  max-height: 95vh;
 
   background: white;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.16);
@@ -36,8 +36,8 @@
 
 header {
   @include dFlex($jc: space-between);
-  width: 100%;
-  border: 2px solid red;
+
+  // border: 2px solid red;
 }
 
 .badge {
@@ -73,23 +73,21 @@ header {
   font-weight: 700;
   line-height: 1.2;
 
-  border: 2px solid red;
+  // border: 2px solid red;
 }
 
 .description {
-  width: 100%;
   font-size: 20px;
   font-weight: 400;
   line-height: 1.2;
 
-  border: 2px solid red;
+  // border: 2px solid red;
 }
 
 .date-prio-wrapper {
-  width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-  border: 2px solid red;
+  // border: 2px solid red;
 
   .label {
     width: 25%;
@@ -124,7 +122,7 @@ header {
   }
 
   tr:first-child td {
-    padding-bottom: 24px;
+    padding-bottom: 20px;
   }
 }
 
@@ -138,17 +136,41 @@ header {
 }
 
 .assignment {
-  // @include dFlex();
-  width: 100%;
-  // display: flex;
-  // align-items: flex-start;
-  // gap: 16px;
-  border: 2px solid red;
+  @include dFlex($fd: column, $ai: flex-start, $g: 4px);
+  // border: 2px solid red;
 }
 
 .assignment .label {
-  // width: 25%;
   white-space: nowrap;
+}
+
+.assignment .name {
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.2;
+  vertical-align: middle;
+}
+
+.circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+
+  @include dFlex();
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  flex-shrink: 0;
+}
+
+.assigned {
+  @include dFlex($fd: column, $ai: flex-start, $g: 4px);
+}
+
+.assigned-item {
+  @include dFlex($jc: flex-start, $g: 16px);
+  padding: 7px 16px;
 }
 
 .value--muted {
@@ -156,6 +178,90 @@ header {
   font-size: 20px;
   font-weight: 400;
   line-height: 1.2;
+  margin-top: 4px;
 }
 
+.subtask {
+  @include dFlex($jc: flex-start, $g: 16px);
+  width: fit-content;
+  padding: 2px 16px;
+  border-radius: 10px;
 
+  &:hover {
+    background-color: $color-neutral-user-bg;
+  }
+}
+
+.subtask__check {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.subtask__icon {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+
+  content: url('../../../../../public/img/icons/checkbox-todo.svg');
+}
+
+.subtask:hover .subtask__icon {
+  background-color: $color-neutral-light;
+}
+
+.subtask__check:checked + .subtask__icon {
+  content: url('../../../../../public/img/icons/checkbox-done.svg');
+}
+
+.subtask__title {
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.actions {
+  @include dFlex($jc: flex-end, $g: 8px);
+  // border: 2px solid red;
+}
+
+.seperator {
+  width: 0px;
+  height: 24px;
+  border: 1px solid $color-neutral-light;
+}
+
+.action-btn {
+  @include dFlex();
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+
+  span {
+    color: $color-brand-primary;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  &:hover span {
+    color: $color-brand-highlight;
+    font-weight: 700;
+  }
+
+  &--delete:hover img {
+    content: url('../../../../../public/img/icons/delete-blue.svg');
+  }
+
+  &--edit:hover img {
+    content: url('../../../../../public/img/icons/edit-blue.svg');
+  }
+}
