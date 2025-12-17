@@ -10,7 +10,7 @@ import { TasksService } from '../../core/services/tasks.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ContactsService } from '../../core/services/contacts.service';
-import { Task } from '../add-task/task';
+import { Task, Subtask } from '../add-task/task';
 import { Router, RouterOutlet } from '@angular/router';
 import { AddTaskBoard } from './add-task-board';
 
@@ -83,6 +83,11 @@ export class Board {
       Low: 'low',
     };
 
+    const subtasks: Subtask[] = [];
+    if (formValue?.subtask && typeof formValue.subtask === 'string' && formValue.subtask.trim()) {
+      subtasks.push({ id: this.randomId(), title: formValue.subtask.trim(), done: false });
+    }
+
     const payload: Omit<Task, 'id' | 'createdAt' | 'updatedAt'> = {
       title: formValue.title,
       description: formValue.description ?? '',
@@ -91,7 +96,7 @@ export class Board {
       dueDate: formValue.dueDate ?? undefined,
       category: 'user-story',
       assignees: [],
-      subtasks: [],
+      ...(subtasks.length ? { subtasks } : {}),
     };
 
     try {
@@ -100,6 +105,10 @@ export class Board {
     } catch (err) {
       console.error('Failed to create task', err);
     }
+  }
+
+  private randomId(): string {
+    return Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
   }
 
   drop(event: CdkDragDrop<Task[]>) {

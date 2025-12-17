@@ -88,6 +88,11 @@ export class AddTask {
         category: Task['category'];
         subtask: string;
       };
+      const subtasksArray = this.subtasks.map(s => ({ id: s.id, title: s.title, done: s.done }));
+      // Falls im Eingabefeld "subtask" noch Text steht, diesen ebenfalls als Subtask übernehmen
+      if (form.subtask && form.subtask.trim()) {
+        subtasksArray.push({ id: this.randomId(), title: form.subtask.trim(), done: false });
+      }
       const payload: Omit<Task, 'id' | 'createdAt' | 'updatedAt'> = {
         title: form.title.trim(),
         description: (form.description || '').trim(),
@@ -98,7 +103,7 @@ export class AddTask {
           .filter(c => (form.assignedTo || []).includes(c.id!))
           .map(c => ({ uid: c.id!, name: c.name, email: c.email })),
         ...(form.dueDate ? { dueDate: new Date(form.dueDate).toISOString() } : {}),
-        ...(this.subtasks.length ? { subtasks: this.subtasks.map(s => ({ id: s.id, title: s.title, done: s.done })) } : {}),
+        ...(subtasksArray.length ? { subtasks: subtasksArray } : {}),
       };
       const created = await this.tasks.create(payload);
       this.resultMsg = `Created: ${created.id}`;
