@@ -33,7 +33,15 @@ export class AddTask {
   priority: Task['priority'] = 'medium';
   category: Task['category'] = 'user-story';
   // Options for priority buttons
-  priorities: Task['priority'][] = ['urgent', 'medium', 'low'];
+  readonly priorities = ['Urgent', 'Medium', 'Low'] as const;
+
+priorityIcons: Record<(typeof this.priorities)[number], string> = {
+  Urgent: '/img/icons/prio-urgent.svg',
+  Medium: '/img/icons/prio-medium.svg',
+  Low: '/img/icons/prio-low.svg',
+};
+
+
   contacts: Contact[] = [];
   selectedAssigneeIds: string[] = [];
 
@@ -44,7 +52,7 @@ export class AddTask {
   saving = false;
   resultMsg = '';
 
-  
+
   editId: string | null = null;
 
   /**
