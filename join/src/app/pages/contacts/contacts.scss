@@ -21,8 +21,8 @@
 @use '../../../styles.scss' as *;
 
 :host {
-  height: calc(100% - 96px);
-  display: block;
+  flex: 1;
+  display: flex;
   min-height: 0;
 }
 
@@ -468,7 +468,7 @@ h3 {
   .contacts-list {
     width: 100%;
     border-right: none;
-    margin-bottom: 64px;
+    margin-bottom: 80px;
   }
 
   .contacts-scroll-area {

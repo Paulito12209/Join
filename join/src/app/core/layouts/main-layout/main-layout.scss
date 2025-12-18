@@ -1,5 +1,6 @@
 :host {
     height: 100vh;
+    height: 100dvh; // Dynamische Viewport Height für Mobile (mit Fallback)
     display: flex;
     background-color: #F6F7F8; // <- nur relevant, solange wir die Preview Bilder verwenden
 }
@@ -9,9 +10,31 @@
     flex-direction: column;
     flex: 1; // <- Essenziell für die volle Breite
     height: 100vh;
-    overflow: hidden;
+    height: 100dvh; // Dynamische Viewport Height für Mobile
+    overflow: hidden; // Haupt-Container bleibt hidden
 
     app-header {
         flex-shrink: 0;
+    }
+
+    // Content-Bereich scrollbar machen
+    .content-wrapper {
+        flex: 1;
+        min-height: 0; // Wichtig: erlaubt dem flex-item zu schrumpfen
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch; // Smooth scrolling auf iOS
+
+        // Scrollbar verstecken auf Mobile (unter 768px)
+        @media (max-width: 768px) {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
     }
 }
