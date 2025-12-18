@@ -1,43 +1,71 @@
 @use '../../../../styles.scss' as *;
 
 /* ===============================
-   TASK DIALOG OVERLAY & CARD
+   OVERLAY & CONTENT-AREA
 ================================ */
 
 .dialog-overlay {
   position: fixed;
   inset: 0;
   z-index: 3;
-
   background: rgba(0, 0, 0, 0.3);
 
+  @include dFlex($jc: flex-start, $ai: center);
+}
+
+.content-container {
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
   @include dFlex($jc: center, $ai: center);
 }
+
+/* ===============================
+   DIALOG
+================================ */
 
 .dialog {
   @include dFlex($fd: column, $ai: stretch, $g: 24px);
   position: relative;
 
-  width: 95%;
-  max-width: 520px;
+  width: 92%;
+  max-width: 525px;
   max-height: 95vh;
 
   background: white;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.16);
   border-radius: 30px;
-  padding: 50px 40px;
+  padding: 48px 40px;
 
-  overflow: auto;
+  overflow: hidden;
+}
+
+.dialog--animated { // doppelt? 
+  transform: translateX(0);
+  animation: dialogSlideIn 400ms ease-out forwards;
+}
+
+@keyframes dialogSlideIn {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+@keyframes dialogSlideOut {
+  from { transform: translateX(0); }
+  to   { transform: translateX(110vw); }
+}
+
+.dialog--animated.dialog--closing {
+  animation: dialogSlideOut 400ms ease-out forwards;
 }
 
 /* ===============================
-   CONTENT
+   HEADER
 ================================ */
 
 header {
   @include dFlex($jc: space-between);
-
-  // border: 2px solid red;
 }
 
 .badge {
@@ -47,7 +75,6 @@ header {
   color: white;
   font-size: 23px;
   font-weight: 400;
-  // line-height: 1.2;
 
   &--user-story {
     background-color: $color-board-user-story;
@@ -68,34 +95,65 @@ header {
   cursor: pointer;
 }
 
+/* ===============================
+   SCROLL AREA
+================================ */
+
+.dialog-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.dialog-content__inner {
+  @include dFlex($fd: column, $ai: stretch, $g: 24px);
+}
+
+/* ===============================
+   TYPOGRAPHY
+================================ */
+
 .title {
   font-size: $h1;
   font-weight: 700;
   line-height: 1.2;
-
-  // border: 2px solid red;
+  margin: 0;
 }
 
 .description {
   font-size: 20px;
   font-weight: 400;
   line-height: 1.2;
-
-  // border: 2px solid red;
+  margin: 0;
 }
+
+.label {
+  color: $color-brand-primary;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.value--muted {
+  color: black;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-top: 4px;
+}
+
+/* ===============================
+   DATE + PRIORITY
+================================ */
 
 .date-prio-wrapper {
   border-collapse: collapse;
-  border-spacing: 0;
-  // border: 2px solid red;
 
   .label {
     width: 25%;
-    color: $color-brand-primary;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 1.2;
-    white-space: nowrap;
   }
 
   .value {
@@ -126,26 +184,16 @@ header {
   }
 }
 
-.label {
-  // doppelt?
-  color: $color-brand-primary;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 1.2;
-  white-space: nowrap;
-}
+/* ===============================
+   ASSIGNED TO
+================================ */
 
 .assignment {
   @include dFlex($fd: column, $ai: flex-start, $g: 4px);
-  // border: 2px solid red;
-}
-
-.assignment .label {
-  white-space: nowrap;
 }
 
 .assignment .name {
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 400;
   line-height: 1.2;
   vertical-align: middle;
@@ -173,13 +221,9 @@ header {
   padding: 7px 16px;
 }
 
-.value--muted {
-  color: black;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 1.2;
-  margin-top: 4px;
-}
+/* ===============================
+   SUBTASKS
+================================ */
 
 .subtask {
   @include dFlex($jc: flex-start, $g: 16px);
@@ -223,13 +267,16 @@ header {
   line-height: 1.2;
 }
 
+/* ===============================
+   ACTIONS
+================================ */
+
 .actions {
   @include dFlex($jc: flex-end, $g: 8px);
-  // border: 2px solid red;
 }
 
-.seperator {
-  width: 0px;
+.separator {
+  width: 0;
   height: 24px;
   border: 1px solid $color-neutral-light;
 }
@@ -264,4 +311,61 @@ header {
   &--edit:hover img {
     content: url('../../../../../public/img/icons/edit-blue.svg');
   }
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1024px) {
+  .dialog {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dialog {
+    @include dFlex($fd: column, $ai: stretch, $g: 16px);
+    max-height: calc(100svh - 180px);
+    max-width: 396px;
+    padding: 32px 24px;
+  }
+
+  .dialog-content__inner {
+    @include dFlex($fd: column, $ai: stretch, $g: 16px);
+  }
+
+  .badge {
+    padding: 4px 16px;
+    font-size: 16px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .description,
+  .label,
+  .date-prio-wrapper .value,
+  .assignment .name,
+  .value--muted {
+    font-size: 16px;
+  }
+
+  .date-prio-wrapper {
+    .label {
+      width: 30%;
+    }
+
+    .value {
+      width: 70%;
+    }
+  }
+
+  .date-prio-wrapper tr:first-child td {
+    padding-bottom: 16px;
+  }
+}
+
+@media (max-width: 480px) {
 }

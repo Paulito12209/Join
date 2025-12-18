@@ -23,6 +23,8 @@ export class TaskDialog {
   taskId$ = this.route.paramMap.pipe(map((p) => p.get('id') ?? ''));
   task$ = this.taskId$.pipe(switchMap((id) => this.tasksService.getById(id)));
   isEdit$ = this.route.url.pipe(map((segments) => segments.some((s) => s.path === 'edit')));
+  isClosing = false;
+
 
   contacts$ = this.contactsService.getContacts(); // <-- dein Service
 
@@ -37,16 +39,21 @@ export class TaskDialog {
     })
   );
 
-  close(): void {
+close(): void {
+  this.isClosing = true;
+
+  setTimeout(() => {
+    this.isClosing = false;
     this.router.navigate(['/board']);
-  }
+  }, 400);
+}
 
-  async deleteTask(task: Task): Promise<void> {
-    if (!task.id) return;
+async deleteTask(task: Task): Promise<void> {
+  if (!task.id) return;
 
-    await this.tasksService.remove(task.id);
-    this.close();
-  }
+  await this.tasksService.remove(task.id);
+  this.close();
+}
 
   openEdit(task: Task): void {
     if (!task.id) return;
