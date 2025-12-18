@@ -1,26 +1,40 @@
-**Responsive Design in Angular: Ein umfassender Leitfaden**
+# Responsive Design in Angular: Ein umfassender Leitfaden
 
-**Einleitung**
+## Einleitung
+
 Responsive Design ist heute keine Option mehr, sondern eine Grundvoraussetzung für moderne Webanwendungen. In diesem Leitfaden erfährst du, wie du Angular-Projekte so entwickelst, dass sie auf allen Geräten hervorragend aussehen und funktionieren.
 
-1. Grundlegende Prinzipien
-Mobile First Ansatz
+---
+
+## 1. Grundlegende Prinzipien
+
+### Mobile First Ansatz
+
 Beginne immer mit dem kleinsten Bildschirm und erweitere dann schrittweise für größere Geräte. Dies zwingt dich dazu, dich auf das Wesentliche zu konzentrieren.
-Warum Mobile First?
 
-Erzwingt Priorisierung von Inhalten
-Bessere Performance auf mobilen Geräten
-Einfacher zu erweitern als umgekehrt
-Entspricht dem tatsächlichen Nutzerverhalten (über 60% mobiler Traffic)
+#### Warum Mobile First?
 
-Progressive Enhancement
+- Erzwingt Priorisierung von Inhalten
+- Bessere Performance auf mobilen Geräten
+- Einfacher zu erweitern als umgekehrt
+- Entspricht dem tatsächlichen Nutzerverhalten (über 60% mobiler Traffic)
+
+### Progressive Enhancement
+
 Stelle sicher, dass die Grundfunktionalität überall läuft, und füge dann Features für leistungsfähigere Geräte hinzu.
 
-2. CSS-Strategien in Angular
-Verwendung von CSS Grid und Flexbox
+---
+
+## 2. CSS-Strategien in Angular
+
+### Verwendung von CSS Grid und Flexbox
+
 Diese modernen Layout-Systeme sind die Grundlage für responsive Designs.
-Flexbox für eindimensionale Layouts:
-css.container {
+
+#### Flexbox für eindimensionale Layouts:
+
+```css
+.container {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -29,16 +43,26 @@ css.container {
 .item {
   flex: 1 1 300px; /* Grow, Shrink, Basis */
 }
-CSS Grid für komplexe Layouts:
-css.grid-container {
+```
+
+#### CSS Grid für komplexe Layouts:
+
+```css
+.grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
 }
-Media Queries richtig einsetzen
+```
+
+### Media Queries richtig einsetzen
+
 Definiere klare Breakpoints und halte sie konsistent im gesamten Projekt.
-Empfohlene Breakpoints:
-scss// _breakpoints.scss
+
+#### Empfohlene Breakpoints:
+
+```scss
+// _breakpoints.scss
 $breakpoints: (
   'xs': 0,
   'sm': 576px,
@@ -69,31 +93,48 @@ $breakpoints: (
     padding: 3rem;
   }
 }
-Relative Einheiten verwenden
+```
+
+### Relative Einheiten verwenden
+
 Vermeide fixe Pixel-Werte, nutze stattdessen relative Einheiten.
-Best Practices:
 
-rem für Font-Größen und Spacing (relativ zur Root-Schriftgröße)
-em für Komponenten-interne Abstände (relativ zur Eltern-Schriftgröße)
-% für Breiten
-vw/vh für viewport-relative Größen (sparsam einsetzen)
-clamp() für flexible Größen mit Min/Max-Werten
+#### Best Practices:
 
-css.text {
+- `rem` für Font-Größen und Spacing (relativ zur Root-Schriftgröße)
+- `em` für Komponenten-interne Abstände (relativ zur Eltern-Schriftgröße)
+- `%` für Breiten
+- `vw/vh` für viewport-relative Größen (sparsam einsetzen)
+- `clamp()` für flexible Größen mit Min/Max-Werten
+
+```css
+.text {
   /* Flexible Schriftgröße mit Grenzen */
   font-size: clamp(1rem, 2vw + 0.5rem, 2rem);
   
   /* Flexible Abstände */
   padding: clamp(1rem, 3vw, 3rem);
 }
+```
 
-3. Angular-spezifische Techniken
-Angular CDK Layout Module
+---
+
+## 3. Angular-spezifische Techniken
+
+### Angular CDK Layout Module
+
 Das Angular Component Dev Kit bietet leistungsstarke Tools für responsive Layouts.
-Installation:
-bashng add @angular/cdk
-BreakpointObserver verwenden:
-typescriptimport { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+
+#### Installation:
+
+```bash
+ng add @angular/cdk
+```
+
+#### BreakpointObserver verwenden:
+
+```typescript
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -115,8 +156,12 @@ export class DashboardComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 }
-Benutzerdefinierte Breakpoints:
-typescriptconst customBreakpoints = {
+```
+
+#### Benutzerdefinierte Breakpoints:
+
+```typescript
+const customBreakpoints = {
   tablet: '(min-width: 768px) and (max-width: 1023px)',
   desktop: '(min-width: 1024px)'
 };
@@ -125,9 +170,14 @@ this.breakpointObserver.observe([customBreakpoints.tablet])
   .subscribe(result => {
     this.isTablet = result.matches;
   });
-Directives für Responsive Behavior
+```
+
+### Directives für Responsive Behavior
+
 Erstelle wiederverwendbare Directives für responsive Logik.
-typescriptimport { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+
+```typescript
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Directive({
@@ -156,9 +206,14 @@ export class ShowOnBreakpointDirective {
 // <div *appShowOnBreakpoint="'(min-width: 768px)'">
 //   Nur auf größeren Bildschirmen sichtbar
 // </div>
-Lazy Loading für bessere Performance
+```
+
+### Lazy Loading für bessere Performance
+
 Lade Komponenten nur dann, wenn sie benötigt werden.
-typescript// app-routing.module.ts
+
+```typescript
+// app-routing.module.ts
 const routes: Routes = [
   {
     path: 'dashboard',
@@ -166,12 +221,20 @@ const routes: Routes = [
       .then(m => m.DashboardModule)
   }
 ];
+```
 
-4. Komponenten-Design-Patterns
-Container-Präsentations-Pattern
+---
+
+## 4. Komponenten-Design-Patterns
+
+### Container-Präsentations-Pattern
+
 Trenne Logik (Container) von Darstellung (Präsentations-Komponenten).
-Container-Komponente (Smart Component):
-typescript@Component({
+
+#### Container-Komponente (Smart Component):
+
+```typescript
+@Component({
   selector: 'app-user-list-container',
   template: `
     <app-user-list
@@ -195,8 +258,12 @@ export class UserListContainerComponent {
     // Business-Logik
   }
 }
-Präsentations-Komponente (Dumb Component):
-typescript@Component({
+```
+
+#### Präsentations-Komponente (Dumb Component):
+
+```typescript
+@Component({
   selector: 'app-user-list',
   template: `
     <div [ngClass]="'layout-' + layout">
@@ -224,9 +291,14 @@ export class UserListComponent {
   @Input() layout: 'mobile' | 'desktop' = 'desktop';
   @Output() userSelected = new EventEmitter<User>();
 }
-Responsive Bilder und Assets
+```
+
+### Responsive Bilder und Assets
+
 Lade nur die Bilder, die für die jeweilige Bildschirmgröße benötigt werden.
-html<!-- Responsive Images mit srcset -->
+
+```html
+<!-- Responsive Images mit srcset -->
 <img 
   srcset="image-small.jpg 480w,
           image-medium.jpg 768w,
@@ -244,11 +316,18 @@ html<!-- Responsive Images mit srcset -->
   <source srcset="desktop-image.webp" type="image/webp">
   <img src="desktop-image.jpg" alt="Beschreibung">
 </picture>
+```
 
-5. Konventionen und Best Practices
-Design-Tokens und CSS-Variablen
+---
+
+## 5. Konventionen und Best Practices
+
+### Design-Tokens und CSS-Variablen
+
 Zentralisiere Design-Entscheidungen für Konsistenz.
-scss// styles/_variables.scss
+
+```scss
+// styles/_variables.scss
 :root {
   // Spacing Scale
   --space-xs: 0.25rem;
@@ -282,10 +361,16 @@ scss// styles/_variables.scss
   font-size: var(--font-size-h1);
   padding: var(--space-lg);
 }
-Naming-Konventionen
+```
+
+### Naming-Konventionen
+
 Etabliere klare Namenskonventionen für CSS-Klassen.
-BEM-Methodik (Block Element Modifier):
-scss// Block
+
+#### BEM-Methodik (Block Element Modifier):
+
+```scss
+// Block
 .card { }
 
 // Element
@@ -300,9 +385,14 @@ scss// Block
 // Responsive Modifier
 .card--mobile { }
 .card--desktop { }
-Accessibility nicht vergessen
+```
+
+### Accessibility nicht vergessen
+
 Responsive Design muss auch barrierefrei sein.
-html<!-- Versteckte Elemente zugänglich machen -->
+
+```html
+<!-- Versteckte Elemente zugänglich machen -->
 <button class="mobile-menu-toggle" 
         aria-label="Menü öffnen"
         aria-expanded="false">
@@ -324,10 +414,16 @@ html<!-- Versteckte Elemente zugänglich machen -->
   border: 0;
 }
 </style>
+```
 
-6. Testing responsiver Komponenten
-Unit Tests mit verschiedenen Breakpoints
-typescriptimport { ComponentFixture, TestBed } from '@angular/core/testing';
+---
+
+## 6. Testing responsiver Komponenten
+
+### Unit Tests mit verschiedenen Breakpoints
+
+```typescript
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { of } from 'rxjs';
 
@@ -358,9 +454,14 @@ describe('ResponsiveComponent', () => {
     expect(component.isMobile).toBe(true);
   });
 });
-Visual Regression Testing
+```
+
+### Visual Regression Testing
+
 Nutze Tools wie Cypress oder Playwright für visuelle Tests.
-typescript// cypress/e2e/responsive.cy.ts
+
+```typescript
+// cypress/e2e/responsive.cy.ts
 describe('Responsive Design Tests', () => {
   const viewports = [
     { name: 'mobile', width: 375, height: 667 },
@@ -376,13 +477,24 @@ describe('Responsive Design Tests', () => {
     });
   });
 });
+```
 
-7. Zusammenarbeit im Team
-Design-System etablieren
+---
+
+## 7. Zusammenarbeit im Team
+
+### Design-System etablieren
+
 Erstelle eine gemeinsame Grundlage für alle Entwickler.
-Dokumentation mit Storybook:
-bashng add @storybook/angular
-typescript// button.stories.ts
+
+#### Dokumentation mit Storybook:
+
+```bash
+ng add @storybook/angular
+```
+
+```typescript
+// button.stories.ts
 import { Meta, StoryObj } from '@storybook/angular';
 import { ButtonComponent } from './button.component';
 
@@ -406,22 +518,29 @@ export const Default: StoryObj<ButtonComponent> = {
     size: 'medium'
   }
 };
-Code-Review-Checkliste
+```
+
+### Code-Review-Checkliste
+
 Stelle sicher, dass responsive Aspekte bei jedem Review geprüft werden.
-Checkliste für Reviews:
 
- Mobile First Ansatz verwendet?
- Komponente auf allen Breakpoints getestet?
- Relative Einheiten statt fixer Pixel-Werte?
- Touch-Targets mindestens 44x44px?
- Bilder sind responsive und optimiert?
- Keine horizontalen Scrollbalken?
- Performance auf mobilen Geräten akzeptabel?
- Accessibility-Anforderungen erfüllt?
+#### Checkliste für Reviews:
 
-Gemeinsame Standards dokumentieren
+- [ ] Mobile First Ansatz verwendet?
+- [ ] Komponente auf allen Breakpoints getestet?
+- [ ] Relative Einheiten statt fixer Pixel-Werte?
+- [ ] Touch-Targets mindestens 44x44px?
+- [ ] Bilder sind responsive und optimiert?
+- [ ] Keine horizontalen Scrollbalken?
+- [ ] Performance auf mobilen Geräten akzeptabel?
+- [ ] Accessibility-Anforderungen erfüllt?
+
+### Gemeinsame Standards dokumentieren
+
 Erstelle ein Style Guide für das Team.
-markdown# Frontend Style Guide
+
+```markdown
+# Frontend Style Guide
 
 ## Breakpoints
 - Mobile: bis 767px
@@ -436,10 +555,16 @@ Verwende ausschließlich Werte aus der Spacing-Scale:
 - Container-Komponenten: `*.container.component.ts`
 - Präsentations-Komponenten: `*.component.ts`
 - Styles immer in separater SCSS-Datei
+```
 
-8. Performance-Optimierung
-Change Detection optimieren
-typescript@Component({
+---
+
+## 8. Performance-Optimierung
+
+### Change Detection optimieren
+
+```typescript
+@Component({
   selector: 'app-heavy-list',
   changeDetection: ChangeDetectionStrategy.OnPush, // Wichtig!
   template: `
@@ -455,8 +580,12 @@ export class HeavyListComponent {
     return item.id; // Eindeutige ID verwenden
   }
 }
-Lazy Loading von Bildern
-typescript// Eigene Lazy-Loading-Directive
+```
+
+### Lazy Loading von Bildern
+
+```typescript
+// Eigene Lazy-Loading-Directive
 @Directive({
   selector: 'img[appLazyLoad]'
 })
@@ -479,33 +608,61 @@ export class LazyLoadDirective implements OnInit {
     observer.observe(this.el.nativeElement);
   }
 }
+```
 
-9. Häufige Fehler vermeiden
-Fehler 1: Fixe Höhen und Breiten
-❌ Falsch:
-css.container {
+---
+
+## 9. Häufige Fehler vermeiden
+
+### Fehler 1: Fixe Höhen und Breiten
+
+❌ **Falsch:**
+
+```css
+.container {
   width: 1200px;
   height: 600px;
 }
-✅ Richtig:
-css.container {
+```
+
+✅ **Richtig:**
+
+```css
+.container {
   max-width: 1200px;
   width: 100%;
   min-height: 600px;
 }
-Fehler 2: Zu viele Breakpoints
-❌ Falsch: Spezielle Styles für jedes erdenkliche Gerät
-✅ Richtig: 3-5 Hauptbreakpoints, flüssige Layouts dazwischen
-Fehler 3: Desktop-First denken
-❌ Falsch: Desktop-Version bauen, dann mühsam für Mobile anpassen
-✅ Richtig: Mit Mobile starten, dann erweitern
-Fehler 4: Viewport Meta-Tag vergessen
-❌ Falsch: Kein Meta-Tag in index.html
-✅ Richtig:
-html<meta name="viewport" content="width=device-width, initial-scale=1">
+```
 
-10. Praktisches Beispiel: Dashboard-Layout
-typescript// dashboard.component.ts
+### Fehler 2: Zu viele Breakpoints
+
+❌ **Falsch:** Spezielle Styles für jedes erdenkliche Gerät
+
+✅ **Richtig:** 3-5 Hauptbreakpoints, flüssige Layouts dazwischen
+
+### Fehler 3: Desktop-First denken
+
+❌ **Falsch:** Desktop-Version bauen, dann mühsam für Mobile anpassen
+
+✅ **Richtig:** Mit Mobile starten, dann erweitern
+
+### Fehler 4: Viewport Meta-Tag vergessen
+
+❌ **Falsch:** Kein Meta-Tag in index.html
+
+✅ **Richtig:**
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1">
+```
+
+---
+
+## 10. Praktisches Beispiel: Dashboard-Layout
+
+```typescript
+// dashboard.component.ts
 import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
@@ -533,12 +690,18 @@ export class DashboardComponent {
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 }
-html<!-- dashboard.component.html -->
+```
+
+```html
+<!-- dashboard.component.html -->
 <div class="dashboard-grid" 
      [style.grid-template-columns]="'repeat(' + (columns$ | async) + ', 1fr)'">
   <app-widget *ngFor="let widget of widgets" [data]="widget"></app-widget>
 </div>
-scss// dashboard.component.scss
+```
+
+```scss
+// dashboard.component.scss
 .dashboard-grid {
   display: grid;
   gap: var(--space-lg);
@@ -549,16 +712,20 @@ scss// dashboard.component.scss
     padding: var(--space-md);
   }
 }
+```
 
-Zusammenfassung
+---
+
+## Zusammenfassung
+
 Erfolgreiches responsive Design in Angular basiert auf:
 
-Mobile First Denkweise - Beginne klein, erweitere dann
-Moderne CSS-Techniken - Flexbox, Grid, relative Einheiten
-Angular CDK - BreakpointObserver für reaktive Layouts
-Klare Konventionen - Design-Tokens, Naming, Standards
-Performance - Lazy Loading, OnPush, optimierte Assets
-Testing - Unit-, E2E- und Visual Regression Tests
-Teamwork - Design-System, Dokumentation, Code-Reviews
+1. **Mobile First Denkweise** - Beginne klein, erweitere dann
+2. **Moderne CSS-Techniken** - Flexbox, Grid, relative Einheiten
+3. **Angular CDK** - BreakpointObserver für reaktive Layouts
+4. **Klare Konventionen** - Design-Tokens, Naming, Standards
+5. **Performance** - Lazy Loading, OnPush, optimierte Assets
+6. **Testing** - Unit-, E2E- und Visual Regression Tests
+7. **Teamwork** - Design-System, Dokumentation, Code-Reviews
 
 Responsive Design ist ein fortlaufender Prozess. Teste regelmäßig auf echten Geräten, sammle Nutzerfeedback und verbessere kontinuierlich. Mit diesen Prinzipien und Techniken bist du bestens gerüstet, um moderne, responsive Angular-Anwendungen zu entwickeln.
