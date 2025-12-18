@@ -37,7 +37,15 @@
                     </div>
                     <div class="task-title">{{ task.title }}</div>
                     <div class="task-description">{{ task.description }}</div>
-                    <!-- Placeholder for Subtaks/Assignees/Priority if needed later -->
+                    <!-- Subtask Progress Bar -->
+                    <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
+                        <div class="progress-bar">
+                            <div class="progress-fill"
+                                [style.width.%]="getCompletedSubtasksCount(task) / task.subtasks.length * 100"></div>
+                        </div>
+                        <p class="subtask-count">{{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length }}
+                            Subtasks</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,6 +68,15 @@
                     </div>
                     <div class="task-title">{{ task.title }}</div>
                     <div class="task-description">{{ task.description }}</div>
+                    <!-- Subtask Progress Bar -->
+                    <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
+                        <div class="progress-bar">
+                            <div class="progress-fill"
+                                [style.width.%]="getCompletedSubtasksCount(task) / task.subtasks.length * 100"></div>
+                        </div>
+                        <p class="subtask-count">{{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length }}
+                            Subtasks</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -82,6 +99,15 @@
                     </div>
                     <div class="task-title">{{ task.title }}</div>
                     <div class="task-description">{{ task.description }}</div>
+                    <!-- Subtask Progress Bar -->
+                    <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
+                        <div class="progress-bar">
+                            <div class="progress-fill"
+                                [style.width.%]="getCompletedSubtasksCount(task) / task.subtasks.length * 100"></div>
+                        </div>
+                        <p class="subtask-count">{{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length }}
+                            Subtasks</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,6 +128,15 @@
                     </div>
                     <div class="task-title">{{ task.title }}</div>
                     <div class="task-description">{{ task.description }}</div>
+                    <!-- Subtask Progress Bar -->
+                    <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
+                        <div class="progress-bar">
+                            <div class="progress-fill"
+                                [style.width.%]="getCompletedSubtasksCount(task) / task.subtasks.length * 100"></div>
+                        </div>
+                        <p class="subtask-count">{{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length }}
+                            Subtasks</p>
+                    </div>
                 </div>
             </div>
         </div>

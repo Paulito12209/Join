@@ -155,4 +155,14 @@ export class Board {
     if (!task.id) return;
     this.router.navigate(['/board', task.id]);
   }
+
+  /**
+   * Get the count of completed subtasks for a given task
+   * @param task The task to count completed subtasks for
+   * @returns Number of completed subtasks
+   */
+  getCompletedSubtasksCount(task: Task): number {
+    if (!task.subtasks || task.subtasks.length === 0) return 0;
+    return task.subtasks.filter(s => s.done).length;
+  }
 }

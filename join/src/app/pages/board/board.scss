@@ -204,6 +204,36 @@
                 -webkit-box-orient: vertical;
             }
 
+            // Subtask Progress Bar
+            .subtask-progress {
+                @include dFlex($ai: center, $jc: flex-start, $g: 16px);
+                width: 100%;
+                margin-top: 6px;
+
+                .progress-bar {
+                    flex: 1;
+                    height: 8px;
+                    background-color: $color-neutral-light;
+                    border-radius: 8px;
+                    overflow: hidden;
+
+                    .progress-fill {
+                        height: 100%;
+                        background-color: $color-board-progressbar;
+                        border-radius: 8px;
+                        transition: width 0.3s ease;
+                    }
+                }
+
+                .subtask-count {
+                    flex: 1;
+                    margin: 0;
+                    font-size: 12px;
+                    color: black;
+                    white-space: nowrap;
+                }
+            }
+
             &:last-child {
                 border: none; // irrelevant, wenn Karten getrennt sind
             }
