@@ -39,11 +39,15 @@
   padding: 48px 40px;
 
   overflow: hidden;
+  transform: translateX(0);
 }
 
-.dialog--animated { // doppelt? 
-  transform: translateX(0);
+.dialog--animated {
   animation: dialogSlideIn 400ms ease-out forwards;
+}
+
+.dialog--closing {
+  animation: dialogSlideOut 400ms ease-out forwards;
 }
 
 @keyframes dialogSlideIn {
@@ -56,9 +60,6 @@
   to   { transform: translateX(110vw); }
 }
 
-.dialog--animated.dialog--closing {
-  animation: dialogSlideOut 400ms ease-out forwards;
-}
 
 /* ===============================
    HEADER

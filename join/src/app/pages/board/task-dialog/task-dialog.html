@@ -1,15 +1,17 @@
 <div class="dialog-overlay" (click)="close()">
   <div class="content-container">
     <section
-      class="dialog dialog--animated"
+      #dialogEl
+      class="dialog"
+      [class.dialog--animated]="!disableEnterAnimation"
       [class.dialog--closing]="isClosing"
+      [style.height.px]="fixedHeight"
       (click)="$event.stopPropagation()"
     >
-      @if (task$ | async; as task) { @if (isEdit$ | async) {
+      @if (task$ | async; as task) {
       <!-- =========================
-             EDIT MODE
+               HEADER (shared)
         ========================== -->
-
       <header>
         <div
           class="badge"
@@ -24,39 +26,21 @@
         </button>
       </header>
 
-      <p>Edit mode (Placeholder)</p>
-
-      <footer class="actions">
-        <button type="button" class="action-btn" (click)="backToView(task)">
-          <span>Back</span>
-        </button>
-
-        <button type="button" class="action-btn">
-          <span>Ok</span>
-        </button>
-      </footer>
-
-      } @else {
       <!-- =========================
-             VIEW MODE
+               SCROLL AREA (shared)
         ========================== -->
-
-      <header>
-        <div
-          class="badge"
-          [class.badge--user-story]="task.category === 'user-story'"
-          [class.badge--tech-task]="task.category === 'technical-task'"
-        >
-          {{ getCategoryLabel(task.category) }}
-        </div>
-
-        <button class="close-btn" type="button" aria-label="Close dialog" (click)="close()">
-          <img src="/img/icons/close_black.svg" alt="" />
-        </button>
-      </header>
-
       <section class="dialog-content">
         <div class="dialog-content__inner">
+          @if (isEdit$ | async) {
+          <!-- =========================
+                     EDIT MODE (placeholder)
+              ========================== -->
+          <p>Edit mode (Placeholder)</p>
+          } @else {
+          <!-- =========================
+                     VIEW MODE
+              ========================== -->
+
           <h1 class="title">{{ task.title }}</h1>
           <p class="description">{{ task.description }}</p>
 
@@ -93,8 +77,9 @@
 
             @if (taskView$ | async; as taskView) {
             <div class="assigned">
-              @if (taskView.task?.assignees?.length) { @for ( assignee of buildAssigneeViews(
-              taskView.task!.assignees!, taskView.contactsById ); track assignee.uid ) {
+              @if (taskView.task?.assignees?.length) { @for ( assignee of
+              buildAssigneeViews(taskView.task!.assignees!, taskView.contactsById); track
+              assignee.uid ) {
               <div class="assigned-item">
                 <div class="circle" [style.background-color]="assignee.color">
                   {{ assignee.initials }}
@@ -121,32 +106,43 @@
                   [checked]="subtask.done"
                   (change)="toggleSubtask(task, subtask)"
                 />
-
                 <span class="subtask__icon" aria-hidden="true"></span>
                 <span class="subtask__title">{{ subtask.title }}</span>
               </label>
-
               }
             </div>
             } @else {
             <p class="value value--muted">No subtasks</p>
             }
           </div>
+          }
         </div>
       </section>
 
+      <!-- =========================
+               FOOTER (mode-specific)
+        ========================== -->
+      @if (isEdit$ | async) {
+      <footer class="actions actions--single">
+        <button type="button" class="action-btn action-btn--primary" (click)="backToView(task)">
+          <span>Ok</span>
+        </button>
+      </footer>
+
+      } @else {
       <footer class="actions">
         <button type="button" class="action-btn action-btn--delete" (click)="deleteTask(task)">
           <img src="img/icons/delete.svg" alt="" />
           <span>Delete</span>
         </button>
+
         <div class="separator"></div>
+
         <button type="button" class="action-btn action-btn--edit" (click)="openEdit(task)">
           <img src="img/icons/edit-hover.svg" alt="" />
           <span>Edit</span>
         </button>
       </footer>
-
       } } @else {
       <p>Task not found.</p>
       }

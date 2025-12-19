@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, ElementRef, ViewChild, inject } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, switchMap } from 'rxjs';
@@ -19,12 +19,13 @@ export class TaskDialog {
   private readonly route = inject(ActivatedRoute);
   private readonly tasksService = inject(TasksService);
   private readonly contactsService = inject(ContactsService);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   taskId$ = this.route.paramMap.pipe(map((p) => p.get('id') ?? ''));
   task$ = this.taskId$.pipe(switchMap((id) => this.tasksService.getById(id)));
   isEdit$ = this.route.url.pipe(map((segments) => segments.some((s) => s.path === 'edit')));
   isClosing = false;
-
+  disableEnterAnimation = false;
 
   contacts$ = this.contactsService.getContacts(); // <-- dein Service
 
@@ -39,31 +40,52 @@ export class TaskDialog {
     })
   );
 
+  @ViewChild('dialogEl') dialogEl?: ElementRef<HTMLElement>;
+  fixedHeight: number | null = null;
+
+  constructor() {
+    const nav = this.router.getCurrentNavigation();
+    const state = (nav?.extras.state as any) ?? history.state;
+
+    this.disableEnterAnimation = !!state?.skipEnter;
+    this.fixedHeight = typeof state?.dialogHeight === 'number' ? state.dialogHeight : null;
+  }
+
 close(): void {
   this.isClosing = true;
+  this.cdr.detectChanges(); 
 
   setTimeout(() => {
-    this.isClosing = false;
     this.router.navigate(['/board']);
   }, 400);
 }
 
-async deleteTask(task: Task): Promise<void> {
-  if (!task.id) return;
 
-  await this.tasksService.remove(task.id);
-  this.close();
-}
+  async deleteTask(task: Task): Promise<void> {
+    if (!task.id) return;
+
+    await this.tasksService.remove(task.id);
+    this.close();
+  }
 
   openEdit(task: Task): void {
     if (!task.id) return;
-    this.router.navigate(['/board', task.id, 'edit']);
+
+    const height = this.dialogEl?.nativeElement.getBoundingClientRect().height ?? null;
+
+    this.router.navigate(['/board', task.id, 'edit'], {
+      state: { skipEnter: true, dialogHeight: height },
+    });
   }
 
-  backToView(task: Task): void {
-    if (!task.id) return;
-    this.router.navigate(['/board', task.id]);
-  }
+backToView(task: Task): void {
+  if (!task.id) return;
+
+  this.router.navigate(['/board', task.id], {
+    state: { skipEnter: true },
+  });
+}
+
 
   async toggleSubtask(task: Task, subtask: Subtask): Promise<void> {
     if (!task.id) return;
