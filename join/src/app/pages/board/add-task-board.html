@@ -1,9 +1,14 @@
-<div class="overlay" (click)="onClose()">
-  <div class="dialog" (click)="$event.stopPropagation()">
+bitte die icons bei subtask anpassen den edit stift soll sichtbar sein<div class="overlay" (click)="onClose()">
+  <div class="dialog" (click)="$event.stopPropagation(); assigneeOpen = false">
     <div class="header">
       <h2>Add Task</h2>
       <button class="close" (click)="onClose()">✕</button>
     </div>
+    <!-- ... form content ... -->
+    <!-- Skipping lines for brevity in replace, but I need to target the specific lines -->
+    <!-- Actually, I should do two separate replaces or one multi-replace if they are far apart. -->
+    <!-- The dialog tag is at line 2. The dropdown-item is at line 41. -->
+    <!-- I will use multi_replace_file_content. -->
     <form [formGroup]="taskForm" class="content">
       <div class="left">
         <label>Title<span>*</span></label>
@@ -19,12 +24,15 @@
         <div class="priority-row">
           <label>Priority</label>
           <div class="priority">
-            <button type="button" [class.active]="taskForm.value.priority === 'Urgent'"
-              (click)="taskForm.patchValue({ priority: 'Urgent' })">Urgent <span class="prio-icon">↑</span></button>
-            <button type="button" [class.active]="taskForm.value.priority === 'Medium'"
-              (click)="taskForm.patchValue({ priority: 'Medium' })">Medium <span class="prio-icon">=</span></button>
-            <button type="button" [class.active]="taskForm.value.priority === 'Low'"
-              (click)="taskForm.patchValue({ priority: 'Low' })">Low <span class="prio-icon">✔</span></button>
+            <button type="button" class="prio-urgent" [class.active]="taskForm.value.priority === 'Urgent'"
+              (click)="taskForm.patchValue({ priority: 'Urgent' })">Urgent <img src="img/icons/prio-urgent.svg"
+                alt="Urgent" /></button>
+            <button type="button" class="prio-medium" [class.active]="taskForm.value.priority === 'Medium'"
+              (click)="taskForm.patchValue({ priority: 'Medium' })">Medium <img src="img/icons/prio-medium.svg"
+                alt="Medium" /></button>
+            <button type="button" class="prio-low" [class.active]="taskForm.value.priority === 'Low'"
+              (click)="taskForm.patchValue({ priority: 'Low' })">Low <img src="img/icons/prio-low.svg"
+                alt="Low" /></button>
           </div>
         </div>
         <div class="assigned-row">
@@ -38,7 +46,7 @@
             </div>
             <div class="dropdown-list" *ngIf="assigneeOpen">
               <ng-container *ngFor="let c of contacts">
-                <div *ngIf="c.id" class="dropdown-item"
+                <div *ngIf="c.id" class="dropdown-item" [class.selected]="isAssigned(c.id)"
                   (click)="toggleAssignee(c.id, !isAssigned(c.id)); $event.stopPropagation()">
                   <span class="avatar" [ngStyle]="{background: c.color}">{{ getInitials(c.name) }}</span>
                   <span class="name">{{ c.name }}</span>
@@ -122,8 +130,10 @@
       </div>
     </form>
     <div class="actions">
-      <button class="cancel" (click)="onClose()">Cancel ✕</button>
-      <button type="button" class="submit" [disabled]="taskForm.invalid" (click)="onSubmit()">Create Task ✔</button>
+      <button class="cancel" (click)="onClose()">Cancel <img src="img/icons/close_black.svg" alt="Cancel" /></button>
+      <button type="button" class="submit" [disabled]="taskForm.invalid" (click)="onSubmit()">
+        Create Task <img src="img/icons/check.svg" alt="Create" />
+      </button>
     </div>
   </div>
 </div>

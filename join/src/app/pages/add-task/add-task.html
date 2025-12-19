@@ -18,13 +18,8 @@
     <div class="right">
       <label>Priority</label>
       <div class="priority">
-        <button
-          type="button"
-          *ngFor="let p of priorities"
-          [class.active]="taskForm.value.priority === p"
-          [ngClass]="p"
-          (click)="taskForm.patchValue({ priority: p })"
-        >
+        <button type="button" *ngFor="let p of priorities" [class.active]="taskForm.value.priority === p" [ngClass]="p"
+          (click)="taskForm.patchValue({ priority: p })">
           <span class="label">{{ p }}</span>
 
           <img class="prio-icon" [src]="priorityIcons[p]" alt="" />
@@ -32,48 +27,32 @@
       </div>
 
       <label>Assigned to</label>
-      <div
-        class="assignee-field"
-        (click)="toggleAssigneeDropdown(true)"
-        tabindex="0"
-        (blur)="toggleAssigneeDropdown(false)"
-      >
+      <div class="assignee-field" (click)="toggleAssigneeDropdown(true)" tabindex="0"
+        (blur)="toggleAssigneeDropdown(false)">
         <span class="placeholder"> Select contacts to assign </span>
         <span class="caret">▾</span>
       </div>
 
       <div class="assignee-avatars" *ngIf="(taskForm.value.assignedTo || []).length">
-        <span
-          class="avatar"
-          *ngFor="let uid of taskForm.value.assignedTo"
-          [style.background]="getContactColor(uid)"
-          [title]="getContactName(uid)"
-        >
+        <span class="avatar" *ngFor="let uid of taskForm.value.assignedTo" [style.background]="getContactColor(uid)"
+          [title]="getContactName(uid)">
           {{ (getContactName(uid) || '?').slice(0, 1).toUpperCase() }}
         </span>
       </div>
 
       <div class="assigned-list dropdown" *ngIf="assigneeOpen">
-        <label
-          class="assigned-item"
-          *ngFor="let person of contacts"
-          (mousedown)="
+        <label class="assigned-item" *ngFor="let person of contacts" (mousedown)="
             toggleAssignee(person.id!, !(taskForm.value.assignedTo || []).includes(person.id!))
-          "
-        >
+          ">
           <span class="avatar" aria-hidden="true" [style.background]="person.color || '#6c63ff'">{{
             (person.name || '?').slice(0, 1).toUpperCase()
-          }}</span>
+            }}</span>
           <span class="name">{{ person.name }}</span>
-          <img
-            class="checkbox-icon"
-            [src]="
+          <img class="checkbox-icon" [src]="
               (taskForm.value.assignedTo || []).includes(person.id!)
-                ? '/img/icons/checkbox-done.svg'
-                : '/img/icons/checkbox-todo.svg'
-            "
-            alt="checkbox"
-          />
+                ? 'img/icons/checkbox-done.svg'
+                : 'img/icons/checkbox-todo.svg'
+            " alt="checkbox" />
         </label>
       </div>
 
@@ -95,12 +74,12 @@
     <div class="action-buttons">
       <button class="clear" type="button" (click)="clearForm()">
         Clear
-        <img class="btn-icon" src="/img/icons/close_black.svg" alt="clear icon" />
+        <img class="btn-icon" src="img/icons/close_black.svg" alt="clear icon" />
       </button>
 
       <button class="submit" [disabled]="taskForm.invalid" (click)="createTask()">
         Create Task
-        <img class="btn-icon" src="/img/icons/check.svg" alt="check icon" />
+        <img class="btn-icon" src="img/icons/check.svg" alt="check icon" />
       </button>
     </div>
   </footer>

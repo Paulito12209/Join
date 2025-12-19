@@ -35,12 +35,11 @@ export class AddTask {
   // Options for priority buttons
   readonly priorities = ['Urgent', 'Medium', 'Low'] as const;
 
-priorityIcons: Record<(typeof this.priorities)[number], string> = {
-  Urgent: '/img/icons/prio-urgent.svg',
-  Medium: '/img/icons/prio-medium.svg',
-  Low: '/img/icons/prio-low.svg',
-};
-
+  priorityIcons: Record<(typeof this.priorities)[number], string> = {
+    Urgent: 'img/icons/prio-urgent.svg',
+    Medium: 'img/icons/prio-medium.svg',
+    Low: 'img/icons/prio-low.svg',
+  };
 
   contacts: Contact[] = [];
   selectedAssigneeIds: string[] = [];
