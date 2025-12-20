@@ -9,6 +9,7 @@
     <label>Due date</label>
     <input type="date" formControlName="dueDate" />
 
+    <!-- PRIORITY -->
     <div class="priority-row">
       <label>Priority</label>
 
@@ -45,52 +46,56 @@
       </div>
     </div>
 
+    <!-- ASSIGNED TO -->
     <div class="assigned-row">
       <label>Assigned to</label>
 
       <div class="assigned-dropdown" (click)="$event.stopPropagation()">
         <div class="assigned-input" (click)="assigneeOpen = !assigneeOpen">
-          <input type="text" placeholder="Select contacts to assign" readonly value="" />
+          <input type="text" placeholder="Select contacts to assign" readonly />
           <span class="dropdown-arrow">&#9662;</span>
         </div>
 
         @if (assigneeOpen) {
           <div class="dropdown-list">
-            <ng-container *ngFor="let c of (contacts ?? [])">
-              <div
-                *ngIf="c.id"
-                class="dropdown-item"
-                [class.selected]="isAssigned(c.id)"
-                (click)="toggleAssignee(c.id, !isAssigned(c.id)); $event.stopPropagation()"
-              >
-                <span class="avatar" [ngStyle]="{ background: c.color }">
-                  {{ getInitials(c.name) }}
-                </span>
+            @for (contact of (contacts ?? []); track contact.id) {
+              @if (contact.id) {
+                <div
+                  class="dropdown-item"
+                  [class.selected]="isAssigned(contact.id)"
+                  (click)="toggleAssignee(contact.id, !isAssigned(contact.id)); $event.stopPropagation()"
+                >
+                  <span class="avatar" [ngStyle]="{ background: contact.color }">
+                    {{ getInitials(contact.name) }}
+                  </span>
 
-                <span class="name">{{ c.name }}</span>
+                  <span class="name">{{ contact.name }}</span>
 
-                <input
-                  type="checkbox"
-                  [checked]="isAssigned(c.id)"
-                  (click)="$event.stopPropagation(); toggleAssignee(c.id, $event.target.checked)"
-                />
-              </div>
-            </ng-container>
+                  <input
+                    type="checkbox"
+                    [checked]="isAssigned(contact.id)"
+                    (click)="$event.stopPropagation(); toggleAssignee(contact.id, $event.target.checked)"
+                  />
+                </div>
+              }
+            }
           </div>
         }
       </div>
 
       <div class="assigned-badges">
-        <span
-          *ngFor="let uid of selectedAssigneeIds"
-          class="badge-avatar"
-          [ngStyle]="{ background: getContactColor(uid) }"
-        >
-          {{ getContactInitials(uid) }}
-        </span>
+        @for (uid of selectedAssigneeIds; track uid) {
+          <span
+            class="badge-avatar"
+            [ngStyle]="{ background: getContactColor(uid) }"
+          >
+            {{ getContactInitials(uid) }}
+          </span>
+        }
       </div>
     </div>
 
+    <!-- SUBTASKS -->
     <div class="subtasks-row">
       <label>Subtasks</label>
 
@@ -105,14 +110,16 @@
         />
 
         <span class="subtask-icons">
-          <ng-container *ngIf="!subtaskFocus && !newSubtaskTitle; else activeIcons">
+          @if (!subtaskFocus && !newSubtaskTitle) {
             <button type="button" class="icon-btn" (click)="subtaskFocus = true">
               <img src="img/icons/add.svg" alt="Add" />
             </button>
-          </ng-container>
-
-          <ng-template #activeIcons>
-            <button type="button" class="icon-btn" (click)="clearSubtaskInput(); subtaskFocus = false">
+          } @else {
+            <button
+              type="button"
+              class="icon-btn"
+              (click)="clearSubtaskInput(); subtaskFocus = false"
+            >
               <img src="img/icons/close_black.svg" alt="Clear" />
             </button>
 
@@ -121,53 +128,68 @@
             <button type="button" class="icon-btn" (click)="addSubtask()">
               <img src="img/icons/check-hover.svg" alt="Add" />
             </button>
-          </ng-template>
+          }
         </span>
       </div>
 
       <ul class="subtask-list">
-        <li *ngFor="let s of subtasks">
-          <ng-container *ngIf="editSubtaskId !== s.id; else editTpl">
-            <span class="subtask-bullet">•</span>
-            <span class="subtask-title">{{ s.title }}</span>
+        @for (subtask of subtasks; track subtask.id) {
+          <li>
+            @if (editSubtaskId !== subtask.id) {
+              <span class="subtask-bullet">•</span>
+              <span class="subtask-title">{{ subtask.title }}</span>
 
-            <div class="item-actions">
-              <button type="button" class="icon-btn" (click)="startEditSubtask(s.id, s.title)">
-                <img src="img/icons/edit.svg" alt="Edit" />
-              </button>
-
-              <span class="divider-small"></span>
-
-              <button type="button" class="icon-btn" (click)="removeSubtask(s.id)">
-                <img src="img/icons/delete.svg" alt="Delete" />
-              </button>
-            </div>
-          </ng-container>
-
-          <ng-template #editTpl>
-            <div class="edit-wrapper">
-              <input
-                [(ngModel)]="editSubtaskTitle"
-                [ngModelOptions]="{ standalone: true }"
-                class="edit-input"
-              />
-
-              <div class="edit-actions">
-                <button type="button" class="icon-btn" (click)="removeSubtask(s.id)">
-                  <img src="img/icons/delete.svg" alt="Delete" />
+              <div class="item-actions">
+                <button
+                  type="button"
+                  class="icon-btn"
+                  (click)="startEditSubtask(subtask.id, subtask.title)"
+                >
+                  <img src="img/icons/edit.svg" alt="Edit" />
                 </button>
 
                 <span class="divider-small"></span>
 
-                <button type="button" class="icon-btn" (click)="saveEditSubtask(s.id)">
-                  <img src="img/icons/check-hover.svg" alt="Save" />
+                <button
+                  type="button"
+                  class="icon-btn"
+                  (click)="removeSubtask(subtask.id)"
+                >
+                  <img src="img/icons/delete.svg" alt="Delete" />
                 </button>
               </div>
-            </div>
-          </ng-template>
-        </li>
+            } @else {
+              <div class="edit-wrapper">
+                <input
+                  [(ngModel)]="editSubtaskTitle"
+                  [ngModelOptions]="{ standalone: true }"
+                  class="edit-input"
+                />
+
+                <div class="edit-actions">
+                  <button
+                    type="button"
+                    class="icon-btn"
+                    (click)="removeSubtask(subtask.id)"
+                  >
+                    <img src="img/icons/delete.svg" alt="Delete" />
+                  </button>
+
+                  <span class="divider-small"></span>
+
+                  <button
+                    type="button"
+                    class="icon-btn"
+                    (click)="saveEditSubtask(subtask.id)"
+                  >
+                    <img src="img/icons/check-hover.svg" alt="Save" />
+                  </button>
+                </div>
+              </div>
+            }
+          </li>
+        }
       </ul>
     </div>
   </form>
 </div>
-
