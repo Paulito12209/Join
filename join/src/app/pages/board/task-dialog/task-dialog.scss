@@ -366,6 +366,16 @@ header.header--edit {
   .dialog {
     max-width: 420px;
   }
+
+  .date-prio-wrapper {
+    .label {
+      width: 30%;
+    }
+
+    .value {
+      width: 70%;
+    }
+  }
 }
 
 @media (max-width: 768px) {
@@ -397,17 +407,19 @@ header.header--edit {
     font-size: 16px;
   }
 
+  .date-prio-wrapper tr:first-child td {
+    padding-bottom: 16px;
+  }
+}
+
+@media (max-width: 340px) {
   .date-prio-wrapper {
     .label {
-      width: 30%;
+      width: 35%;
     }
 
     .value {
-      width: 70%;
+      width: 65%;
     }
-  }
-
-  .date-prio-wrapper tr:first-child td {
-    padding-bottom: 16px;
   }
 }
