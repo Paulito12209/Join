@@ -18,8 +18,13 @@
     <div class="right">
       <label>Priority</label>
       <div class="priority">
-        <button type="button" *ngFor="let p of priorities" [class.active]="taskForm.value.priority === p" [ngClass]="p"
-          (click)="taskForm.patchValue({ priority: p })">
+        <button
+          type="button"
+          *ngFor="let p of priorities"
+          [class.active]="taskForm.value.priority === p"
+          [ngClass]="p"
+          (click)="taskForm.patchValue({ priority: p })"
+        >
           <span class="label">{{ p }}</span>
 
           <img class="prio-icon" [src]="priorityIcons[p]" alt="" />
@@ -27,32 +32,50 @@
       </div>
 
       <label>Assigned to</label>
-      <div class="assignee-field" (click)="toggleAssigneeDropdown(true)" tabindex="0"
-        (blur)="toggleAssigneeDropdown(false)">
+      <div class="assignee-field" (click)="toggleAssigneeDropdown(true)" tabindex="0">
         <span class="placeholder"> Select contacts to assign </span>
-        <span class="caret">▾</span>
+        <img
+          class="dropdown-arrow"
+          [src]="assigneeOpen ? 'img/icons/dropup.svg' : 'img/icons/dropdown.svg'"
+          (click)="$event.stopPropagation(); toggleAssigneeDropdown(!assigneeOpen)"
+        />
       </div>
 
       <div class="assignee-avatars" *ngIf="(taskForm.value.assignedTo || []).length">
-        <span class="avatar" *ngFor="let uid of taskForm.value.assignedTo" [style.background]="getContactColor(uid)"
-          [title]="getContactName(uid)">
+        <span
+          class="avatar"
+          *ngFor="let uid of taskForm.value.assignedTo"
+          [style.background]="getContactColor(uid)"
+          [title]="getContactName(uid)"
+        >
           {{ (getContactName(uid) || '?').slice(0, 1).toUpperCase() }}
         </span>
       </div>
 
       <div class="assigned-list dropdown" *ngIf="assigneeOpen">
-        <label class="assigned-item" *ngFor="let person of contacts" (mousedown)="
+        <label
+          class="assigned-item"
+          *ngFor="let person of contacts"
+          [class.selected]="(taskForm.value.assignedTo || []).includes(person.id!)"
+          (mousedown)="
             toggleAssignee(person.id!, !(taskForm.value.assignedTo || []).includes(person.id!))
-          ">
-          <span class="avatar" aria-hidden="true" [style.background]="person.color || '#6c63ff'">{{
-            (person.name || '?').slice(0, 1).toUpperCase()
-            }}</span>
+          "
+        >
+          <span class="avatar" [style.background]="person.color || '#6c63ff'">
+            {{ (person.name || '?').slice(0, 1).toUpperCase() }}
+          </span>
+
           <span class="name">{{ person.name }}</span>
-          <img class="checkbox-icon" [src]="
+
+          <img
+            class="checkbox-icon"
+            [src]="
               (taskForm.value.assignedTo || []).includes(person.id!)
                 ? 'img/icons/checkbox-done.svg'
                 : 'img/icons/checkbox-todo.svg'
-            " alt="checkbox" />
+            "
+            alt="checkbox"
+          />
         </label>
       </div>
 
@@ -64,7 +87,51 @@
       </select>
 
       <label>Subtasks</label>
-      <input formControlName="subtask" placeholder="Add new subtask" />
+
+      <div class="subtask-input-wrapper">
+        <input
+          [(ngModel)]="newSubtaskTitle"
+          [ngModelOptions]="{ standalone: true }"
+          placeholder="Add new subtask"
+          (focus)="subtaskFocus = true"
+          (blur)="!newSubtaskTitle && (subtaskFocus = false)"
+          (keydown.enter)="$event.preventDefault(); addSubtask()"
+        />
+
+        <span class="subtask-icons" *ngIf="subtaskFocus">
+          <button
+            type="button"
+            class="icon-btn"
+            (click)="clearSubtaskInput(); subtaskFocus = false"
+          >
+            <img src="img/icons/close_black.svg" alt="Clear" />
+          </button>
+
+          <span class="divider"></span>
+
+          <button type="button" class="icon-btn" (click)="addSubtask()">
+            <img src="img/icons/check-hover.svg" alt="Add" />
+          </button>
+        </span>
+      </div>
+
+      <ul class="subtask-list">
+        <li *ngFor="let s of subtasks">
+          <span class="subtask-title">{{ s.title }}</span>
+
+          <div class="item-actions">
+            <button type="button" class="icon-btn" (click)="startEditSubtask(s.id, s.title)">
+              <img src="img/icons/edit.svg" alt="Edit" />
+            </button>
+
+            <span class="divider-small"></span>
+
+            <button type="button" class="icon-btn" (click)="removeSubtask(s.id)">
+              <img src="img/icons/delete.svg" alt="Delete" />
+            </button>
+          </div>
+        </li>
+      </ul>
     </div>
   </form>
 
