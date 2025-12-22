@@ -124,7 +124,8 @@ $color-avatar-15: #ffbb2b;
    box-sizing: border-box;
    border-radius: 24px;
    background: transparent;
-   overflow: visible !important; // Verhindert Scrollbars und Abschneiden
+   overflow: visible; // Verhindert Scrollbars und Abschneiden
+   // overflow: visible !important; // Verhindert Scrollbars und Abschneiden
    // Die innere .example-box übernimmt die Rotation
 }
 

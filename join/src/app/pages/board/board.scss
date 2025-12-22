@@ -403,6 +403,10 @@
             max-width: 100%;
             gap: 8px;
 
+            h2 {
+                font-size: 27px;
+            }
+
             .example-list {
                 display: flex;
                 flex-direction: row;
