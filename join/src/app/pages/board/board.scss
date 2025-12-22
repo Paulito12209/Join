@@ -117,11 +117,66 @@
         }
     }
 
+    // Wrapper für board-content und no-results (für column-reverse im Mobile)
+    .board-main {
+        @include dFlex($fd: column, $ai: stretch);
+        width: 100%;
+    }
+
     .board-content {
         width: 100%;
-        @include dFlex($ai: start, $jc: space-between, $g: 24px); // vergrößerter Abstand
-        flex-wrap: wrap; // Ermöglicht das Wrapen auf kleinen Bildschirmen
+        @include dFlex($ai: start, $jc: space-between, $g: 24px);
+        flex-wrap: wrap;
         padding-bottom: 56px;
+    }
+
+    // "Keine Aufgaben gefunden" - zentrierte Anzeige
+    .no-results {
+        @include dFlex($fd: column, $ai: center, $jc: flex-start, $g: 16px);
+        width: 100%;
+        padding: 0 16px 24px;
+
+        .no-results-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: $color-neutral-placeholders;
+            @include dFlex($ai: center, $jc: center);
+
+            img {
+                width: 40px;
+                height: 40px;
+                opacity: 0.7;
+            }
+        }
+
+        .no-results-title {
+            font-family: 'Inter-Bold';
+            font-size: 20px;
+            font-weight: 700;
+            color: $color-brand-primary;
+            margin: 0;
+            text-align: center;
+        }
+
+        .no-results-search {
+            @include dFlex($ai: center, $jc: center, $g: 8px);
+            background-color: $color-neutral-placeholders;
+            padding: 10px 16px;
+            border-radius: 10px;
+
+            .search-icon {
+                width: 24px;
+                height: 24px;
+                opacity: 0.5;
+            }
+
+            span {
+                font-size: 16px;
+                color: $color-neutral-dark;
+                font-family: 'Inter', sans-serif;
+            }
+        }
     }
 }
 
@@ -133,7 +188,6 @@
     // min-width: 240px;
     flex: 1;
     box-sizing: border-box;
-
 
     .status-header {
         @include dFlex($ai: center, $jc: space-between);
@@ -171,8 +225,6 @@
         @include dFlex($fd: column, $jc: start, $ai: space-between, $g: 16px);
     }
 
-
-
     .no-tasks {
         border: 2px dashed #D1D1D1;
         border-radius: 16px;
@@ -187,16 +239,9 @@
     }
 }
 
-
-
-
-
-
 .example-box:last-child {
     border: none;
 }
-
-
 
 .drag-item {
     width: 100%;
@@ -234,6 +279,7 @@
     }
 
     .task-title {
+        font-family: "Inter-Bold";
         font-weight: 700;
         color: #2A3647; // Dark brand color
     }
@@ -323,12 +369,61 @@
             gap: 16px;
         }
     }
-
-
 }
 
-@media (max-width: 1080px) {
+// Ab 1024px: Button mit Text + Suchleiste nach unten + 2-Spalten-Layout
+@media (max-width: 1024px) {
     .board-container {
+        .board-header {
+            @include dFlex($ai: center, $jc: space-between, $fd: column, $g: 40px);
+            flex-wrap: wrap;
+            padding-bottom: 16px;
+
+            .header-left {
+                width: 100%;
+                @include dFlex($jc: space-between);
+
+                // Button mit Text anzeigen
+                .add-task-btn {
+                    display: flex;
+                    background-color: $color-brand-primary;
+                    color: white;
+                    font-size: 21px;
+                    font-weight: 700;
+                    border-radius: 10px;
+                    padding: 8px 16px;
+                    border: none;
+                    cursor: pointer;
+                    @include dFlex($g: 16px);
+                    height: 48px;
+
+                    span {
+                        display: inline; // Text anzeigen
+                    }
+
+                    img {
+                        width: 18px;
+                        height: 18px;
+                        filter: brightness(0) invert(1);
+                    }
+                }
+            }
+
+            .header-right {
+                gap: 16px;
+                width: 100%;
+
+                // Desktop-Button ausblenden
+                .add-task-btn {
+                    display: none;
+                }
+
+                .search-field {
+                    width: auto;
+                    flex-grow: 1;
+                }
+            }
+        }
 
         .board-content {
             padding-bottom: 32px;
@@ -339,7 +434,6 @@
     .status-container {
         width: 48%; // 2 Spalten pro Zeile
         max-width: none;
-        // margin-bottom: 24px;
     }
 }
 
@@ -349,25 +443,34 @@
 
         .board-header {
             @include dFlex($ai: center, $jc: space-between, $fd: column, $g: 40px);
-            flex-wrap: wrap; // Umbruch erlauben, falls nötig
+            flex-wrap: wrap;
             padding-bottom: 16px;
-
-            h1 {
-                font-size: 47px;
-            }
 
             .header-left {
                 width: 100%;
                 @include dFlex($jc: space-between);
 
-                // Den mobilen Button anzeigen
+                h1 {
+                    font-size: 47px;
+                }
+
+                // Mobiler Button: Nur Plus-Icon
                 .add-task-btn {
-                    display: flex; // Zurück zu flex
+                    display: flex;
                     background-color: $color-brand-primary;
                     border-radius: 10px;
                     border: none;
+                    padding: 8px 10px;
+                    height: 40px;
+
+                    // Text ausblenden unter 768px
+                    span {
+                        display: none;
+                    }
 
                     img {
+                        width: 20px;
+                        height: 20px;
                         filter: brightness(0) invert(1);
                     }
                 }
@@ -377,24 +480,27 @@
                 gap: 16px;
                 width: 100%;
 
-                // Den Desktop-Button ausblenden
+                // Desktop-Button ausblenden
                 .add-task-btn {
                     display: none;
                 }
 
                 .search-field {
-                    // Auf dem Handy muss die Suchleiste schrumpfen oder sich anpassen
                     width: auto;
                     flex-grow: 1;
                 }
             }
         }
 
+        .board-main {
+            flex-direction: column-reverse; // no-results oben anzeigen
+        }
+
         .board-content {
             flex-direction: column;
-            align-items: stretch; // Spalten in voller Breite
+            align-items: stretch;
             padding-bottom: 16px;
-            margin-bottom: 80px; // Platz für mobile Navigation
+            margin-bottom: 80px;
             gap: 0px;
         }
 
@@ -403,8 +509,15 @@
             max-width: 100%;
             gap: 8px;
 
-            h2 {
-                font-size: 27px;
+            .status-header {
+                h2 {
+                    font-size: 27px;
+                }
+
+                button img {
+                    height: 30px;
+                    width: 30px;
+                }
             }
 
             .example-list {
@@ -412,21 +525,20 @@
                 flex-direction: row;
                 overflow-x: auto;
                 gap: 16px;
-                padding: 4px 4px 48px 4px; // Padding für Schatten (oben, rechts, unten, links)
+                padding: 4px 4px 48px 4px;
 
-                // Scrollbar ausblenden
-                -ms-overflow-style: none; // IE und Edge
-                scrollbar-width: none; // Firefox
+                -ms-overflow-style: none;
+                scrollbar-width: none;
 
                 &::-webkit-scrollbar {
-                    display: none; // Chrome, Safari und Opera
+                    display: none;
                 }
 
                 .example-box {
-                    min-width: 250px; // Mindestbreite
-                    width: 250px; // Definierte Breite (fix)
-                    height: 200px; // Feste Höhe für mobile Karten
-                    flex-shrink: 0; // Verhindert Schrumpfen
+                    min-width: 250px;
+                    width: 250px;
+                    height: 200px;
+                    flex-shrink: 0;
                     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.075);
                 }
             }
@@ -434,6 +546,6 @@
     }
 
     .no-tasks {
-        max-width: 250px;
+        width: 250px;
     }
 }
