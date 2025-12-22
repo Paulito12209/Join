@@ -288,7 +288,6 @@
         font-size: 16px;
         min-width: 22%;
         box-sizing: border-box;
-        flex: 1;
     }
 }
 
@@ -400,20 +399,20 @@
             align-items: stretch; // Spalten in voller Breite
             padding-bottom: 16px;
             margin-bottom: 80px; // Platz für mobile Navigation
+            gap: 8px;
         }
 
         .status-container {
             width: 100%;
             max-width: 100%;
-            padding-bottom: 32px;
-            // margin-bottom: 32px;
+            gap: 8px;
 
             .example-list {
                 display: flex;
                 flex-direction: row;
                 overflow-x: auto;
                 gap: 16px;
-                padding: 4px 4px 8px 4px; // Padding für Schatten (oben, rechts, unten, links)
+                padding: 4px 4px 40px 4px; // Padding für Schatten (oben, rechts, unten, links)
 
                 // Scrollbar ausblenden
                 -ms-overflow-style: none; // IE und Edge

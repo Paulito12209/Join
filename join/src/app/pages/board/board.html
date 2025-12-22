@@ -57,7 +57,7 @@
                         <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
                     </div>
                 </div>
-                <div class="no-tasks" *ngIf="todo.length === 0">No tasks To do</div>
+                <div class="no-tasks" *ngIf="todo.length === 0"><span>No tasks To do</span></div>
             </div>
         </div>
 
@@ -99,7 +99,7 @@
                         <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
                     </div>
                 </div>
-                <div class="no-tasks" *ngIf="inProgress.length === 0">No tasks In progress</div>
+                <div class="no-tasks" *ngIf="inProgress.length === 0"><span>No tasks In progress</span></div>
             </div>
         </div>
 
@@ -141,7 +141,9 @@
                         <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
                     </div>
                 </div>
-                <div class="no-tasks" *ngIf="awaitFeedback.length === 0">No tasks Await feedback</div>
+                <div class="no-tasks" *ngIf="awaitFeedback.length === 0">
+                    <p>No tasks Await feedback</p>
+                </div>
             </div>
 
         </div>
@@ -180,7 +182,7 @@
                         </div>
                         <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
                     </div>
-                    <div class="no-tasks" *ngIf="done.length === 0">No tasks Done</div>
+                    <div class="no-tasks" *ngIf="done.length === 0"><span>No tasks Done</span></div>
                 </div>
             </div>
         </div>
