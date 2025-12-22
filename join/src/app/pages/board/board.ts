@@ -154,6 +154,9 @@ export class Board {
         this.tasksService.update(task.id, { status: newStatus });
       }
 
+      // Update local task status immediately to prevent issues with filtering
+      task.status = newStatus;
+
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,

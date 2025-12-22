@@ -115,3 +115,32 @@ $color-avatar-15: #ffbb2b;
    font-style: normal;
    font-display: swap;
 }
+
+/* ============================================
+   DRAG & DROP
+============================================ */
+
+.cdk-drag-preview {
+   box-sizing: border-box;
+   border-radius: 24px;
+   background: transparent;
+   overflow: visible; // Verhindert Scrollbars und Abschneiden
+   // overflow: visible !important; // Verhindert Scrollbars und Abschneiden
+   // Die innere .example-box übernimmt die Rotation
+}
+
+// Innere Box in der Vorschau erhält die Rotation
+.cdk-drag-preview .example-box {
+   transform: rotate(3deg);
+   /* Sicherstellen, dass der Schatten sichtbar ist und nicht abgeschnitten wird */
+   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+      0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+   opacity: 0;
+}
+
+.cdk-drag-animating {
+   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
