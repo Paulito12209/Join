@@ -2,7 +2,7 @@
 
 .add-task-page {
   padding: 32px;
-  max-width: 900px;
+  max-width: 1100px;
   background: #ffffff;
   background-color: #F6F7F8;
 }
@@ -604,4 +604,134 @@ input[type='date']::after {
   height: 16px;
   cursor: pointer;
   flex-shrink: 0;
+  border-radius: 50%;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.assignee-field:hover .dropdown-arrow {
+  background-color: $color-neutral-user-bg;
+  transform: scale(1.05);
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+select {
+  background-image: none;
+  padding-right: 44px;
+  position: relative;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.select-wrapper:hover .select-arrow {
+  background-color: $color-neutral-user-bg;
+}
+
+.select-arrow {
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.select-wrapper:focus-within:hover .select-arrow {
+  transform: translateY(-50%) rotate(180deg) scale(1.05);
+}
+
+@media (max-width: 768px) {
+
+  .add-task-page {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .right {
+    padding-left: 0;
+  }
+
+  .right::before {
+    display: none;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .priority {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .priority button {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 8px;
+    font-size: 14px;
+  }
+
+  .priority .label {
+    white-space: nowrap;
+  }
+
+  .assigned-list.dropdown {
+    position: static;
+    max-height: 240px;
+  }
+
+  .assignee-avatars .avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+    position: sticky;
+    bottom: 0;
+    background: #f6f7f8;
+    padding: 16px 0;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .action-buttons button {
+    width: 100%;
+  }
+
+  .required-hint {
+    text-align: center;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  .icon-btn img {
+    width: 18px;
+    height: 18px;
+  }
 }

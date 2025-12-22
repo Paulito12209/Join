@@ -80,11 +80,16 @@
       </div>
 
       <label>Category<span>*</span></label>
-      <select formControlName="category">
-        <option value="">Select task category</option>
-        <option value="user-story">User story</option>
-        <option value="technical-task">Technical task</option>
-      </select>
+
+      <div class="select-wrapper">
+        <select formControlName="category">
+          <option value="">Select task category</option>
+          <option value="user-story">User story</option>
+          <option value="technical-task">Technical task</option>
+        </select>
+
+        <img class="dropdown-arrow select-arrow" src="img/icons/dropdown.svg" alt="dropdown" />
+      </div>
 
       <label>Subtasks</label>
 
