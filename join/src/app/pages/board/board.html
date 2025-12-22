@@ -57,6 +57,7 @@
                         <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
                     </div>
                 </div>
+                <div class="no-tasks" *ngIf="todo.length === 0">No tasks To do</div>
             </div>
         </div>
 
@@ -98,6 +99,7 @@
                         <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
                     </div>
                 </div>
+                <div class="no-tasks" *ngIf="inProgress.length === 0">No tasks In progress</div>
             </div>
         </div>
 
@@ -139,9 +141,10 @@
                         <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
                     </div>
                 </div>
+                <div class="no-tasks" *ngIf="awaitFeedback.length === 0">No tasks Await feedback</div>
             </div>
-        </div>
 
+        </div>
         <!-- DONE -->
         <div class="status-container">
             <div class="status-header">
@@ -161,7 +164,8 @@
                     <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
                         <div class="progress-bar">
                             <div class="progress-fill"
-                                [style.width.%]="getCompletedSubtasksCount(task) / task.subtasks.length * 100"></div>
+                                [style.width.%]="getCompletedSubtasksCount(task) / task.subtasks.length * 100">
+                            </div>
                         </div>
                         <p class="subtask-count">{{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length }}
                             Subtasks</p>
@@ -176,18 +180,18 @@
                         </div>
                         <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
                     </div>
+                    <div class="no-tasks" *ngIf="done.length === 0">No tasks Done</div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div *ngIf="searchQuery && !todo.length && !inProgress.length && !awaitFeedback.length && !done.length"
-    class="no-results">
-    <span>No tasks found matching "{{searchQuery}}"</span>
-</div>
+    <div *ngIf="searchQuery && !todo.length && !inProgress.length && !awaitFeedback.length && !done.length"
+        class="no-results">
+        <span>No tasks found matching "{{searchQuery}}"</span>
+    </div>
 
-<app-add-task-board *ngIf="isAddDialogOpen" (close)="onAddClose()" (create)="onAddCreate($event)">
-</app-add-task-board>
+    <app-add-task-board *ngIf="isAddDialogOpen" (close)="onAddClose()" (create)="onAddCreate($event)">
+    </app-add-task-board>
 
-<router-outlet></router-outlet>
+    <router-outlet></router-outlet>

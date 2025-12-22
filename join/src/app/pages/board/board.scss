@@ -100,6 +100,7 @@
                 cursor: pointer;
                 @include dFlex($g: 16px);
                 height: 48px;
+                width: 160px;
                 transition: all 100ms ease-in-out;
 
                 &:hover {
@@ -127,8 +128,11 @@
 // Gehört zu BOARD_CONTENT
 .status-container {
     @include dFlex($ai: space-between, $jc: start, $fd: column, $g: 16px);
-    width: 22%;
+    // width: 20%;
+    min-width: 22%;
+    // min-width: 240px;
     flex: 1;
+    box-sizing: border-box;
 
 
     .status-header {
@@ -272,6 +276,20 @@
             }
         }
     }
+
+    .no-tasks {
+        border: 2px dashed #D1D1D1;
+        border-radius: 16px;
+        background-color: #E7E7E7; // Light gray background
+        color: #A8A8A8;
+        text-align: center;
+        padding: 16px;
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        min-width: 22%;
+        box-sizing: border-box;
+        flex: 1;
+    }
 }
 
 
@@ -302,7 +320,7 @@
         padding: 0 32px;
 
         .status-container {
-            width: 45%;
+            min-width: 290px;
         }
 
         .board-content {
@@ -319,7 +337,7 @@
 
         .board-content {
             padding-bottom: 32px;
-            gap: 32px 16px;
+            gap: 16px;
         }
     }
 
@@ -387,6 +405,7 @@
         .status-container {
             width: 100%;
             max-width: 100%;
+            padding-bottom: 32px;
             // margin-bottom: 32px;
 
             .example-list {
@@ -394,7 +413,7 @@
                 flex-direction: row;
                 overflow-x: auto;
                 gap: 16px;
-                padding: 4px 4px 16px 4px; // Padding für Schatten (oben, rechts, unten, links)
+                padding: 4px 4px 8px 4px; // Padding für Schatten (oben, rechts, unten, links)
 
                 // Scrollbar ausblenden
                 -ms-overflow-style: none; // IE und Edge
@@ -409,9 +428,13 @@
                     width: 250px; // Definierte Breite (fix)
                     height: 200px; // Feste Höhe für mobile Karten
                     flex-shrink: 0; // Verhindert Schrumpfen
-                    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.15);
+                    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.075);
                 }
             }
         }
+    }
+
+    .no-tasks {
+        max-width: 250px;
     }
 }
