@@ -7,16 +7,19 @@
 
     <div class="label-input-wrapper">
       <label>Description</label>
-      <textarea formControlName="description" placeholder="Enter a Description"></textarea>
+      <div class="textarea-wrapper">
+        <textarea formControlName="description" placeholder="Enter a Description"></textarea>
+      </div>
     </div>
 
     <div class="label-input-wrapper">
       <label>Due date</label>
       <input type="date" formControlName="dueDate" />
+      <!-- <input type="text" formControlName="dueDate" placeholder="dd/mm/yyyy" /> -->
     </div>
 
     <!-- PRIORITY -->
-    <div class="priority-row">
+    <div class="priority-wrapper">
       <label>Priority</label>
 
       <div class="priority">
@@ -53,13 +56,13 @@
     </div>
 
     <!-- ASSIGNED TO -->
-    <div class="assigned-row">
+    <div class="assigned-wrapper">
       <label>Assigned to</label>
 
       <div class="assigned-dropdown" (click)="$event.stopPropagation()">
         <div class="assigned-input" (click)="assigneeOpen = !assigneeOpen">
           <input type="text" placeholder="Select contacts to assign" readonly />
-          <span class="dropdown-arrow">&#9662;</span>
+          <span class="dropdown-arrow" [class.dropdown-arrow--open]="assigneeOpen"></span>
         </div>
 
         @if (assigneeOpen) {

@@ -26,20 +26,70 @@ textarea {
   font-size: 20px;
   font-weight: 400;
   line-height: 1.2;
+
+  outline: none; // verhindert den schwarzen Browser-Focus-Ring
+  cursor: pointer;
+}
+
+input:focus,
+textarea:focus {
+  border-color: $color-brand-highlight;
+}
+
+.textarea-wrapper {
+  position: relative;
 }
 
 textarea {
   height: 120px;
-  //   resize: vertical;
+  resize: none;
+}
+
+.textarea-wrapper::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  bottom: 11px;
+  width: 18.9px;
+  height: 18.9px;
+  background-image: url('../../../../../../public/img/icons/textarea-resize.svg');
+  pointer-events: none;
+}
+
+input::placeholder {
+  color: $color-neutral-light;
+  opacity: 1;
+}
+
+input[type='date'] {
+  position: relative;
+}
+
+/* Native calendar icon ausblenden */
+input[type='date']::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+/* Eigenes Icon */
+input[type='date']::after {
+  content: '';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  background-image: url('../../../../../../public/img/icons/due_date.svg');
 }
 
 /* Priority */
-.priority-row {
+.priority-wrapper {
   @include dFlex($fd: column, $ai: stretch, $g: 8px);
 }
 
 .priority {
-  @include dFlex($jc: space-between);
+  // @include dFlex($jc: space-between);
+  @include dFlex($g: 16px);
 }
 
 .priority button {
@@ -87,7 +137,7 @@ textarea {
 }
 
 /* Assigned */
-.assigned-row {
+.assigned-wrapper {
   @include dFlex($fd: column, $ai: stretch, $g: 8px);
 }
 
@@ -96,14 +146,18 @@ textarea {
   cursor: pointer;
 }
 
-.assigned-input { // prüfen
-  display: flex;
-  align-items: center;
-  border: 1px solid #d1d1d1;
-  border-radius: 8px;
-  padding: 10px;
+.assigned-input {
+  @include dFlex();
+  border: 1px solid $color-neutral-light;
+  border-radius: 10px;
+  padding: 12px 16px;
   background: #fff;
   cursor: pointer;
+}
+
+.assigned-input input::placeholder {
+  color: black;
+  opacity: 1; // wichtig für Firefox
 }
 
 .assigned-input input {
@@ -114,9 +168,23 @@ textarea {
 }
 
 .dropdown-arrow {
-  margin-left: auto;
-  font-size: 18px;
-  color: #2a3647;
+  width: 0;
+  height: 0;
+
+  /* 7.21px Breite = 3.605px links + 3.605px rechts */
+  border-left: 3.605px solid transparent;
+  border-right: 3.605px solid transparent;
+
+  /* 4.6px Höhe */
+  border-top: 4.6px solid $color-brand-primary;
+
+  /* Abstand zum Input */
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+.dropdown-arrow--open {
+  transform: rotate(180deg);
 }
 
 .dropdown-list {
@@ -127,7 +195,7 @@ textarea {
   margin-top: 4px;
   background: #fff;
   border: 1px solid #d1d1d1;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 100;
   max-height: 200px;
@@ -184,15 +252,16 @@ textarea {
 }
 
 .assigned-badges {
-  display: flex;
+  // display: flex;
+  @include dFlex($jc: flex-start);
   flex-wrap: wrap;
   margin-top: 4px;
   padding-left: 8px;
 }
 
 .badge-avatar {
-  width: 32px;
-  height: 32px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   color: #fff;
   display: flex;
@@ -201,8 +270,8 @@ textarea {
   font-size: 12px;
   font-weight: 500;
   border: 2px solid #fff;
-//   margin-left: -8px;
-    margin-left: 8px;
+  //   margin-left: -8px;
+  margin-left: 8px;
 }
 
 .badge-avatar:first-child {
@@ -220,7 +289,7 @@ textarea {
   display: flex;
   align-items: center;
   border: 1px solid #d1d1d1;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 8px 16px;
   background: #fff;
 }
@@ -334,3 +403,50 @@ textarea {
   display: flex;
   align-items: center;
 }
+
+@media (max-width: 768px) {
+  .edit-form {
+    @include dFlex($fd: column, $ai: stretch, $g: 16px);
+  }
+
+  label,
+  input,
+  textarea {
+    font-size: 16px;
+  }
+
+  textarea {
+    height: 88px;
+  }
+
+  .priority button {
+    width: 104px;
+    height: 41px;
+    padding: 18px 10px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 440px) {
+  .priority {
+    @include dFlex($g: 8px);
+  }
+
+  .priority button {
+    width: 104px; // ohne max?
+    height: 41px; // ohne max?
+    padding: 18px 6px;
+    font-size: 16px;
+  }
+
+  .priority button img {
+    width: 16px;
+  }
+}
+
+@media (max-width: 440px) {
+  .priority {
+    @include dFlex($fd: column, $ai:flex-start, $g: 8px);
+  }
+}
+

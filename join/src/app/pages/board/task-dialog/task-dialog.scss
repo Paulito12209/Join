@@ -31,6 +31,7 @@
 
   width: 92%;
   max-width: 525px;
+  // width: 525px;
   max-height: 95vh;
 
   background: white;
@@ -127,6 +128,10 @@ header.header--edit {
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+
+  /* --- scrollbar spacing (moves scrollbar visually into padding) --- */
+  padding-right: 16px;
+  margin-right: -16px;
 }
 
 .dialog-content__inner {
@@ -362,28 +367,34 @@ header.header--edit {
    RESPONSIVE
 ================================ */
 
-@media (max-width: 1024px) {
-  .dialog {
-    max-width: 420px;
-  }
+// @media (max-width: 1024px) {
+//   .dialog {
+//     max-width: 420px;
+//   }
 
-  .date-prio-wrapper {
-    .label {
-      width: 30%;
-    }
+//   .date-prio-wrapper {
+//     .label {
+//       width: 30%;
+//     }
 
-    .value {
-      width: 70%;
-    }
-  }
-}
+//     .value {
+//       width: 70%;
+//     }
+//   }
+// }
 
 @media (max-width: 768px) {
   .dialog {
     @include dFlex($fd: column, $ai: stretch, $g: 16px);
-    max-height: calc(100svh - 180px);
+    // max-height: calc(100svh - 180px);
+    max-height: 95%;
     max-width: 396px;
     padding: 32px 24px;
+  }
+
+  .dialog-content {
+    padding-right: 8px;
+    margin-right: -8px;
   }
 
   .dialog-content__inner {
