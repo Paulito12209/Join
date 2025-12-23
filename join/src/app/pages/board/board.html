@@ -12,7 +12,7 @@
                 <div class="search-separator"></div>
                 <img src="img/icons/search.svg" alt="Search" class="search-icon">
             </div>
-            <button class="add-task-btn" (click)="openAddTask()">
+            <button class="add-task-btn" (click)="openAddTask('todo')">
                 <span>Add task</span> <img src="img/icons/add.svg" alt="Add task">
             </button>
         </div>
@@ -25,7 +25,7 @@
             <div class="status-container">
                 <div class="status-header">
                     <h2>To do</h2>
-                    <button (click)="openAddTask()">
+                    <button (click)="openAddTask('todo')">
                         <img src="img/icons/add_board_button.svg" alt="Add task">
                     </button>
                 </div>
@@ -74,7 +74,7 @@
             <div class="status-container">
                 <div class="status-header">
                     <h2>In progress</h2>
-                    <button (click)="openAddTask()">
+                    <button (click)="openAddTask('in-progress')">
                         <img src="img/icons/add_board_button.svg" alt="Add task">
                     </button>
                 </div>
@@ -122,7 +122,7 @@
             <div class="status-container">
                 <div class="status-header">
                     <h2>Await feedback</h2>
-                    <button (click)="openAddTask()">
+                    <button (click)="openAddTask('awaiting-feedback')">
                         <img src="img/icons/add_board_button.svg" alt="Add task">
                     </button>
                 </div>

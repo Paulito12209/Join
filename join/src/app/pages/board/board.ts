@@ -43,6 +43,7 @@ export class Board {
 
   // ++++++++Dialog state for Add Task +++++++++++++++++++++++++++++++
   isAddDialogOpen = false;
+  currentAddStatus: Task['status'] = 'todo';
 
   constructor() {
     this.tasksService.list().subscribe((tasks) => {
@@ -80,7 +81,8 @@ export class Board {
 
   // ++++++ dialog function: onaddclose openAddTask onAddCreate+++++++++++
 
-  openAddTask(): void {
+  openAddTask(status: Task['status'] = 'todo'): void {
+    this.currentAddStatus = status;
     this.isAddDialogOpen = true;
   }
 
@@ -110,7 +112,7 @@ export class Board {
     const payload: Omit<Task, 'id' | 'createdAt' | 'updatedAt'> = {
       title: formValue.title,
       description: formValue.description ?? '',
-      status: 'todo',
+      status: this.currentAddStatus,
       priority: (priorityMap[formValue.priority] ?? 'medium'),
       dueDate: formValue.dueDate ?? undefined,
       category: 'user-story',
