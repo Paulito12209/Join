@@ -18,7 +18,8 @@
         <textarea formControlName="description" placeholder="Enter a Description"></textarea>
 
         <label>Due date<span>*</span></label>
-        <input type="date" formControlName="dueDate" placeholder="dd/mm/yyyy" />
+        <input #dateInput type="date" formControlName="dueDate" placeholder="dd/mm/yyyy"
+          (click)="dateInput.showPicker()" />
       </div>
       <div class="right dashed-box">
         <div class="priority-row">
