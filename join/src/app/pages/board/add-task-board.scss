@@ -775,16 +775,16 @@ input[type='date']::-webkit-calendar-picker-indicator {
   }
 
   .toast {
-    position: fixed; // <- wichtig (nicht mehr im scrollenden dialog)
+    position: fixed;
     left: 50%;
     top: 50%;
     width: calc(100% - 32px);
     max-width: 360px;
 
-    transform: translate(-50%, 100svh); // Start: unterhalb des Screens (stabiler als 100vh)
+    transform: translate(-50%, 100svh);
     animation: toastSlideToCenter 300ms ease-out forwards;
 
-    z-index: 100; // über dialog/overlay (bei dir war 8)
+    z-index: 1000; // sicher über overlay/dialog
   }
 
   @keyframes toastSlideToCenter {

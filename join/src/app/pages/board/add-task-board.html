@@ -1,4 +1,12 @@
 <div class="overlay" (click)="onClose()">
+  <!-- Toast (centered in dialog) -->
+  @if (showTaskAddedToast) {
+  <div class="toast">
+    <span>Task added to board</span>
+    <img src="img/icons/board-active.svg" alt="" />
+  </div>
+  }
+
   <div
     class="dialog dialog--animated"
     [class.dialog--closing]="isClosing"
@@ -9,14 +17,6 @@
       <h2>Add Task</h2>
       <button class="close" (click)="onClose()">✕</button>
     </div>
-
-    <!-- Toast (centered in dialog) -->
-    @if (showTaskAddedToast) {
-    <div class="toast">
-      <span>Task added to board</span>
-      <img src="img/icons/board-active.svg" alt="" />
-    </div>
-    }
 
     <form [formGroup]="taskForm" class="content">
       <div class="left">
