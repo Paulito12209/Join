@@ -27,6 +27,7 @@ export class TaskDialog {
   isEdit$ = this.route.url.pipe(map((segments) => segments.some((s) => s.path === 'edit')));
   isClosing = false;
   disableEnterAnimation = false;
+  isHardClose = false;
 
   contacts$ = this.contactsService.getContacts(); // <-- dein Service
 
@@ -62,11 +63,11 @@ export class TaskDialog {
     }, 400);
   }
 
-  async deleteTask(task: Task): Promise<void> {
+  deleteTask(task: Task): void {
     if (!task.id) return;
 
-    await this.tasksService.remove(task.id);
-    this.close();
+    this.hardClose(); 
+    void this.tasksService.remove(task.id); 
   }
 
   openEdit(task: Task): void {
@@ -152,5 +153,10 @@ export class TaskDialog {
     this.router.navigate(['/board', task.id], {
       state: { skipEnter: true },
     });
+  }
+
+  private hardClose() {
+    this.isHardClose = true;
+    this.router.navigate(['/board']);
   }
 }
