@@ -5,8 +5,8 @@
   align-items: center;
   border: 1px solid $color-neutral-light;
   border-radius: 8px;
-  padding: 0px 16px 8px;
-  background: white;
+  padding: 8px 16px 8px;
+  background: #fff;
   margin-top: 8px;
 }
 
@@ -232,8 +232,8 @@
 
 .dropdown-arrow {
   margin-left: auto;
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
 }
 
@@ -483,8 +483,8 @@ select {
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   pointer-events: none;
   object-fit: contain;
 }
@@ -638,11 +638,11 @@ input[type='date']::-webkit-calendar-picker-indicator {
   background: transparent;
 }
 
-.actions button img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-}
+// .actions button img {
+//   width: 20px;
+//   height: 20px;
+//   object-fit: contain;
+// }
 
 .cancel {
   background: white !important;
@@ -653,6 +653,11 @@ input[type='date']::-webkit-calendar-picker-indicator {
     border-color: $color-brand-primary-hover !important;
     color: $color-brand-primary-hover;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
   }
 }
 
@@ -673,6 +678,11 @@ input[type='date']::-webkit-calendar-picker-indicator {
     background: $color-neutral-mid !important;
     cursor: not-allowed;
     box-shadow: none;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
   }
 }
 
@@ -713,6 +723,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
 }
 
 @media (max-width: 768px) {
+
   // Overlay positioniert zwischen Header und Navigation
   .overlay {
     background: $color-neutral-bg; // Solider Hintergrund
@@ -784,7 +795,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
     transform: translate(-50%, 100svh);
     animation: toastSlideToCenter 300ms ease-out forwards;
 
-    z-index: 8; 
+    z-index: 8;
   }
 
   @keyframes toastSlideToCenter {
@@ -792,6 +803,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
       transform: translate(-50%, 100svh);
       opacity: 0;
     }
+
     to {
       transform: translate(-50%, -50%);
       opacity: 1;

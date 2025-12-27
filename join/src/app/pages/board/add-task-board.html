@@ -7,12 +7,8 @@
   </div>
   }
 
-  <div
-    class="dialog dialog--animated"
-    [class.dialog--closing]="isClosing"
-    [class.dialog--toast-lock]="showTaskAddedToast"
-    (click)="$event.stopPropagation(); assigneeOpen = false"
-  >
+  <div class="dialog dialog--animated" [class.dialog--closing]="isClosing"
+    [class.dialog--toast-lock]="showTaskAddedToast" (click)="$event.stopPropagation(); assigneeOpen = false">
     <div class="header">
       <h2>Add Task</h2>
       <button class="close" (click)="onClose()">✕</button>
@@ -22,54 +18,32 @@
       <div class="left">
         <label>Title<span>*</span></label>
         <input formControlName="title" placeholder="Enter a title" />
-        <span class="error" *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched"
-          >This field is required</span
-        >
+        <span class="error" *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched">This field is
+          required</span>
 
         <label>Description</label>
         <textarea formControlName="description" placeholder="Enter a Description"></textarea>
 
         <label>Due date<span>*</span></label>
-        <input
-          #dateInput
-          type="date"
-          formControlName="dueDate"
-          placeholder="dd/mm/yyyy"
-          required
-          (click)="dateInput.showPicker()"
-        />
-        <span
-          class="error"
-          *ngIf="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched"
-          >This field is required</span
-        >
+        <input #dateInput type="date" formControlName="dueDate" placeholder="dd/mm/yyyy" required
+          (click)="dateInput.showPicker()" />
+        <span class="error" *ngIf="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched">This field is
+          required</span>
       </div>
       <div class="right dashed-box">
         <div class="priority-row">
           <label>Priority</label>
           <div class="priority">
-            <button
-              type="button"
-              class="prio-urgent"
-              [class.active]="taskForm.value.priority === 'Urgent'"
-              (click)="taskForm.patchValue({ priority: 'Urgent' })"
-            >
+            <button type="button" class="prio-urgent" [class.active]="taskForm.value.priority === 'Urgent'"
+              (click)="taskForm.patchValue({ priority: 'Urgent' })">
               Urgent <img src="img/icons/prio-urgent.svg" alt="Urgent" />
             </button>
-            <button
-              type="button"
-              class="prio-medium"
-              [class.active]="taskForm.value.priority === 'Medium'"
-              (click)="taskForm.patchValue({ priority: 'Medium' })"
-            >
+            <button type="button" class="prio-medium" [class.active]="taskForm.value.priority === 'Medium'"
+              (click)="taskForm.patchValue({ priority: 'Medium' })">
               Medium <img src="img/icons/prio-medium.svg" alt="Medium" />
             </button>
-            <button
-              type="button"
-              class="prio-low"
-              [class.active]="taskForm.value.priority === 'Low'"
-              (click)="taskForm.patchValue({ priority: 'Low' })"
-            >
+            <button type="button" class="prio-low" [class.active]="taskForm.value.priority === 'Low'"
+              (click)="taskForm.patchValue({ priority: 'Low' })">
               Low <img src="img/icons/prio-low.svg" alt="Low" />
             </button>
           </div>
@@ -78,50 +52,31 @@
           <label>Assigned to</label>
           <div class="assigned-dropdown" (click)="$event.stopPropagation()">
             <div class="assigned-input" (click)="assigneeOpen = !assigneeOpen">
-              <input
-                type="text"
-                placeholder="Select contacts to assign"
-                readonly
-                [value]="taskForm.value.assignedTo?.length ? '' : ''"
-              />
-              <img
-                class="dropdown-arrow"
-                [src]="assigneeOpen ? 'img/icons/dropup.svg' : 'img/icons/dropdown.svg'"
-                alt="dropdown"
-              />
+              <input type="text" placeholder="Select contacts to assign" readonly
+                [value]="taskForm.value.assignedTo?.length ? '' : ''" />
+              <img class="dropdown-arrow" [src]="assigneeOpen ? 'img/icons/dropup.svg' : 'img/icons/dropdown.svg'"
+                alt="dropdown" />
             </div>
             <div class="dropdown-list" *ngIf="assigneeOpen">
               <ng-container *ngFor="let c of contacts">
-                <div
-                  *ngIf="c.id"
-                  class="dropdown-item"
-                  [class.selected]="isAssigned(c.id)"
-                  (click)="toggleAssignee(c.id, !isAssigned(c.id)); $event.stopPropagation()"
-                >
+                <div *ngIf="c.id" class="dropdown-item" [class.selected]="isAssigned(c.id)"
+                  (click)="toggleAssignee(c.id, !isAssigned(c.id)); $event.stopPropagation()">
                   <span class="avatar" [ngStyle]="{ background: c.color }">{{
                     getInitials(c.name)
-                  }}</span>
+                    }}</span>
                   <span class="name">{{ c.name }}</span>
-                  <img
-                    class="checkbox-icon"
-                    [src]="
+                  <img class="checkbox-icon" [src]="
                       isAssigned(c.id)
                         ? 'img/icons/checkbox-done.svg'
                         : 'img/icons/checkbox-todo.svg'
-                    "
-                    (click)="$event.stopPropagation(); toggleAssignee(c.id, !isAssigned(c.id))"
-                    alt="checkbox"
-                  />
+                    " (click)="$event.stopPropagation(); toggleAssignee(c.id, !isAssigned(c.id))" alt="checkbox" />
                 </div>
               </ng-container>
             </div>
           </div>
           <div class="assigned-badges">
-            <span
-              *ngFor="let uid of taskForm.value.assignedTo"
-              class="badge-avatar"
-              [ngStyle]="{ background: getContactColor(uid) }"
-            >
+            <span *ngFor="let uid of taskForm.value.assignedTo" class="badge-avatar"
+              [ngStyle]="{ background: getContactColor(uid) }">
               {{ getContactInitials(uid) }}
             </span>
           </div>
@@ -129,37 +84,22 @@
         <div class="category-row">
           <label>Category<span>*</span></label>
           <div class="select-wrapper">
-            <select
-              formControlName="category"
-              (focus)="categoryOpen = true"
-              (blur)="categoryOpen = false"
-            >
+            <select formControlName="category" (focus)="categoryOpen = true" (blur)="categoryOpen = false">
               <option value="">Select task category</option>
               <option *ngFor="let c of categories">{{ c }}</option>
             </select>
-            <img
-              class="select-arrow"
-              [src]="categoryOpen ? 'img/icons/dropup.svg' : 'img/icons/dropdown.svg'"
-              alt="dropdown"
-            />
+            <img class="select-arrow" [src]="categoryOpen ? 'img/icons/dropup.svg' : 'img/icons/dropdown.svg'"
+              alt="dropdown" />
           </div>
-          <span
-            class="error"
-            *ngIf="taskForm.get('category')?.invalid && taskForm.get('category')?.touched"
-            >This field is required</span
-          >
+          <span class="error" *ngIf="taskForm.get('category')?.invalid && taskForm.get('category')?.touched">This field
+            is required</span>
         </div>
         <div class="subtasks-row">
           <label>Subtasks</label>
           <div class="subtask-input-wrapper" [class.focused]="subtaskFocus">
-            <input
-              [(ngModel)]="newSubtaskTitle"
-              [ngModelOptions]="{ standalone: true }"
-              (focus)="subtaskFocus = true"
-              (keydown.enter)="$event.preventDefault(); addSubtask()"
-              placeholder="Add new subtask"
-              name="subtaskInput"
-            />
+            <input [(ngModel)]="newSubtaskTitle" [ngModelOptions]="{ standalone: true }" (focus)="subtaskFocus = true"
+              (keydown.enter)="$event.preventDefault(); addSubtask()" placeholder="Add new subtask"
+              name="subtaskInput" />
             <span class="subtask-icons">
               <ng-container *ngIf="!subtaskFocus && !newSubtaskTitle; else activeIcons">
                 <button type="button" class="icon-btn" (click)="subtaskFocus = true">
@@ -167,11 +107,7 @@
                 </button>
               </ng-container>
               <ng-template #activeIcons>
-                <button
-                  type="button"
-                  class="icon-btn"
-                  (click)="clearSubtaskInput(); subtaskFocus = false"
-                >
+                <button type="button" class="icon-btn" (click)="clearSubtaskInput(); subtaskFocus = false">
                   <img src="img/icons/close_black.svg" alt="Clear" />
                 </button>
                 <span class="divider"></span>
@@ -182,10 +118,7 @@
             </span>
           </div>
           <ul class="subtask-list">
-            <li
-              *ngFor="let s of subtasks; let i = index"
-              (dblclick)="startEditSubtask(s.id, s.title)"
-            >
+            <li *ngFor="let s of subtasks; let i = index" (dblclick)="startEditSubtask(s.id, s.title)">
               <ng-container *ngIf="editSubtaskId !== s.id; else editTpl">
                 <span class="subtask-bg-hover"></span>
                 <!-- Hover overlay if needed, or stick to li:hover -->
@@ -203,11 +136,7 @@
               </ng-container>
               <ng-template #editTpl>
                 <div class="edit-wrapper">
-                  <input
-                    [(ngModel)]="editSubtaskTitle"
-                    [ngModelOptions]="{ standalone: true }"
-                    class="edit-input"
-                  />
+                  <input [(ngModel)]="editSubtaskTitle" [ngModelOptions]="{ standalone: true }" class="edit-input" />
                   <div class="edit-actions">
                     <button type="button" class="icon-btn" (click)="removeSubtask(s.id)">
                       <img src="img/icons/delete.svg" alt="Delete" />
@@ -222,9 +151,7 @@
             </li>
           </ul>
           <!-- Required-Hint für Mobile View (unter Subtasks) -->
-          <span class="required-hint-mobile"
-            ><span class="asterisk">*</span>This field is required</span
-          >
+          <span class="required-hint-mobile"><span class="asterisk">*</span>This field is required</span>
         </div>
       </div>
     </form>
@@ -232,10 +159,10 @@
       <span class="required-hint"><span class="asterisk">*</span>This field is required</span>
       <div class="action-buttons">
         <button class="cancel" (click)="onClose()">
-          Cancel <img src="img/icons/close_black.svg" alt="Cancel" />
+          Cancel <img src="img/icons/dialog_cancel.svg" alt="Cancel" />
         </button>
         <button type="button" class="submit" (click)="onSubmit()">
-          Create Task <img src="img/icons/check.svg" alt="Create" />
+          Create Task <img src="img/icons/dialog_check.svg" alt="Create" />
         </button>
       </div>
     </div>
