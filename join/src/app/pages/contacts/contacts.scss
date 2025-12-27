@@ -43,7 +43,7 @@ h3 {
   display: flex;
   flex-direction: column;
   min-width: 40%;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid $color-neutral-light;
   overflow-y: auto; // Scroll auf dem ganzen Container
   overflow-x: hidden;
 }
@@ -82,7 +82,7 @@ h3 {
   font-weight: 400;
   margin-bottom: 6px;
   padding: 0 8% 20px;
-  border-bottom: 1px solid #d1d1d1;
+  border-bottom: 1px solid $color-neutral-light;
 }
 
 .contact-entry {
@@ -92,27 +92,27 @@ h3 {
   align-items: center;
   gap: 16px;
   padding: 16px 5%;
-  border-radius: 6px;
+  border-radius: 10px;
   cursor: pointer;
   min-width: 0; // Ermöglicht Flex-Items zu schrumpfen
 }
 
 .contact-entry.active {
-  background: #2a3647;
-  border: 2px solid #2a3647;
+  background: $color-brand-primary;
+  border: 2px solid $color-brand-primary;
   cursor: default;
 }
 
 .contact-entry.active:hover {
-  background: #2a3647 !important;
+  background: $color-brand-primary !important;
 }
 
 .contact-entry.active .name {
-  color: #fff;
+  color: white;
 }
 
 .contact-entry:hover {
-  background: linear-gradient(to bottom, #ffffff, #fafafa, #f1f1f1); // Änderung hier
+  background: linear-gradient(180deg, #f9f9f9 0%, #f0f0f0 100%);
 }
 
 .circle {
@@ -123,10 +123,10 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: white;
   font-size: 16px;
   font-weight: 400;
-  border: 2px solid #fff;
+  border: 2px solid white;
   flex-shrink: 0;
 }
 
@@ -135,7 +135,7 @@ h3 {
   height: 120px;
   font-size: $h3;
   font-weight: 500;
-  border: 4px solid #fff;
+  border: 4px solid white;
 }
 
 .contact-info {
@@ -154,7 +154,7 @@ h3 {
 .contact-info .email {
   font-size: $p;
   font-weight: 400;
-  color: #007cee;
+  color: $color-email;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -162,7 +162,7 @@ h3 {
 
 .contact-detail {
   flex: 1;
-  background-color: #f6f7f8;
+  background-color: $color-neutral-bg;
   padding: 120px 40px;
 
   // Boxshadow links
@@ -207,14 +207,14 @@ h3 {
 .divider {
   width: 3px;
   height: 59px;
-  background: #29abe2;
+  background: $color-brand-highlight;
   border-radius: 2px;
 }
 
 .contact-detail .sub {
   font-size: 27px;
   font-weight: 400;
-  color: #2a3547;
+  color: $color-brand-primary;
 }
 
 .detail-content {
@@ -263,7 +263,7 @@ h3 {
   gap: 16px;
   font-size: 16px;
   font-weight: 400;
-  color: #2a3647;
+  color: $color-brand-primary;
   margin-top: 4px;
   cursor: pointer;
 }
@@ -274,7 +274,7 @@ h3 {
   gap: 6px;
   background: transparent;
   border: none;
-  color: #2a3647;
+  color: $color-brand-primary;
   cursor: pointer;
   font-size: 16px;
 
@@ -289,7 +289,6 @@ h3 {
 }
 
 .action-btn:hover {
-  // color: #007cee;
   color: #02A4BD;
 }
 
@@ -307,15 +306,15 @@ h3 {
 }
 
 .email-detail {
-  color: #007cee;
+  color: $color-email;
   font-weight: 400;
 }
 
 .add-contact-btn {
   width: 100%;
   padding: 16px 4px;
-  background: #2a3647;
-  color: #fff;
+  background: $color-brand-primary;
+  color: white;
   border: none;
   border-radius: 10px;
   font-size: 21px;
@@ -439,7 +438,7 @@ h3 {
       height: 96px;
       font-size: 40px;
       font-weight: 500;
-      // border: 4px solid #fff;
+      // border: 4px solid white;
     }
 
     .name {
@@ -487,7 +486,7 @@ h3 {
     bottom: 80px;
     height: auto;
 
-    background: #f6f7f8;
+    background: $color-neutral-bg;
     padding: 140px 30px 30px;
 
     display: flex;
@@ -560,7 +559,7 @@ h3 {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: #2a3647;
+    background: $color-brand-primary;
     justify-content: center;
     align-items: center;
     border: none;
@@ -583,7 +582,7 @@ h3 {
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: #2a3647;
+    background: $color-brand-primary;
     justify-content: center;
     align-items: center;
     border: none;
@@ -595,9 +594,9 @@ h3 {
   .mobile-fab-actions .dots {
     width: 6px;
     height: 6px;
-    background: #fff;
+    background: white;
     border-radius: 50%;
-    box-shadow: 0 -10px 0 #fff, 0 10px 0 #fff;
+    box-shadow: 0 -10px 0 white, 0 10px 0 white;
   }
 
   /* Slide-in Action Panel */
@@ -608,7 +607,7 @@ h3 {
     right: 10px;
     width: 150px;
     height: 130px;
-    background: #fff;
+    background: white;
 
     border-radius: 16px 16px 0 16px;
 
@@ -653,7 +652,7 @@ h3 {
     border: none;
     text-align: left;
     font-size: 18px;
-    color: #2a3647;
+    color: $color-brand-primary;
     cursor: pointer;
   }
 

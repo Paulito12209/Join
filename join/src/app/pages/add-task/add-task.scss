@@ -3,8 +3,8 @@
 .add-task-page {
   padding: 32px;
   max-width: 1100px;
-  background: #ffffff;
-  background-color: #f6f7f8;
+  background: white;
+  background-color: $color-neutral-bg;
 }
 
 .toast {
@@ -101,10 +101,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #e0e0e0;
+  border: 1px solid $color-neutral-light;
   border-radius: 8px;
   padding: 8px 12px;
-  background: #fff;
+  background: white;
   cursor: pointer;
 }
 
@@ -132,7 +132,7 @@
   justify-content: center;
   font-size: 12px;
   font-weight: 600;
-  color: #fff;
+  color: white;
 }
 
 .assignee-field .chip .remove {
@@ -157,10 +157,9 @@
   width: 100%;
   max-height: 220px;
   overflow: auto;
-  border: 1px solid #e0e0e0;
   border-radius: 8px;
-  background: #fff;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  background: white;
+  box-shadow: 0 0 14px 3px rgba(0, 0, 0, 0.04);
 }
 
 .assigned-item {
@@ -177,7 +176,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: white;
   font-weight: 600;
 }
 
@@ -197,7 +196,7 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   padding: 8px;
-  background: #fff;
+  background: white;
 }
 
 .assigned-item {
@@ -225,7 +224,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  color: #fff;
+  color: white;
   background: #6c63ff;
   /* fallback color */
 }
@@ -233,7 +232,7 @@
 .assigned-item .name {
   font-size: 14px;
   font-weight: 400;
-  color: #000000;
+  color: black;
 }
 
 .assignee-avatars {
@@ -251,7 +250,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  color: #ffffff;
+  color: white;
   font-size: 14px;
 }
 
@@ -266,7 +265,7 @@
 }
 
 .dialog {
-  background: #fff;
+  background: white;
   border-radius: 16px;
   width: 900px;
   padding: 24px;
@@ -300,7 +299,7 @@ label {
 }
 
 label span {
-  color: #ff3d00;
+  color: $color-priority-urgent;
   margin-left: 4px;
 }
 
@@ -310,7 +309,7 @@ select {
   width: 100%;
   padding: 12px 14px;
   border-radius: 10px;
-  border: 1px solid #d1d1d1;
+  border: 1px solid $color-neutral-light;
   font-size: 14px;
   margin-top: 8px;
 }
@@ -324,7 +323,7 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: #2a3647;
+  border-color: $color-brand-primary;
 }
 
 .priority {
@@ -338,7 +337,7 @@ select:focus {
   min-width: 90px;
   height: 40px;
   padding: 10px 18px;
-  background-color: #fff;
+  background-color: white;
   border-radius: 10px;
   border-color: $color-neutral-light;
   font-size: 14px;
@@ -367,7 +366,7 @@ select:focus {
 .priority button.Urgent.active {
   background-color: $color-priority-urgent;
   border-color: $color-priority-urgent;
-  color: #ffffff;
+  color: white;
   font-weight: 600;
   box-shadow: none;
 }
@@ -375,7 +374,7 @@ select:focus {
 .priority button.Medium.active {
   background-color: $color-priority-medium;
   border-color: $color-priority-medium;
-  color: #ffffff;
+  color: white;
   font-weight: 600;
   box-shadow: none;
 }
@@ -383,7 +382,7 @@ select:focus {
 .priority button.Low.active {
   background-color: $color-priority-low;
   border-color: $color-priority-low;
-  color: #ffffff;
+  color: white;
   font-weight: 600;
   box-shadow: none;
 }
@@ -397,11 +396,11 @@ select:focus {
 
 .required-hint {
   font-size: 13px;
-  color: #6b6b6b;
+  color: black;
 }
 
 .required-hint .asterisk {
-  color: #ff3d00;
+  color: $color-priority-urgent;
   margin-right: 2px;
 }
 
@@ -425,8 +424,8 @@ select:focus {
 .actions .submit {
   padding: 12px 20px;
   border-radius: 10px;
-  background: #2a3647;
-  color: #ffffff;
+  background: $color-brand-primary;
+  color: white;
   font-weight: 400;
   border: none;
   cursor: pointer;
@@ -459,8 +458,8 @@ select:focus {
 .actions .clear {
   padding: 12px 20px;
   border-radius: 10px;
-  background: #f2f2f2;
-  color: #2a3647;
+  background: $color-neutral-bg;
+  color: $color-brand-primary;
   font-weight: 400;
   border: 2px solid $color-neutral-light;
   cursor: pointer;
@@ -492,10 +491,10 @@ select:focus {
   display: flex;
   align-items: center;
   height: 44px;
-  border: 1px solid #d1d1d1;
+  border: 1px solid $color-neutral-light;
   border-radius: 10px;
   padding: 8px 16px;
-  background: #fff;
+  background: white;
   margin-top: 8px;
 }
 
@@ -542,14 +541,14 @@ select:focus {
 .divider {
   width: 1px;
   height: 16px;
-  background: #d1d1d1;
+  background: $color-neutral-light;
   margin: 0 4px;
 }
 
 .divider-small {
   width: 1px;
   height: 16px;
-  background: #d1d1d1;
+  background: $color-neutral-light;
   margin: 0 3px;
 }
 
@@ -630,12 +629,12 @@ input[type='date']::after {
 }
 
 .assigned-item.selected {
-  background-color: #2a3647;
-  color: #ffffff;
+  background-color: $color-brand-primary;
+  color: white;
 }
 
 .assigned-item.selected .name {
-  color: #ffffff;
+  color: white;
 }
 
 .assigned-item.selected .avatar {
@@ -753,7 +752,7 @@ select {
     margin-top: 32px;
     position: sticky;
     bottom: 0;
-    background: #f6f7f8;
+    background: $color-neutral-bg;
     padding: 16px 0;
   }
 

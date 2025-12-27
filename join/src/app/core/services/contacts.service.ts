@@ -30,21 +30,21 @@ export class ContactsService {
    * sequence on creation.
    */
   private readonly avatarPalette: string[] = [
-    '#ff7a00',
-    '#9327ff',
-    '#ff745e',
-    '#ffc701',
-    '#ffe62b',
-    '#ff5eb3',
-    '#00bee8',
-    '#ffa35e',
-    '#0038ff',
-    '#ff4646',
-    '#6e52ff',
-    '#1fd7c1',
-    '#fc71ff',
-    '#c3ff2b',
-    '#ffbb2b',
+    '$color-avatar-01',
+    '$color-avatar-02',
+    '$color-avatar-03',
+    '$color-avatar-04',
+    '$color-avatar-05',
+    '$color-avatar-06',
+    '$color-avatar-07',
+    '$color-avatar-08',
+    '$color-avatar-09',
+    '$color-avatar-10',
+    '$color-avatar-11',
+    '$color-avatar-12',
+    '$color-avatar-13',
+    '$color-avatar-14',
+    '$color-avatar-15',
   ];
 
   /**

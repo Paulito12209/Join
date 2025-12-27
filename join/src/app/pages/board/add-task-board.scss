@@ -3,10 +3,10 @@
 .subtask-input-wrapper {
   display: flex;
   align-items: center;
-  border: 1px solid #d1d1d1;
+  border: 1px solid $color-neutral-light;
   border-radius: 8px;
   padding: 0px 16px 8px;
-  background: #fff;
+  background: white;
   margin-top: 8px;
 }
 
@@ -54,14 +54,14 @@
 .divider {
   width: 1px;
   height: 20px;
-  background: #d1d1d1;
+  background: $color-neutral-light;
   margin: 0 4px;
 }
 
 .divider-small {
   width: 1px;
   height: 14px;
-  background: #d1d1d1;
+  background: $color-neutral-light;
   margin: 0 4px;
 }
 
@@ -83,7 +83,7 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #a8a8a8;
+    background: $color-neutral-dark;
     border-radius: 4px;
   }
 
@@ -142,7 +142,7 @@
   display: flex;
   align-items: center;
   width: 100%;
-  border-bottom: 1px solid #29abe2;
+  border-bottom: 1px solid $color-brand-highlight;
   padding-bottom: 2px;
 }
 
@@ -174,11 +174,11 @@
 .assigned-input {
   display: flex;
   align-items: center;
-  border: 1px solid #d1d1d1;
+  border: 1px solid $color-neutral-light;
   border-radius: 8px;
   padding: 12px 12px 12px 16px;
   margin-top: 8px;
-  background: #fff;
+  background: white;
   cursor: pointer;
 }
 
@@ -202,13 +202,13 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  color: #fff;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   font-weight: 500;
-  border: 2px solid #fff;
+  border: 2px solid white;
   margin-left: -8px;
   /* overlap */
 }
@@ -224,7 +224,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: white;
   font-weight: 500;
   margin-right: 12px;
   font-size: 12px;
@@ -244,8 +244,8 @@
   top: 100%;
   margin-top: 4px;
   /* Slight gap */
-  background: #fff;
-  border: 1px solid #d1d1d1;
+  background: white;
+  border: 1px solid $color-neutral-light;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 100;
@@ -310,7 +310,7 @@
 
 .dialog {
   position: relative;
-  background: #fff;
+  background: white;
   border-radius: 16px;
   width: 900px;
   padding: 24px;
@@ -355,7 +355,7 @@
   h2 {
     font-family: 'Inter-Bold';
     font-size: 61px;
-    color: #000000;
+    color: black;
   }
 }
 
@@ -398,14 +398,14 @@
 label {
   font-weight: 400;
   font-size: 20px; // Desktop: 20px gemäß Checkliste
-  color: #000000;
+  color: black;
   margin-top: 16px;
   display: block;
   font-family: 'Inter', sans-serif;
 }
 
 label span {
-  color: #ff8190; // Sternchen-Farbe gemäß Checkliste
+  color: $color-required-star;
 }
 
 input,
@@ -428,7 +428,7 @@ textarea {
 // Placeholder-Styles gemäß Checkliste - Desktop: 16px, Farbe #D1D1D1
 input::placeholder,
 textarea::placeholder {
-  color: #d1d1d1;
+  color: $color-neutral-light;
   font-size: 20px;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
@@ -436,33 +436,33 @@ textarea::placeholder {
 
 // Readonly Inputs (z.B. "Select contacts to assign") - SCHWARZ wie normale Texte
 .assigned-input input[readonly] {
-  color: #000000;
+  color: black;
   font-size: 20px;
 }
 
 .assigned-input input[readonly]::placeholder {
-  color: #000000;
+  color: black;
   font-size: 20px;
 }
 
 // Date Input - hellgrau wenn leer, schwarz wenn Datum ausgewählt
 // Das "required" Attribut muss im HTML gesetzt sein, damit :valid funktioniert
 input[type='date'] {
-  color: #d1d1d1; // Standard: Hellgrau (kein Datum ausgewählt)
+  color: $color-neutral-light; // Standard: Hellgrau (kein Datum ausgewählt)
 }
 
 input[type='date']:valid {
-  color: #000000; // Schwarz wenn ein gültiges Datum ausgewählt wurde
+  color: black; // Schwarz wenn ein gültiges Datum ausgewählt wurde
 }
 
 // Select Placeholder-Option
 select option:first-child {
-  color: #d1d1d1;
+  color: $color-neutral-light;
 }
 
 select:invalid,
 select option[value=''] {
-  color: #d1d1d1;
+  color: $color-neutral-light;
 }
 
 select {
@@ -537,7 +537,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
   padding: 8px 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  background: #fff;
+  background: white;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -612,7 +612,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
   margin-bottom: 40px;
 
   .asterisk {
-    color: #ff8190;
+    color: $color-required-star;
     margin-right: 4px;
   }
 }
@@ -657,16 +657,16 @@ input[type='date']::-webkit-calendar-picker-indicator {
 }
 
 .submit {
-  background: #2a3647 !important; // Inaktiv-Zustand (dunkles Blau)
+  background: $color-brand-primary !important; // Inaktiv-Zustand (dunkles Blau)
   color: white;
 
   &:hover {
-    background: #29abe2 !important; // Hover-Zustand (helles Blau)
+    background: $color-brand-highlight !important; // Hover-Zustand (helles Blau)
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   }
 
   &:active {
-    background: #091931 !important; // Aktiv-Zustand (tiefes Blau)
+    background: $color-brand-deep !important; // Aktiv-Zustand (tiefes Blau)
   }
 
   &:disabled {
@@ -715,7 +715,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
 @media (max-width: 768px) {
   // Overlay positioniert zwischen Header und Navigation
   .overlay {
-    background: #f6f7f8; // Solider Hintergrund
+    background: $color-neutral-bg; // Solider Hintergrund
     position: fixed;
     top: 80px; // Platz für Header
     bottom: 80px; // Exakt bündig mit der Navigation (Nav-Höhe anpassen falls nötig)
@@ -735,7 +735,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
     border-radius: 0;
     box-shadow: none;
     overflow-y: auto; // Scrollbar wenn Inhalt zu lang
-    background: #f6f7f8; // Mobile Hintergrundfarbe
+    background: $color-neutral-bg; // Mobile Hintergrundfarbe
     display: flex;
     flex-direction: column; // Wichtig für sticky am Ende
   }
@@ -855,7 +855,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
     flex-direction: row;
     justify-content: flex-end;
     gap: 16px;
-    background: #f6f7f8; // Gleiche Farbe wie Dialog-Hintergrund
+    background: $color-neutral-bg; // Gleiche Farbe wie Dialog-Hintergrund
     padding: 16px 0;
     margin: 0;
     margin-top: auto; // Push to bottom
@@ -887,7 +887,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
   // Cancel-Button auf Mobile mit transparentem/grauem Hintergrund
   .cancel {
     background: transparent !important; // Übernimmt #F6F7F8 vom Dialog
-    border: 1px solid #2a3647 !important;
+    border: 1px solid $color-brand-primary !important;
   }
 
   .required-hint {
@@ -919,7 +919,7 @@ input[type='date']::-webkit-calendar-picker-indicator {
     font-size: 16px !important;
 
     &::placeholder {
-      color: #000000;
+      color: black;
       font-size: 16px !important;
     }
   }

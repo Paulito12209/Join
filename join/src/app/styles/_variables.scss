@@ -14,12 +14,14 @@ $color-brand-highlight: #29abe2; // Accent blue
 $color-neutral-light: #d1d1d1; // Placeholder-text, standard borders, dividers
 $color-neutral-mid: #cdcdcd; // disabled states (navigation)
 $color-neutral-dark: #a8a8a8; // Secondary text (burger-menu, footer-links), icons on light background
+$color-neutral-bg: #f6f7f8; // Backgroundcolor sections
 $color-neutral-user-bg: #e4e7ed; // Backgroundcolor user-initials
-$color-neutral-placeholders: #E7E7E7;
+$color-neutral-placeholders: #e7e7e7;
 
 // --- ERROR & EMAIL ---
 $color-error: #e60026;
 $color-email: #007cee;
+$color-required-star: #FF8190;
 
 // --- PRIORITY COLORS (KANBAN) ---
 $color-priority-urgent: #ff3d00;
@@ -47,7 +49,6 @@ $color-avatar-12: #1fd7c1; // Duplicate of $color-board-tech-task → optional d
 $color-avatar-13: #fc71ff;
 $color-avatar-14: #c3ff2b;
 $color-avatar-15: #ffbb2b;
-
 
 /* ============================================
    FONT SIZES
