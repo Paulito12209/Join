@@ -14,75 +14,66 @@
     <div class="left">
       <label>Title<span>*</span></label>
       <input formControlName="title" placeholder="Enter a title" />
+      <span class="error" *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched">This field is
+        required</span>
 
       <label>Description</label>
-      <textarea formControlName="description"></textarea>
+      <textarea formControlName="description" placeholder="Enter a Description"></textarea>
 
       <label>Due date<span>*</span></label>
-      <input type="date" formControlName="dueDate" />
+      <input #dateInput type="date" formControlName="dueDate" placeholder="dd/mm/yyyy" required
+        (click)="dateInput.showPicker()" />
+      <span class="error" *ngIf="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched">This field is
+        required</span>
     </div>
 
     <div class="right">
       <label>Priority</label>
       <div class="priority">
-        <button
-          type="button"
-          *ngFor="let p of priorities"
-          [class.active]="taskForm.value.priority === p"
-          [ngClass]="p"
-          (click)="taskForm.patchValue({ priority: p })"
-        >
-          <span class="label">{{ p }}</span>
-
-          <img class="prio-icon" [src]="priorityIcons[p]" alt="" />
+        <button type="button" class="prio-urgent" [class.active]="taskForm.value.priority === 'Urgent'"
+          (click)="taskForm.patchValue({ priority: 'Urgent' })">
+          Urgent <img src="img/icons/prio-urgent.svg" alt="Urgent" />
+        </button>
+        <button type="button" class="prio-medium" [class.active]="taskForm.value.priority === 'Medium'"
+          (click)="taskForm.patchValue({ priority: 'Medium' })">
+          Medium <img src="img/icons/prio-medium.svg" alt="Medium" />
+        </button>
+        <button type="button" class="prio-low" [class.active]="taskForm.value.priority === 'Low'"
+          (click)="taskForm.patchValue({ priority: 'Low' })">
+          Low <img src="img/icons/prio-low.svg" alt="Low" />
         </button>
       </div>
 
       <label>Assigned to</label>
       <div class="assignee-field" (click)="toggleAssigneeDropdown(true)" tabindex="0">
         <span class="placeholder"> Select contacts to assign </span>
-        <img
-          class="dropdown-arrow"
-          [src]="assigneeOpen ? 'img/icons/dropup.svg' : 'img/icons/dropdown.svg'"
-          (click)="$event.stopPropagation(); toggleAssigneeDropdown(!assigneeOpen)"
-        />
+        <img class="dropdown-arrow" [src]="assigneeOpen ? 'img/icons/dropup.svg' : 'img/icons/dropdown.svg'"
+          (click)="$event.stopPropagation(); toggleAssigneeDropdown(!assigneeOpen)" />
       </div>
 
       <div class="assignee-avatars" *ngIf="(taskForm.value.assignedTo || []).length">
-        <span
-          class="avatar"
-          *ngFor="let uid of taskForm.value.assignedTo"
-          [style.background]="getContactColor(uid)"
-          [title]="getContactName(uid)"
-        >
+        <span class="avatar" *ngFor="let uid of taskForm.value.assignedTo" [style.background]="getContactColor(uid)"
+          [title]="getContactName(uid)">
           {{ (getContactName(uid) || '?').slice(0, 1).toUpperCase() }}
         </span>
       </div>
 
       <div class="assigned-list dropdown" *ngIf="assigneeOpen">
-        <label
-          class="assigned-item"
-          *ngFor="let person of contacts"
-          [class.selected]="(taskForm.value.assignedTo || []).includes(person.id!)"
-          (mousedown)="
+        <label class="assigned-item" *ngFor="let person of contacts"
+          [class.selected]="(taskForm.value.assignedTo || []).includes(person.id!)" (mousedown)="
             toggleAssignee(person.id!, !(taskForm.value.assignedTo || []).includes(person.id!))
-          "
-        >
+          ">
           <span class="avatar" [style.background]="person.color || '#6c63ff'">
             {{ (person.name || '?').slice(0, 1).toUpperCase() }}
           </span>
 
           <span class="name">{{ person.name }}</span>
 
-          <img
-            class="checkbox-icon"
-            [src]="
+          <img class="checkbox-icon" [src]="
               (taskForm.value.assignedTo || []).includes(person.id!)
                 ? 'img/icons/checkbox-done.svg'
                 : 'img/icons/checkbox-todo.svg'
-            "
-            alt="checkbox"
-          />
+            " alt="checkbox" />
         </label>
       </div>
 
@@ -97,25 +88,18 @@
 
         <img class="dropdown-arrow select-arrow" src="img/icons/dropdown.svg" alt="dropdown" />
       </div>
+      <span class="error" *ngIf="taskForm.get('category')?.invalid && taskForm.get('category')?.touched">This field is
+        required</span>
 
       <label>Subtasks</label>
 
       <div class="subtask-input-wrapper">
-        <input
-          [(ngModel)]="newSubtaskTitle"
-          [ngModelOptions]="{ standalone: true }"
-          placeholder="Add new subtask"
-          (focus)="subtaskFocus = true"
-          (blur)="!newSubtaskTitle && (subtaskFocus = false)"
-          (keydown.enter)="$event.preventDefault(); addSubtask()"
-        />
+        <input [(ngModel)]="newSubtaskTitle" [ngModelOptions]="{ standalone: true }" placeholder="Add new subtask"
+          (focus)="subtaskFocus = true" (blur)="!newSubtaskTitle && (subtaskFocus = false)"
+          (keydown.enter)="$event.preventDefault(); addSubtask()" />
 
         <span class="subtask-icons" *ngIf="subtaskFocus">
-          <button
-            type="button"
-            class="icon-btn"
-            (click)="clearSubtaskInput(); subtaskFocus = false"
-          >
+          <button type="button" class="icon-btn" (click)="clearSubtaskInput(); subtaskFocus = false">
             <img src="img/icons/close_black.svg" alt="Clear" />
           </button>
 
@@ -144,6 +128,8 @@
           </div>
         </li>
       </ul>
+      <!-- Required-Hint für Mobile View (unter Subtasks) -->
+      <span class="required-hint-mobile"><span class="asterisk">*</span>This field is required</span>
     </div>
   </form>
 
@@ -153,12 +139,12 @@
     <div class="action-buttons">
       <button class="clear" type="button" (click)="clearForm()">
         Clear
-        <img class="btn-icon" src="img/icons/close_black.svg" alt="clear icon" />
+        <img class="btn-icon" src="img/icons/dialog_cancel.svg" alt="Clear" />
       </button>
 
       <button class="submit" [disabled]="taskForm.invalid" (click)="createTask()">
         Create Task
-        <img class="btn-icon" src="img/icons/check.svg" alt="check icon" />
+        <img class="btn-icon" src="img/icons/dialog_check.svg" alt="Create" />
       </button>
     </div>
   </footer>
