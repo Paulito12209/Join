@@ -26,7 +26,7 @@ textarea {
   font-weight: 400;
   line-height: 1.2;
 
-  outline: none; 
+  outline: none;
   cursor: pointer;
 }
 
@@ -154,7 +154,7 @@ input[type='date']::after {
 
 .assigned-input input::placeholder {
   color: black;
-  opacity: 1; 
+  opacity: 1;
 }
 
 .assigned-input input {
@@ -417,27 +417,25 @@ input[type='date']::after {
     padding: 18px 10px;
     font-size: 16px;
   }
+
+  .item-actions {
+    opacity: 1;
+  }
 }
 
-@media (max-width: 440px) {
+@media (max-width: 400px) {
   .priority {
     @include dFlex($g: 8px);
   }
 
   .priority button {
-    width: 104px; // ohne max?
-    height: 41px; // ohne max?
+    width: 104px;
+    height: 41px;
     padding: 18px 6px;
     font-size: 16px;
   }
 
   .priority button img {
     width: 16px;
-  }
-}
-
-@media (max-width: 440px) {
-  .priority {
-    @include dFlex($fd: column, $ai: flex-start, $g: 8px);
   }
 }
