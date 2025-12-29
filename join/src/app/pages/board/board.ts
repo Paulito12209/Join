@@ -116,7 +116,7 @@ export class Board {
       priority: (priorityMap[formValue.priority] ?? 'medium'),
       dueDate: formValue.dueDate ?? undefined,
       category: 'user-story',
-      assignees: [],
+      assignees: (formValue.assignedTo ?? []).map((uid: string) => ({ uid })),
       ...(subtasks.length ? { subtasks } : {}),
     };
 
