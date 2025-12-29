@@ -57,7 +57,7 @@ export class AddTask {
       title: ['', Validators.required],
       description: [''],
       dueDate: ['', Validators.required],
-      priority: ['medium'],
+      priority: ['Medium'],
       assignedTo: [[]],
       category: ['', Validators.required],
       subtask: [''],
@@ -103,12 +103,12 @@ export class AddTask {
         ...(form.dueDate ? { dueDate: new Date(form.dueDate).toISOString() } : {}),
         ...(this.subtasks.length
           ? {
-              subtasks: this.subtasks.map((s) => ({
-                id: s.id,
-                title: s.title,
-                done: s.done,
-              })),
-            }
+            subtasks: this.subtasks.map((s) => ({
+              id: s.id,
+              title: s.title,
+              done: s.done,
+            })),
+          }
           : {}),
       };
 
@@ -143,7 +143,7 @@ export class AddTask {
       title: '',
       description: '',
       dueDate: '',
-      priority: 'medium',
+      priority: 'Medium',
       assignedTo: [],
       category: 'user-story',
       subtask: '',

@@ -1,7 +1,7 @@
 @use '../../../styles.scss' as *;
 
 .add-task-page {
-  padding: 32px;
+  padding: 0 56px;
   max-width: 1100px;
   background: white;
   background-color: $color-neutral-bg;
@@ -19,9 +19,9 @@
 }
 
 .page-header h1 {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 32px;
+  font-family: "Inter-Bold";
+  font-size: 61px;
+  padding: 64px 0 0 0;
 }
 
 .content {
@@ -101,7 +101,7 @@
 
 .assignee-field .placeholder {
   /* color: $color-neutral-light; */
-  font-size: 14px;
+  font-size: 20px;
 }
 
 .assignee-field .caret {
@@ -249,10 +249,12 @@
 }
 
 label {
-  font-size: 14px;
   font-weight: 400;
+  font-size: 20px; // Desktop: 20px wie im Board-Dialog
+  color: black;
   margin-top: 16px;
   display: block;
+  font-family: 'Inter', sans-serif;
 }
 
 label span {
@@ -264,16 +266,42 @@ input,
 textarea,
 select {
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid $color-neutral-light;
-  font-size: 14px;
+  padding: 12px 16px; // Padding wie im Board-Dialog
+  border-radius: 8px;
+  border: 1px solid #ccc;
   margin-top: 8px;
+  font-size: 20px; // Desktop: 20px
 }
 
 textarea {
   min-height: 100px;
   resize: vertical;
+  max-height: 150px;
+}
+
+// Placeholder-Styles - Desktop: 20px, Farbe #D1D1D1
+input::placeholder,
+textarea::placeholder {
+  color: $color-neutral-light;
+  font-size: 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+// Date Input - hellgrau wenn leer, schwarz wenn Datum ausgewählt
+// Das "required" Attribut muss im HTML gesetzt sein, damit :valid funktioniert
+input[type='date'] {
+  color: $color-neutral-light; // Standard: Hellgrau (kein Datum ausgewählt)
+}
+
+input[type='date']:valid {
+  color: black; // Schwarz wenn ein gültiges Datum ausgewählt wurde
+}
+
+// Select Placeholder-Option - grau wenn leer
+select:invalid,
+select option[value=''] {
+  color: $color-neutral-light;
 }
 
 input:focus,
@@ -283,65 +311,83 @@ select:focus {
   border-color: $color-brand-primary;
 }
 
+// Validierungsfehler
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched {
+  border-color: $color-priority-urgent;
+}
+
+.error {
+  display: block;
+  color: $color-priority-urgent;
+  font-size: 12px;
+  margin-top: 4px;
+  min-height: 16px;
+}
+
 .priority {
   display: flex;
-  justify-content: space-between;
   gap: 12px;
   margin-top: 8px;
 }
 
+// Priority Buttons - Design wie im Board-Dialog
 .priority button {
-  min-width: 90px;
-  height: 40px;
-  padding: 10px 18px;
-  background-color: white;
-  border-radius: 10px;
-  border-color: $color-neutral-light;
-  font-size: 14px;
-  font-weight: 400;
+  min-width: 136px;
+  height: 56px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc; // Klarer Border wie im Screenshot
+  background: white;
   cursor: pointer;
-
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  font-size: 20px;
 }
 
-.priority button:hover {
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4);
+.priority button img {
+  width: 20px;
+  height: 14px;
+  object-fit: contain;
 }
 
-.priority .prio-icon {
-  width: 16px;
-  height: 16px;
+.priority button:not(.active):hover {
+  box-shadow: 0px 4px 4px 0px #00000040;
 }
 
-.priority button.active .prio-icon {
-  filter: brightness(0) invert(1);
-}
-
-.priority button.Urgent.active {
-  background-color: $color-priority-urgent;
+// Aktive Priority-Buttons mit fetter Schrift (Inter-Bold)
+.priority button.prio-urgent.active {
+  background: $color-priority-urgent;
+  color: white;
+  font-family: 'Inter-Bold', sans-serif;
+  font-weight: 700;
+  font-size: 21px;
   border-color: $color-priority-urgent;
-  color: white;
-  font-weight: 600;
-  box-shadow: none;
 }
 
-.priority button.Medium.active {
-  background-color: $color-priority-medium;
+.priority button.prio-medium.active {
+  background: $color-priority-medium;
+  color: white;
+  font-family: 'Inter-Bold', sans-serif;
+  font-weight: 700;
+  font-size: 21px;
   border-color: $color-priority-medium;
-  color: white;
-  font-weight: 600;
-  box-shadow: none;
 }
 
-.priority button.Low.active {
-  background-color: $color-priority-low;
-  border-color: $color-priority-low;
+.priority button.prio-low.active {
+  background: $color-priority-low;
   color: white;
-  font-weight: 600;
-  box-shadow: none;
+  font-family: 'Inter-Bold', sans-serif;
+  font-weight: 700;
+  font-size: 21px;
+  border-color: $color-priority-low;
+}
+
+.priority button.active img {
+  filter: brightness(0) invert(1);
 }
 
 .actions {
@@ -352,13 +398,27 @@ select:focus {
 }
 
 .required-hint {
-  font-size: 13px;
+  font-size: 16px;
   color: black;
 }
 
 .required-hint .asterisk {
   color: $color-priority-urgent;
-  margin-right: 2px;
+  margin-right: 4px;
+}
+
+// Required-Hint für Mobile - standardmäßig ausgeblendet
+.required-hint-mobile {
+  display: none; // Auf Desktop versteckt
+  font-size: 16px;
+  color: black;
+  margin-top: 16px;
+  margin-bottom: 40px;
+
+  .asterisk {
+    color: $color-priority-urgent;
+    margin-right: 4px;
+  }
 }
 
 .action-buttons {
@@ -374,71 +434,66 @@ select:focus {
 }
 
 .actions .btn-icon {
-  width: 12px;
-  height: 12px;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
+// Submit Button - Standard: #2A3647, Valid: #091931
 .actions .submit {
-  padding: 12px 20px;
+  padding: 12px 24px;
   border-radius: 10px;
-  background: $color-brand-primary;
+  background: #2A3647; // Standard-Farbe wenn disabled
   color: white;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 500;
   border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.1s;
 
   &:hover:not(:disabled) {
-    background-color: $color-brand-highlight;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4);
+    background: $color-brand-highlight;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
   }
 
-  .btn-icon {
-    width: 12px;
-    height: 12px;
+  &:active {
+    background: $color-brand-deep;
   }
 
   &:disabled {
-    background: #bdbdbd;
+    background: #2A3647; // Disabled-Farbe
+    color: white;
     cursor: not-allowed;
+    box-shadow: none;
   }
 }
 
-.actions .submit:disabled {
-  background: #bdbdbd;
-  cursor: not-allowed;
+// Wenn Form gültig ist, bekommt Submit-Button die dunkle Farbe
+.actions .submit:not(:disabled) {
+  background: #091931; // Valid-Farbe
 }
 
 .actions .clear {
-  padding: 12px 20px;
+  padding: 12px 24px;
   border-radius: 10px;
-  background: $color-neutral-bg;
+  background: white !important;
   color: $color-brand-primary;
-  font-weight: 400;
-  border: 2px solid $color-neutral-light;
+  font-size: 20px;
+  font-weight: 500;
+  border: 1px solid $color-brand-primary !important;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.1s;
 
   &:hover {
-    border-color: $color-brand-highlight;
-    color: $color-brand-highlight;
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.4);
-
-    .btn-icon {
-      filter: brightness(0) saturate(100%) invert(40%) sepia(95%) saturate(5100%) hue-rotate(200deg) brightness(95%) contrast(90%);
-    }
-  }
-
-  .btn-icon {
-    width: 12px;
-    height: 12px;
-    transition: filter 0.2s ease;
+    border-color: $color-brand-primary-hover !important;
+    color: $color-brand-primary-hover;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -653,7 +708,7 @@ select {
 
 @media (max-width: 768px) {
   .add-task-page {
-    padding: 16px;
+    padding: 16px 16px 160px 16px;
     max-width: 100%;
   }
 
@@ -671,8 +726,9 @@ select {
   }
 
   .page-header h1 {
-    font-size: 24px;
-    margin-bottom: 16px;
+    font-size: 47px;
+    margin-bottom: 0;
+    padding: 48px 0 0 0;
   }
 
   .priority {
@@ -684,11 +740,28 @@ select {
     flex: 1;
     min-width: 0;
     padding: 10px 8px;
-    font-size: 14px;
+    font-size: 16px;
+    height: auto;
+  }
+
+  // Aktive Priority Buttons - 16px und Inter-Bold auf Mobile
+  .priority button.active {
+    font-size: 16px !important;
+    font-family: 'Inter-Bold' !important; // Fetter als nicht-aktive Buttons
   }
 
   .priority .label {
     white-space: nowrap;
+  }
+
+  .assignee-field {
+    span {
+      font-size: 16px !important;
+    }
+  }
+
+  .assignee-field .placeholder {
+    font-size: 16px !important;
   }
 
   .assigned-list.dropdown {
@@ -702,32 +775,59 @@ select {
     font-size: 13px;
   }
 
+  // Actions auf Mobile - fixed am unteren Rand (hover über Sidebar)
   .actions {
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 32px;
-    position: sticky;
-    bottom: 0;
+    position: fixed;
+    bottom: 80px; // Platz für Navigation
+    left: 0;
+    right: 0;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 16px;
     background: $color-neutral-bg;
-    padding: 16px 0;
+    padding: 16px;
+    margin: 0;
+    z-index: 10;
+  }
+
+  // Required-Hint auf Mobile ausblenden (wird unter Subtasks angezeigt)
+  .required-hint {
+    display: none;
+  }
+
+  // Required-Hint unter Subtasks auf Mobile einblenden
+  .required-hint-mobile {
+    display: block;
   }
 
   .action-buttons {
-    flex-direction: column;
-    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 16px;
   }
 
   .action-buttons button {
-    width: 100%;
+    width: auto; // Nicht 100% - natürliche Breite
+    flex-shrink: 0; // Nicht shrinken
+    white-space: nowrap;
+    padding: 12px 16px;
+    font-size: 16px;
   }
 
-  .required-hint {
-    text-align: center;
+  // Mobile Typografie - alle auf 16px
+  label {
+    font-size: 16px;
   }
 
   input,
   textarea,
   select {
+    font-size: 16px;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
     font-size: 16px;
   }
 
