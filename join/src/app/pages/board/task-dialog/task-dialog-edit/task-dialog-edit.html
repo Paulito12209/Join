@@ -81,7 +81,7 @@
         </div>
 
         @if (assigneeOpen) {
-        <div class="dropdown-list">
+        <div class="dropdown-list" (click)="$event.stopPropagation()">
           @for (contact of (contacts ?? []); track contact.id) { @if (contact.id) {
           <div
             class="dropdown-item"

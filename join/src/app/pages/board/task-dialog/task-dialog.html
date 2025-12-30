@@ -1,5 +1,5 @@
 @if (!isHardClose) {
-<div class="dialog-overlay" (click)="close()">
+<div class="dialog-overlay" (click)="onOverlayClick($event)">
   <div class="content-container">
     <section
       #dialogEl
@@ -7,7 +7,7 @@
       [class.dialog--animated]="!disableEnterAnimation"
       [class.dialog--closing]="isClosing"
       [style.height.px]="fixedHeight"
-      (click)="$event.stopPropagation()"
+      (click)="onDialogClick($event)"
     >
       @if (task$ | async; as task) {
       <!-- =========================
@@ -32,7 +32,7 @@
       <!-- =========================
                SCROLL AREA (shared)
         ========================== -->
-      <section class="dialog-content">
+      <section class="dialog-content" (click)="editCmp?.closeAssigneeDropdown()">
         <div class="dialog-content__inner">
           @if (isEdit$ | async) {
           <!-- =========================

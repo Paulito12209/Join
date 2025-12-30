@@ -167,4 +167,24 @@ export class TaskDialog {
     this.isHardClose = true;
     this.router.navigate(['/board']);
   }
+
+  onDialogClick(event: MouseEvent): void {
+    // Klick IM Dialog soll nie das Overlay erreichen
+    event.stopPropagation();
+
+    // Falls Edit-Komponente existiert: Dropdown schließen
+    this.editCmp?.closeAssigneeDropdown();
+  }
+
+  onOverlayClick(event: MouseEvent): void {
+    // Overlay-Klick: wenn Dropdown offen, nur Dropdown schließen
+    if (this.editCmp?.assigneeOpen) {
+      event.stopPropagation();
+      this.editCmp.closeAssigneeDropdown();
+      return;
+    }
+
+    // sonst Dialog schließen
+    this.close();
+  }
 }

@@ -68,6 +68,10 @@ export class TaskDialogEdit implements OnChanges {
     return value.length >= 10 ? value.slice(0, 10) : '';
   }
 
+  closeAssigneeDropdown(): void {
+    this.assigneeOpen = false;
+  }
+
   // -----------------------------
   // Assignees
   // -----------------------------
