@@ -257,6 +257,7 @@ header.header--edit {
   width: fit-content;
   padding: 2px 16px;
   border-radius: 10px;
+  contain: layout paint;
 
   &:hover {
     background-color: $color-neutral-user-bg;
@@ -367,26 +368,9 @@ header.header--edit {
    RESPONSIVE
 ================================ */
 
-// @media (max-width: 1024px) {
-//   .dialog {
-//     max-width: 420px;
-//   }
-
-//   .date-prio-wrapper {
-//     .label {
-//       width: 30%;
-//     }
-
-//     .value {
-//       width: 70%;
-//     }
-//   }
-// }
-
 @media (max-width: 768px) {
   .dialog {
     @include dFlex($fd: column, $ai: stretch, $g: 16px);
-    // max-height: calc(100svh - 180px);
     max-height: 95%;
     max-width: 396px;
     padding: 32px 24px;
