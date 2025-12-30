@@ -62,6 +62,11 @@ input::placeholder {
 
 input[type='date'] {
   position: relative;
+  color: $color-neutral-light;
+}
+
+input[type='date']:valid {
+  color: black; 
 }
 
 /* Native calendar icon ausblenden */

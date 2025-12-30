@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+  FormsModule,
+} from '@angular/forms';
 
 import { Contact } from '../../../../core/services/contacts.service';
 import { AssigneeRef, Subtask, Task } from '../../../add-task/task';
@@ -39,10 +45,12 @@ export class TaskDialogEdit implements OnChanges {
   ngOnChanges(): void {
     if (!this.task) return;
 
+    const dueDateValue = this.toDateInputValue(this.task.dueDate);
+
     this.editForm.patchValue({
       title: this.task.title ?? '',
       description: this.task.description ?? '',
-      dueDate: this.task.dueDate ?? '',
+      dueDate: dueDateValue,
       priority: (this.task.priority ?? 'medium') as Task['priority'],
     });
 
@@ -51,6 +59,12 @@ export class TaskDialogEdit implements OnChanges {
       .filter((uid) => !!uid);
 
     this.subtasks = (this.task.subtasks ?? []).map((subtask) => ({ ...subtask }));
+  }
+
+  private toDateInputValue(value: any): string {
+    if (!value) return '';
+    if (typeof value !== 'string') return '';
+    return value.length >= 10 ? value.slice(0, 10) : '';
   }
 
   // -----------------------------
