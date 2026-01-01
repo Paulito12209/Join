@@ -308,7 +308,13 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: $color-brand-primary;
+  border-color: $color-brand-highlight;
+}
+
+.subtask-input-wrapper:focus-within,
+.assignee-field:focus,
+.assignee-field:focus-within {
+  border-color: $color-brand-highlight;
 }
 
 // Validierungsfehler
