@@ -70,6 +70,7 @@ export class AddTask {
   }
 
   async createTask() {
+    this.taskForm.markAllAsTouched();
     if (this.taskForm.invalid) {
       this.resultMsg = 'Please fill required fields.';
       return;

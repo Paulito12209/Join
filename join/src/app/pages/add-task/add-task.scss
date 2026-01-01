@@ -258,8 +258,7 @@ label {
 }
 
 label span {
-  color: $color-priority-urgent;
-  margin-left: 4px;
+  color: $color-required-star;
 }
 
 input,
@@ -308,19 +307,18 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: $color-brand-primary;
+  border-color: $color-brand-highlight;
 }
 
-// Validierungsfehler
 input.ng-invalid.ng-touched,
 textarea.ng-invalid.ng-touched,
 select.ng-invalid.ng-touched {
-  border-color: $color-priority-urgent;
+  border-color: $color-error;
 }
 
 .error {
   display: block;
-  color: $color-priority-urgent;
+  color: $color-error;
   font-size: 12px;
   margin-top: 4px;
   min-height: 16px;
@@ -403,7 +401,7 @@ select.ng-invalid.ng-touched {
 }
 
 .required-hint .asterisk {
-  color: $color-priority-urgent;
+  color: $color-error;
   margin-right: 4px;
 }
 
@@ -416,7 +414,7 @@ select.ng-invalid.ng-touched {
   margin-bottom: 40px;
 
   .asterisk {
-    color: $color-priority-urgent;
+    color: $color-required-star;
     margin-right: 4px;
   }
 }
