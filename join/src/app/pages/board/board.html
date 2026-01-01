@@ -43,7 +43,7 @@
           class="example-list"
           (cdkDropListDropped)="drop($event)"
         >
-          <div class="drag-item" *ngFor="let task of todo" cdkDrag>
+          <div class="drag-item" *ngFor="let task of todo" cdkDrag [cdkDragStartDelay]="dragDelay">
             <div class="example-box" (click)="openTask(task)">
               <!-- Task Content -->
               <div
@@ -114,7 +114,7 @@
           class="example-list"
           (cdkDropListDropped)="drop($event)"
         >
-          <div class="drag-item" *ngFor="let task of inProgress" cdkDrag>
+          <div class="drag-item" *ngFor="let task of inProgress" cdkDrag [cdkDragStartDelay]="dragDelay">
             <div class="example-box" (click)="openTask(task)">
               <div
                 class="task-category"
@@ -183,7 +183,7 @@
           class="example-list"
           (cdkDropListDropped)="drop($event)"
         >
-          <div class="drag-item" *ngFor="let task of awaitFeedback" cdkDrag>
+          <div class="drag-item" *ngFor="let task of awaitFeedback" cdkDrag [cdkDragStartDelay]="dragDelay">
             <div class="example-box" (click)="openTask(task)">
               <div
                 class="task-category"
@@ -248,7 +248,7 @@
           class="example-list"
           (cdkDropListDropped)="drop($event)"
         >
-          <div class="drag-item" *ngFor="let task of done" cdkDrag>
+          <div class="drag-item" *ngFor="let task of done" cdkDrag [cdkDragStartDelay]="dragDelay">
             <div class="example-box" (click)="openTask(task)">
               <div
                 class="task-category"

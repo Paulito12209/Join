@@ -26,6 +26,10 @@ export class Board {
   private cdr = inject(ChangeDetectorRef);
   private router = inject(Router);
 
+  // Erkennt ob Touch-Gerät (für Drag-Delay)
+  isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  dragDelay = this.isMobile ? 400 : 0;
+
   // All tasks (unfiltered)
   private allTasks: Task[] = [];
 
