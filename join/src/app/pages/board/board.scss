@@ -1,558 +1,562 @@
 @use '../../../styles.scss' as *;
 
 .board-container {
-    @include dFlex($fd: column, $ai: start, $g: 16px);
+  @include dFlex($fd: column, $ai: start, $g: 16px);
+  width: 100%;
+  max-width: 1208px;
+  padding: 0 56px; // Padding hinzufügen, um dem Screenshot zu entsprechen
+  box-sizing: border-box;
+
+  .board-header {
     width: 100%;
-    max-width: 1208px;
-    padding: 0 56px; // Padding hinzufügen, um dem Screenshot zu entsprechen
-    box-sizing: border-box;
+    padding-top: 64px;
+    padding-bottom: 32px;
+    @include dFlex($ai: center, $jc: space-between);
 
-    .board-header {
-        width: 100%;
-        padding-top: 64px;
-        padding-bottom: 32px;
-        @include dFlex($ai: center, $jc: space-between);
+    .header-left {
+      @include dFlex($jc: start, $ai: center, $g: 16px);
+      flex: 1;
 
-        .header-left {
-            @include dFlex($jc: start, $ai: center, $g: 16px);
-            flex: 1;
+      h1 {
+        font-family: 'Inter-Bold';
+        font-size: 61px;
+        font-weight: 700;
+        margin: 0;
+        color: black;
+      }
 
-            h1 {
-                font-family: 'Inter-Bold';
-                font-size: 61px;
-                font-weight: 700;
-                margin: 0;
-                color: black;
-            }
+      // Mobile Button (hidden by default)
+      .add-task-btn {
+        display: none; // Hidden on desktop
+        padding: 8px; // Smaller padding for icon only
 
-            // Mobile Button (hidden by default)
-            .add-task-btn {
-                display: none; // Hidden on desktop
-                padding: 8px; // Smaller padding for icon only
+        img {
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
 
-                img {
-                    width: 24px;
-                    height: 24px;
-                }
-            }
+    .header-right {
+      @include dFlex($g: 32px);
+      flex: 1;
+
+      .search-field {
+        // ... existing styles ...
+        @include dFlex($jc: space-between, $ai: center);
+        background-color: white;
+        border: 1px solid $color-neutral-dark; // oder hellgrau
+        border-radius: 10px;
+        padding: 8px 12px;
+        width: 312px;
+        height: 48px;
+        box-sizing: border-box;
+
+        input {
+          border: none;
+          outline: none;
+          font-size: 20px;
+          width: 100%;
+
+          &::placeholder {
+            color: $color-neutral-light;
+          }
         }
 
-        .header-right {
-            @include dFlex($g: 32px);
-            flex: 1;
-
-            .search-field {
-                // ... existing styles ...
-                @include dFlex($jc: space-between, $ai: center);
-                background-color: white;
-                border: 1px solid $color-neutral-dark; // oder hellgrau
-                border-radius: 10px;
-                padding: 8px 12px;
-                width: 312px;
-                height: 48px;
-                box-sizing: border-box;
-
-                input {
-                    border: none;
-                    outline: none;
-                    font-size: 20px;
-                    width: 100%;
-
-                    &::placeholder {
-                        color: $color-neutral-light;
-                    }
-                }
-
-                .search-separator {
-                    width: 1px;
-                    height: 32px;
-                    background-color: $color-neutral-light;
-                    margin: 0 12px;
-                }
-
-                .search-icon {
-                    width: 32px;
-                    height: 32px;
-                    cursor: pointer;
-
-                    &:hover {
-                        background-color: $color-neutral-user-bg;
-                        border-radius: 50%;
-                    }
-
-                    // Filter, wenn gedrückt wird
-                    &:active {
-                        background-color: white;
-                        content: url("../../../../public/img/icons/search-active.svg");
-                    }
-                }
-            }
-
-            // Desktop Button
-            .add-task-btn {
-                background-color: $color-brand-primary;
-                color: white;
-                font-size: 21px;
-                font-weight: 700;
-                border-radius: 10px;
-                padding: 8px 16px;
-                border: none;
-                cursor: pointer;
-                @include dFlex($g: 16px);
-                height: 48px;
-                width: 160px;
-                transition: all 100ms ease-in-out;
-
-                &:hover {
-                    background-color: $color-brand-highlight;
-                    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-                }
-
-                img {
-                    width: 18px;
-                    height: 18px;
-                    filter: brightness(0) invert(1); // Icon weiß färben
-                }
-            }
+        .search-separator {
+          width: 1px;
+          height: 32px;
+          background-color: $color-neutral-light;
+          margin: 0 12px;
         }
-    }
 
-    // Wrapper für board-content und no-results (für column-reverse im Mobile)
-    .board-main {
-        @include dFlex($fd: column, $ai: stretch);
-        width: 100%;
-    }
+        .search-icon {
+          width: 32px;
+          height: 32px;
+          cursor: pointer;
 
-    .board-content {
-        width: 100%;
-        @include dFlex($ai: start, $jc: space-between, $g: 24px);
-        flex-wrap: wrap;
-        padding-bottom: 56px;
-    }
-
-    // "Keine Aufgaben gefunden" - zentrierte Anzeige
-    .no-results {
-        @include dFlex($fd: column, $ai: center, $jc: flex-start, $g: 16px);
-        width: 100%;
-        padding: 0 16px 24px;
-
-        .no-results-icon {
-            width: 80px;
-            height: 80px;
+          &:hover {
+            background-color: $color-neutral-user-bg;
             border-radius: 50%;
-            background-color: $color-neutral-placeholders;
-            @include dFlex($ai: center, $jc: center);
+          }
 
-            img {
-                width: 40px;
-                height: 40px;
-                opacity: 0.7;
-            }
+          // Filter, wenn gedrückt wird
+          &:active {
+            background-color: white;
+            content: url('../../../../public/img/icons/search-active.svg');
+          }
+        }
+      }
+
+      // Desktop Button
+      .add-task-btn {
+        background-color: $color-brand-primary;
+        color: white;
+        font-size: 21px;
+        font-weight: 700;
+        border-radius: 10px;
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        @include dFlex($g: 16px);
+        height: 48px;
+        width: 160px;
+        transition: all 100ms ease-in-out;
+
+        &:hover {
+          background-color: $color-brand-highlight;
+          box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
         }
 
-        .no-results-title {
-            font-family: 'Inter-Bold';
-            font-size: 20px;
-            font-weight: 700;
-            color: $color-brand-primary;
-            margin: 0;
-            text-align: center;
+        img {
+          width: 18px;
+          height: 18px;
+          filter: brightness(0) invert(1); // Icon weiß färben
         }
-
-        .no-results-search {
-            @include dFlex($ai: center, $jc: center, $g: 8px);
-            background-color: $color-neutral-placeholders;
-            padding: 10px 16px;
-            border-radius: 10px;
-
-            .search-icon {
-                width: 24px;
-                height: 24px;
-                opacity: 0.5;
-            }
-
-            span {
-                font-size: 16px;
-                color: $color-neutral-dark;
-                font-family: 'Inter', sans-serif;
-            }
-        }
+      }
     }
+  }
+
+  // Wrapper für board-content und no-results (für column-reverse im Mobile)
+  .board-main {
+    @include dFlex($fd: column, $ai: stretch);
+    width: 100%;
+  }
+
+  .board-content {
+    width: 100%;
+    @include dFlex($ai: start, $jc: space-between, $g: 24px);
+    flex-wrap: wrap;
+    padding-bottom: 56px;
+  }
+
+  // "Keine Aufgaben gefunden" - zentrierte Anzeige
+  .no-results {
+    @include dFlex($fd: column, $ai: center, $jc: flex-start, $g: 16px);
+    width: 100%;
+    padding: 0 16px 24px;
+
+    .no-results-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: $color-neutral-placeholders;
+      @include dFlex($ai: center, $jc: center);
+
+      img {
+        width: 40px;
+        height: 40px;
+        opacity: 0.7;
+      }
+    }
+
+    .no-results-title {
+      font-family: 'Inter-Bold';
+      font-size: 20px;
+      font-weight: 700;
+      color: $color-brand-primary;
+      margin: 0;
+      text-align: center;
+    }
+
+    .no-results-search {
+      @include dFlex($ai: center, $jc: center, $g: 8px);
+      background-color: $color-neutral-placeholders;
+      padding: 10px 16px;
+      border-radius: 10px;
+
+      .search-icon {
+        width: 24px;
+        height: 24px;
+        opacity: 0.5;
+      }
+
+      span {
+        font-size: 16px;
+        color: $color-neutral-dark;
+        font-family: 'Inter', sans-serif;
+      }
+    }
+  }
 }
 
 // Gehört zu BOARD_CONTENT
 .status-container {
-    @include dFlex($ai: space-between, $jc: start, $fd: column, $g: 16px);
-    // width: 20%;
+  @include dFlex($ai: space-between, $jc: start, $fd: column, $g: 16px);
+  // width: 20%;
+  min-width: 22%;
+  // min-width: 240px;
+  flex: 1;
+  box-sizing: border-box;
+
+  .status-header {
+    @include dFlex($ai: center, $jc: space-between);
+
+    h2 {
+      font-family: 'Inter-Bold';
+      font-size: 20px;
+      font-weight: 700;
+      color: $color-brand-primary; // oder dunkle Markenfarbe
+    }
+
+    button {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+
+      img {
+        width: 24px;
+        height: 24px;
+
+        &:hover {
+          content: url('../../../../public/img/icons/add_board-button-hover.svg');
+        }
+      }
+    }
+  }
+
+  .example-list {
+    min-height: 100px; // Sicherstellen der Größe des Ablagebereichs
+
+    // Hintergrund/Rahmen vom Listencontainer entfernen, damit es wie Spalten aussieht
+    background: transparent;
+    border: none;
+
+    @include dFlex($fd: column, $jc: start, $ai: space-between, $g: 16px);
+  }
+
+  .no-tasks {
+    border: 2px dashed $color-neutral-light;
+    border-radius: 16px;
+    background-color: $color-neutral-placeholders; // Light gray background
+    color: $color-neutral-dark;
+    text-align: center;
+    padding: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
     min-width: 22%;
-    // min-width: 240px;
-    flex: 1;
     box-sizing: border-box;
-
-    .status-header {
-        @include dFlex($ai: center, $jc: space-between);
-
-        h2 {
-            font-family: 'Inter-Bold';
-            font-size: 20px;
-            font-weight: 700;
-            color: $color-brand-primary; // oder dunkle Markenfarbe
-        }
-
-        button {
-            border: none;
-            background-color: transparent;
-            cursor: pointer;
-
-            img {
-                width: 24px;
-                height: 24px;
-
-                &:hover {
-                    content: url("../../../../public/img/icons/add_board-button-hover.svg");
-                }
-            }
-        }
-    }
-
-    .example-list {
-        min-height: 100px; // Sicherstellen der Größe des Ablagebereichs
-
-        // Hintergrund/Rahmen vom Listencontainer entfernen, damit es wie Spalten aussieht
-        background: transparent;
-        border: none;
-
-        @include dFlex($fd: column, $jc: start, $ai: space-between, $g: 16px);
-    }
-
-    .no-tasks {
-        border: 2px dashed $color-neutral-light;
-        border-radius: 16px;
-        background-color: $color-neutral-placeholders; // Light gray background
-        color: $color-neutral-dark;
-        text-align: center;
-        padding: 16px;
-        font-family: 'Inter', sans-serif;
-        font-size: 16px;
-        min-width: 22%;
-        box-sizing: border-box;
-    }
+  }
 }
 
 .example-box:last-child {
-    border: none;
+  border: none;
 }
 
 .drag-item {
-    width: 100%;
-    cursor: move;
+  width: 100%;
+  cursor: move;
 }
 
 .example-box {
-    @include dFlex($fd: column, $ai: start, $jc: start, $g: 10px); // Content stapeln
-    padding: 16px;
-    border-radius: 24px;
-    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08); // Weicher Schatten
-    border: none;
-    color: black;
-    box-sizing: border-box;
-    // cursor: move; // Move cursor to wrapper
-    background: white;
+  @include dFlex($fd: column, $ai: start, $jc: start, $g: 10px); // Content stapeln
+  padding: 16px;
+  border-radius: 24px;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08); // Weicher Schatten
+  border: none;
+  color: black;
+  box-sizing: border-box;
+  // cursor: move; // Move cursor to wrapper
+  background: white;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+
+  .task-category {
+    padding: 4px 16px;
+    border-radius: 8px;
+    color: white;
     font-size: 16px;
-    font-family: 'Inter', sans-serif;
+    align-self: flex-start;
 
+    &.user-story {
+      background-color: $color-board-user-story;
+    }
 
-    .task-category {
-        padding: 4px 16px;
+    &.technical-task {
+      background-color: $color-board-tech-task;
+    }
+  }
+
+  .task-title {
+    font-family: 'Inter-Bold';
+    font-weight: 700;
+    color: $color-brand-primary;
+  }
+
+  .task-description {
+    color: $color-neutral-dark;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; // Max 2 Zeilen, dann ...
+    line-clamp: 2; // Standard-Property für Kompatibilität
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+  }
+
+  // Subtask Progress Bar
+  .subtask-progress {
+    @include dFlex($ai: center, $jc: flex-start, $g: 16px);
+    width: 100%;
+    margin-top: 6px;
+
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background-color: $color-neutral-light;
+      border-radius: 8px;
+      overflow: hidden;
+
+      .progress-fill {
+        height: 100%;
+        background-color: $color-board-progressbar;
         border-radius: 8px;
+        transition: width 0.3s ease;
+      }
+    }
+
+    .subtask-count {
+      flex: 1;
+      margin: 0;
+      font-size: 16px;
+      color: black;
+      white-space: nowrap;
+    }
+  }
+
+  // Assignees & Priority Footer
+  .task-footer {
+    @include dFlex($ai: center, $jc: space-between);
+    width: 100%;
+    margin-top: 10px;
+
+    .assignees {
+      display: flex;
+      padding-left: 8px;
+
+      .assignee-avatar {
+        width: 32px;
+        height: 32px;
+        border: 1px solid white;
+        @include dFlex($ai: center, $jc: center);
+        font-size: 12px;
+        background-color: white;
+        margin-left: -8px;
         color: white;
-        font-size: 16px;
-        align-self: flex-start;
+        border-radius: 50%;
 
-        &.user-story {
-            background-color: $color-board-user-story;
+        &.assignee-avatar--more {
+          background-color: $color-neutral-dark;
+          color: white;
         }
-
-        &.technical-task {
-            background-color: $color-board-tech-task;
-        }
+      }
     }
 
-    .task-title {
-        font-family: "Inter-Bold";
-        font-weight: 700;
-        color: $color-brand-primary; 
+    .priority-icon {
+      width: 20px;
+      height: 20px;
     }
+  }
 
-    .task-description {
-        color: $color-neutral-dark;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 2; // Max 2 Zeilen, dann ...
-        line-clamp: 2; // Standard-Property für Kompatibilität
-        -webkit-box-orient: vertical;
-        text-overflow: ellipsis;
-    }
-
-    // Subtask Progress Bar
-    .subtask-progress {
-        @include dFlex($ai: center, $jc: flex-start, $g: 16px);
-        width: 100%;
-        margin-top: 6px;
-
-        .progress-bar {
-            flex: 1;
-            height: 8px;
-            background-color: $color-neutral-light;
-            border-radius: 8px;
-            overflow: hidden;
-
-            .progress-fill {
-                height: 100%;
-                background-color: $color-board-progressbar;
-                border-radius: 8px;
-                transition: width 0.3s ease;
-            }
-        }
-
-        .subtask-count {
-            flex: 1;
-            margin: 0;
-            font-size: 16px;
-            color: black;
-            white-space: nowrap;
-        }
-    }
-
-    // Assignees & Priority Footer
-    .task-footer {
-        @include dFlex($ai: center, $jc: space-between);
-        width: 100%;
-        margin-top: 10px;
-
-        .assignees {
-            display: flex;
-            padding-left: 8px;
-
-            .assignee-avatar {
-                width: 32px;
-                height: 32px;
-                border: 1px solid white;
-                @include dFlex($ai: center, $jc: center);
-                font-size: 12px;
-                background-color: white;
-                margin-left: -8px;
-                color: white;
-                border-radius: 50%;
-            }
-        }
-
-        .priority-icon {
-            width: 20px;
-            height: 20px;
-        }
-    }
-
-    &:last-child {
-        border: none; // irrelevant, wenn Karten getrennt sind
-    }
+  &:last-child {
+    border: none; // irrelevant, wenn Karten getrennt sind
+  }
 }
 
 @media (max-width: 1200px) {
-    .board-container {
-        padding: 0 32px;
+  .board-container {
+    padding: 0 32px;
 
-        .status-container {
-            min-width: 290px;
-        }
-
-        .board-content {
-            padding-bottom: 32px;
-            gap: 16px;
-        }
+    .status-container {
+      min-width: 290px;
     }
+
+    .board-content {
+      padding-bottom: 32px;
+      gap: 16px;
+    }
+  }
 }
 
 // Ab 1024px: Button mit Text + Suchleiste nach unten + 2-Spalten-Layout
 @media (max-width: 1024px) {
-    .board-container {
-        .board-header {
-            @include dFlex($ai: center, $jc: space-between, $fd: column, $g: 40px);
-            flex-wrap: wrap;
-            padding-bottom: 16px;
+  .board-container {
+    .board-header {
+      @include dFlex($ai: center, $jc: space-between, $fd: column, $g: 40px);
+      flex-wrap: wrap;
+      padding-bottom: 16px;
 
-            .header-left {
-                width: 100%;
-                @include dFlex($jc: space-between);
+      .header-left {
+        width: 100%;
+        @include dFlex($jc: space-between);
 
-                // Button mit Text anzeigen
-                .add-task-btn {
-                    display: flex;
-                    background-color: $color-brand-primary;
-                    color: white;
-                    font-size: 21px;
-                    font-weight: 700;
-                    border-radius: 10px;
-                    padding: 8px 16px;
-                    border: none;
-                    cursor: pointer;
-                    @include dFlex($g: 16px);
-                    height: 48px;
+        // Button mit Text anzeigen
+        .add-task-btn {
+          display: flex;
+          background-color: $color-brand-primary;
+          color: white;
+          font-size: 21px;
+          font-weight: 700;
+          border-radius: 10px;
+          padding: 8px 16px;
+          border: none;
+          cursor: pointer;
+          @include dFlex($g: 16px);
+          height: 48px;
 
-                    span {
-                        display: inline; // Text anzeigen
-                    }
+          span {
+            display: inline; // Text anzeigen
+          }
 
-                    img {
-                        width: 18px;
-                        height: 18px;
-                        filter: brightness(0) invert(1);
-                    }
-                }
-            }
+          img {
+            width: 18px;
+            height: 18px;
+            filter: brightness(0) invert(1);
+          }
+        }
+      }
 
-            .header-right {
-                gap: 16px;
-                width: 100%;
+      .header-right {
+        gap: 16px;
+        width: 100%;
 
-                // Desktop-Button ausblenden
-                .add-task-btn {
-                    display: none;
-                }
-
-                .search-field {
-                    width: auto;
-                    flex-grow: 1;
-                }
-            }
+        // Desktop-Button ausblenden
+        .add-task-btn {
+          display: none;
         }
 
-        .board-content {
-            padding-bottom: 32px;
-            gap: 16px;
+        .search-field {
+          width: auto;
+          flex-grow: 1;
         }
+      }
     }
 
-    .status-container {
-        width: 48%; // 2 Spalten pro Zeile
-        max-width: none;
+    .board-content {
+      padding-bottom: 32px;
+      gap: 16px;
     }
+  }
+
+  .status-container {
+    width: 48%; // 2 Spalten pro Zeile
+    max-width: none;
+  }
 }
 
 @media (max-width: 768px) {
-    .board-container {
-        padding: 0 16px;
+  .board-container {
+    padding: 0 16px;
 
-        .board-header {
-            @include dFlex($ai: center, $jc: space-between, $fd: column, $g: 40px);
-            flex-wrap: wrap;
-            padding-bottom: 16px;
+    .board-header {
+      @include dFlex($ai: center, $jc: space-between, $fd: column, $g: 40px);
+      flex-wrap: wrap;
+      padding-bottom: 16px;
 
-            .header-left {
-                width: 100%;
-                @include dFlex($jc: space-between);
+      .header-left {
+        width: 100%;
+        @include dFlex($jc: space-between);
 
-                h1 {
-                    font-size: 47px;
-                }
-
-                // Mobiler Button: Nur Plus-Icon
-                .add-task-btn {
-                    display: flex;
-                    background-color: $color-brand-primary;
-                    border-radius: 10px;
-                    border: none;
-                    padding: 8px 10px;
-                    height: 40px;
-
-                    // Text ausblenden unter 768px
-                    span {
-                        display: none;
-                    }
-
-                    img {
-                        width: 20px;
-                        height: 20px;
-                        filter: brightness(0) invert(1);
-                    }
-                }
-            }
-
-            .header-right {
-                gap: 16px;
-                width: 100%;
-
-                // Desktop-Button ausblenden
-                .add-task-btn {
-                    display: none;
-                }
-
-                .search-field {
-                    width: auto;
-                    flex-grow: 1;
-                }
-            }
+        h1 {
+          font-size: 47px;
         }
 
-        .board-main {
-            flex-direction: column-reverse; // no-results oben anzeigen
+        // Mobiler Button: Nur Plus-Icon
+        .add-task-btn {
+          display: flex;
+          background-color: $color-brand-primary;
+          border-radius: 10px;
+          border: none;
+          padding: 8px 10px;
+          height: 40px;
+
+          // Text ausblenden unter 768px
+          span {
+            display: none;
+          }
+
+          img {
+            width: 20px;
+            height: 20px;
+            filter: brightness(0) invert(1);
+          }
+        }
+      }
+
+      .header-right {
+        gap: 16px;
+        width: 100%;
+
+        // Desktop-Button ausblenden
+        .add-task-btn {
+          display: none;
         }
 
-        .board-content {
-            flex-direction: column;
-            align-items: stretch;
-            padding-bottom: 16px;
-            margin-bottom: 80px;
-            gap: 0px;
+        .search-field {
+          width: auto;
+          flex-grow: 1;
         }
-
-        .status-container {
-            width: 100%;
-            max-width: 100%;
-            gap: 8px;
-
-            .status-header {
-                h2 {
-                    font-size: 27px;
-                }
-
-                button img {
-                    height: 30px;
-                    width: 30px;
-                }
-            }
-
-            .example-list {
-                display: flex;
-                flex-direction: row;
-                overflow-x: auto;
-                gap: 16px;
-                padding: 4px 4px 32px 4px;
-
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-
-                &::-webkit-scrollbar {
-                    display: none;
-                }
-
-                .example-box {
-                    min-width: 250px;
-                    width: 250px;
-                    // height: auto; // Flexibel nach Content
-                    height: 250px; // Maximale Höhe
-                    flex-shrink: 0;
-                    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.075);
-
-                    .task-title {
-                        padding-top: 16px;
-                    }
-                }
-            }
-        }
+      }
     }
 
-    .no-tasks {
-        flex: 1;
+    .board-main {
+      flex-direction: column-reverse; // no-results oben anzeigen
     }
+
+    .board-content {
+      flex-direction: column;
+      align-items: stretch;
+      padding-bottom: 16px;
+      margin-bottom: 80px;
+      gap: 0px;
+    }
+
+    .status-container {
+      width: 100%;
+      max-width: 100%;
+      gap: 8px;
+
+      .status-header {
+        h2 {
+          font-size: 27px;
+        }
+
+        button img {
+          height: 30px;
+          width: 30px;
+        }
+      }
+
+      .example-list {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 16px;
+        padding: 4px 4px 32px 4px;
+
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        .example-box {
+          min-width: 250px;
+          width: 250px;
+          // height: auto; // Flexibel nach Content
+          height: 250px; // Maximale Höhe
+          flex-shrink: 0;
+          box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.075);
+
+          .task-title {
+            padding-top: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  .no-tasks {
+    flex: 1;
+  }
 }

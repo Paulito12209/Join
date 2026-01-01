@@ -1,232 +1,327 @@
 <div class="board-container">
-    <div class="board-header">
-        <div class="header-left">
-            <h1>Board</h1>
-            <button class="add-task-btn" (click)="openAddTask()">
-                <span>Add task</span><img src="img/icons/add.svg" alt="Add task">
-            </button>
+  <div class="board-header">
+    <div class="header-left">
+      <h1>Board</h1>
+      <button class="add-task-btn" (click)="openAddTask()">
+        <span>Add task</span><img src="img/icons/add.svg" alt="Add task" />
+      </button>
+    </div>
+    <div class="header-right">
+      <div class="search-field">
+        <input
+          type="text"
+          placeholder="Find Task"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="filterTasks()"
+        />
+        <div class="search-separator"></div>
+        <img src="img/icons/search.svg" alt="Search" class="search-icon" />
+      </div>
+      <button class="add-task-btn" (click)="openAddTask('todo')">
+        <span>Add task</span> <img src="img/icons/add.svg" alt="Add task" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Wrapper für column-reverse im Mobile-View -->
+  <div class="board-main">
+    <div class="board-content">
+      <!-- TO DO -->
+      <div class="status-container">
+        <div class="status-header">
+          <h2>To do</h2>
+          <button (click)="openAddTask('todo')">
+            <img src="img/icons/add_board_button.svg" alt="Add task" />
+          </button>
         </div>
-        <div class="header-right">
-            <div class="search-field">
-                <input type="text" placeholder="Find Task" [(ngModel)]="searchQuery" (ngModelChange)="filterTasks()">
-                <div class="search-separator"></div>
-                <img src="img/icons/search.svg" alt="Search" class="search-icon">
+        <div
+          cdkDropList
+          id="todoList"
+          #todoList="cdkDropList"
+          [cdkDropListData]="todo"
+          [cdkDropListConnectedTo]="[progressList, feedbackList, doneList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div class="drag-item" *ngFor="let task of todo" cdkDrag>
+            <div class="example-box" (click)="openTask(task)">
+              <!-- Task Content -->
+              <div
+                class="task-category"
+                [ngClass]="{
+                  'user-story': task.category === 'user-story',
+                  'technical-task': task.category === 'technical-task'
+                }"
+              >
+                {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
+              </div>
+              <div class="task-title">{{ task.title }}</div>
+              <div class="task-description">{{ task.description }}</div>
+              <!-- Subtask Progress Bar -->
+              <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    [style.width.%]="(getCompletedSubtasksCount(task) / task.subtasks.length) * 100"
+                  ></div>
+                </div>
+                <p class="subtask-count">
+                  {{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length }} Subtasks
+                </p>
+              </div>
+              <!-- Assignees & Priority -->
+              <div class="task-footer">
+                <div class="assignees">
+                  @if (task.assignees; as assignees) { @for (assignee of assignees.slice(0, 3);
+                  track assignee.uid) {
+                  <div
+                    class="assignee-avatar"
+                    [style.background-color]="getAssigneeColor(assignee)"
+                  >
+                    {{ getAssigneeInitials(assignee) }}
+                  </div>
+                  } @if (assignees.length > 3) {
+                  <div class="assignee-avatar assignee-avatar--more">
+                    +{{ assignees.length - 3 }}
+                  </div>
+                  } }
+                </div>
+
+                <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon" />
+              </div>
             </div>
-            <button class="add-task-btn" (click)="openAddTask('todo')">
-                <span>Add task</span> <img src="img/icons/add.svg" alt="Add task">
-            </button>
+          </div>
+          <div class="no-tasks" *ngIf="todo.length === 0">
+            <p>No tasks To do</p>
+          </div>
         </div>
+      </div>
+
+      <!-- IN PROGRESS -->
+      <div class="status-container">
+        <div class="status-header">
+          <h2>In progress</h2>
+          <button (click)="openAddTask('in-progress')">
+            <img src="img/icons/add_board_button.svg" alt="Add task" />
+          </button>
+        </div>
+        <div
+          cdkDropList
+          id="progressList"
+          #progressList="cdkDropList"
+          [cdkDropListData]="inProgress"
+          [cdkDropListConnectedTo]="[todoList, feedbackList, doneList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div class="drag-item" *ngFor="let task of inProgress" cdkDrag>
+            <div class="example-box" (click)="openTask(task)">
+              <div
+                class="task-category"
+                [ngClass]="{
+                  'user-story': task.category === 'user-story',
+                  'technical-task': task.category === 'technical-task'
+                }"
+              >
+                {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
+              </div>
+              <div class="task-title">{{ task.title }}</div>
+              <div class="task-description">{{ task.description }}</div>
+              <!-- Subtask Progress Bar -->
+              <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    [style.width.%]="(getCompletedSubtasksCount(task) / task.subtasks.length) * 100"
+                  ></div>
+                </div>
+                <p class="subtask-count">
+                  {{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length }} Subtasks
+                </p>
+              </div>
+              <!-- Assignees & Priority -->
+              <div class="task-footer">
+                <div class="assignees">
+                  @if (task.assignees; as assignees) { @for (assignee of assignees.slice(0, 3);
+                  track assignee.uid) {
+                  <div
+                    class="assignee-avatar"
+                    [style.background-color]="getAssigneeColor(assignee)"
+                  >
+                    {{ getAssigneeInitials(assignee) }}
+                  </div>
+                  } @if (assignees.length > 3) {
+                  <div class="assignee-avatar assignee-avatar--more">
+                    +{{ assignees.length - 3 }}
+                  </div>
+                  } }
+                </div>
+                <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon" />
+              </div>
+            </div>
+          </div>
+          <div class="no-tasks" *ngIf="inProgress.length === 0">
+            <p>No tasks In progress</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- AWAIT FEEDBACK -->
+      <div class="status-container">
+        <div class="status-header">
+          <h2>Await feedback</h2>
+          <button (click)="openAddTask('awaiting-feedback')">
+            <img src="img/icons/add_board_button.svg" alt="Add task" />
+          </button>
+        </div>
+        <div
+          cdkDropList
+          id="feedbackList"
+          #feedbackList="cdkDropList"
+          [cdkDropListData]="awaitFeedback"
+          [cdkDropListConnectedTo]="[todoList, progressList, doneList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div class="drag-item" *ngFor="let task of awaitFeedback" cdkDrag>
+            <div class="example-box" (click)="openTask(task)">
+              <div
+                class="task-category"
+                [ngClass]="{
+                  'user-story': task.category === 'user-story',
+                  'technical-task': task.category === 'technical-task'
+                }"
+              >
+                {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
+              </div>
+              <div class="task-title">{{ task.title }}</div>
+              <div class="task-description">{{ task.description }}</div>
+              <!-- Subtask Progress Bar -->
+              <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    [style.width.%]="(getCompletedSubtasksCount(task) / task.subtasks.length) * 100"
+                  ></div>
+                </div>
+                <p class="subtask-count">
+                  {{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length }} Subtasks
+                </p>
+              </div>
+              <!-- Assignees & Priority -->
+              <div class="task-footer">
+                <div class="assignees">
+                  @if (task.assignees; as assignees) { @for (assignee of assignees.slice(0, 3);
+                  track assignee.uid) {
+                  <div
+                    class="assignee-avatar"
+                    [style.background-color]="getAssigneeColor(assignee)"
+                  >
+                    {{ getAssigneeInitials(assignee) }}
+                  </div>
+                  } @if (assignees.length > 3) {
+                  <div class="assignee-avatar assignee-avatar--more">
+                    +{{ assignees.length - 3 }}
+                  </div>
+                  } }
+                </div>
+                <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon" />
+              </div>
+            </div>
+          </div>
+          <div class="no-tasks" *ngIf="awaitFeedback.length === 0">
+            <p>No tasks Await feedback</p>
+          </div>
+        </div>
+      </div>
+      <!-- DONE -->
+      <div class="status-container">
+        <div class="status-header">
+          <h2>Done</h2>
+        </div>
+        <div
+          cdkDropList
+          id="doneList"
+          #doneList="cdkDropList"
+          [cdkDropListData]="done"
+          [cdkDropListConnectedTo]="[todoList, progressList, feedbackList]"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div class="drag-item" *ngFor="let task of done" cdkDrag>
+            <div class="example-box" (click)="openTask(task)">
+              <div
+                class="task-category"
+                [ngClass]="{
+                  'user-story': task.category === 'user-story',
+                  'technical-task': task.category === 'technical-task'
+                }"
+              >
+                {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
+              </div>
+              <div class="task-title">{{ task.title }}</div>
+              <div class="task-description">{{ task.description }}</div>
+              <!-- Subtask Progress Bar -->
+              <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
+                <div class="progress-bar">
+                  <div
+                    class="progress-fill"
+                    [style.width.%]="(getCompletedSubtasksCount(task) / task.subtasks.length) * 100"
+                  ></div>
+                </div>
+                <p class="subtask-count">
+                  {{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length }} Subtasks
+                </p>
+              </div>
+              <!-- Assignees & Priority -->
+              <div class="task-footer">
+                <div class="assignees">
+                  @if (task.assignees; as assignees) { @for (assignee of assignees.slice(0, 3);
+                  track assignee.uid) {
+                  <div
+                    class="assignee-avatar"
+                    [style.background-color]="getAssigneeColor(assignee)"
+                  >
+                    {{ getAssigneeInitials(assignee) }}
+                  </div>
+                  } @if (assignees.length > 3) {
+                  <div class="assignee-avatar assignee-avatar--more">
+                    +{{ assignees.length - 3 }}
+                  </div>
+                  } }
+                </div>
+                <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon" />
+              </div>
+            </div>
+          </div>
+          <div class="no-tasks" *ngIf="done.length === 0">
+            <p>No tasks Done</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Wrapper für column-reverse im Mobile-View -->
-    <div class="board-main">
-        <div class="board-content">
-            <!-- TO DO -->
-            <div class="status-container">
-                <div class="status-header">
-                    <h2>To do</h2>
-                    <button (click)="openAddTask('todo')">
-                        <img src="img/icons/add_board_button.svg" alt="Add task">
-                    </button>
-                </div>
-                <div cdkDropList id="todoList" #todoList="cdkDropList" [cdkDropListData]="todo"
-                    [cdkDropListConnectedTo]="[progressList, feedbackList, doneList]" class="example-list"
-                    (cdkDropListDropped)="drop($event)">
-                    <div class="drag-item" *ngFor="let task of todo" cdkDrag>
-                        <div class="example-box" (click)="openTask(task)">
-                            <!-- Task Content -->
-                            <div class="task-category"
-                                [ngClass]="{'user-story': task.category === 'user-story', 'technical-task': task.category === 'technical-task'}">
-                                {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
-                            </div>
-                            <div class="task-title">{{ task.title }}</div>
-                            <div class="task-description">{{ task.description }}</div>
-                            <!-- Subtask Progress Bar -->
-                            <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
-                                <div class="progress-bar">
-                                    <div class="progress-fill"
-                                        [style.width.%]="getCompletedSubtasksCount(task) / task.subtasks.length * 100">
-                                    </div>
-                                </div>
-                                <p class="subtask-count">{{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length
-                                    }}
-                                    Subtasks</p>
-                            </div>
-                            <!-- Assignees & Priority -->
-                            <div class="task-footer">
-                                <div class="assignees">
-                                    <div *ngFor="let assignee of task.assignees" class="assignee-avatar"
-                                        [style.background-color]="getAssigneeColor(assignee)">
-                                        {{ getAssigneeInitials(assignee) }}
-                                    </div>
-                                </div>
-                                <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="no-tasks" *ngIf="todo.length === 0">
-                        <p>No tasks To do</p>
-                    </div>
-                </div>
-            </div>
+    <!-- Keine Aufgaben gefunden - zentrierte Anzeige -->
+    <div
+      *ngIf="
+        searchQuery && !todo.length && !inProgress.length && !awaitFeedback.length && !done.length
+      "
+      class="no-results"
+    >
+      <div class="no-results-icon">
+        <img src="img/icons/no-found.png" alt="Keine Aufgaben gefunden" />
+      </div>
+      <h3 class="no-results-title">Keine Ergebnisse gefunden zu</h3>
+      <div class="no-results-search">
+        <img src="img/icons/search.svg" alt="Suche" class="search-icon" />
+        <span>"{{ searchQuery }}"</span>
+      </div>
+    </div>
+  </div>
+  <!-- Ende board-main -->
 
-            <!-- IN PROGRESS -->
-            <div class="status-container">
-                <div class="status-header">
-                    <h2>In progress</h2>
-                    <button (click)="openAddTask('in-progress')">
-                        <img src="img/icons/add_board_button.svg" alt="Add task">
-                    </button>
-                </div>
-                <div cdkDropList id="progressList" #progressList="cdkDropList" [cdkDropListData]="inProgress"
-                    [cdkDropListConnectedTo]="[todoList, feedbackList, doneList]" class="example-list"
-                    (cdkDropListDropped)="drop($event)">
-                    <div class="drag-item" *ngFor="let task of inProgress" cdkDrag>
-                        <div class="example-box" (click)="openTask(task)">
-                            <div class="task-category"
-                                [ngClass]="{'user-story': task.category === 'user-story', 'technical-task': task.category === 'technical-task'}">
-                                {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
-                            </div>
-                            <div class="task-title">{{ task.title }}</div>
-                            <div class="task-description">{{ task.description }}</div>
-                            <!-- Subtask Progress Bar -->
-                            <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
-                                <div class="progress-bar">
-                                    <div class="progress-fill"
-                                        [style.width.%]="getCompletedSubtasksCount(task) / task.subtasks.length * 100">
-                                    </div>
-                                </div>
-                                <p class="subtask-count">{{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length
-                                    }}
-                                    Subtasks</p>
-                            </div>
-                            <!-- Assignees & Priority -->
-                            <div class="task-footer">
-                                <div class="assignees">
-                                    <div *ngFor="let assignee of task.assignees" class="assignee-avatar"
-                                        [style.background-color]="getAssigneeColor(assignee)">
-                                        {{ getAssigneeInitials(assignee) }}
-                                    </div>
-                                </div>
-                                <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="no-tasks" *ngIf="inProgress.length === 0">
-                        <p>No tasks In progress</p>
-                    </div>
-                </div>
-            </div>
+  <app-add-task-board *ngIf="isAddDialogOpen" (close)="onAddClose()" (create)="onAddCreate($event)">
+  </app-add-task-board>
 
-            <!-- AWAIT FEEDBACK -->
-            <div class="status-container">
-                <div class="status-header">
-                    <h2>Await feedback</h2>
-                    <button (click)="openAddTask('awaiting-feedback')">
-                        <img src="img/icons/add_board_button.svg" alt="Add task">
-                    </button>
-                </div>
-                <div cdkDropList id="feedbackList" #feedbackList="cdkDropList" [cdkDropListData]="awaitFeedback"
-                    [cdkDropListConnectedTo]="[todoList, progressList, doneList]" class="example-list"
-                    (cdkDropListDropped)="drop($event)">
-                    <div class="drag-item" *ngFor="let task of awaitFeedback" cdkDrag>
-                        <div class="example-box" (click)="openTask(task)">
-                            <div class="task-category"
-                                [ngClass]="{'user-story': task.category === 'user-story', 'technical-task': task.category === 'technical-task'}">
-                                {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
-                            </div>
-                            <div class="task-title">{{ task.title }}</div>
-                            <div class="task-description">{{ task.description }}</div>
-                            <!-- Subtask Progress Bar -->
-                            <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
-                                <div class="progress-bar">
-                                    <div class="progress-fill"
-                                        [style.width.%]="getCompletedSubtasksCount(task) / task.subtasks.length * 100">
-                                    </div>
-                                </div>
-                                <p class="subtask-count">{{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length
-                                    }}
-                                    Subtasks</p>
-                            </div>
-                            <!-- Assignees & Priority -->
-                            <div class="task-footer">
-                                <div class="assignees">
-                                    <div *ngFor="let assignee of task.assignees" class="assignee-avatar"
-                                        [style.background-color]="getAssigneeColor(assignee)">
-                                        {{ getAssigneeInitials(assignee) }}
-                                    </div>
-                                </div>
-                                <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="no-tasks" *ngIf="awaitFeedback.length === 0">
-                        <p>No tasks Await feedback</p>
-                    </div>
-                </div>
-
-            </div>
-            <!-- DONE -->
-            <div class="status-container">
-                <div class="status-header">
-                    <h2>Done</h2>
-                </div>
-                <div cdkDropList id="doneList" #doneList="cdkDropList" [cdkDropListData]="done"
-                    [cdkDropListConnectedTo]="[todoList, progressList, feedbackList]" class="example-list"
-                    (cdkDropListDropped)="drop($event)">
-                    <div class="drag-item" *ngFor="let task of done" cdkDrag>
-                        <div class="example-box" (click)="openTask(task)">
-                            <div class="task-category"
-                                [ngClass]="{'user-story': task.category === 'user-story', 'technical-task': task.category === 'technical-task'}">
-                                {{ task.category === 'user-story' ? 'User Story' : 'Technical Task' }}
-                            </div>
-                            <div class="task-title">{{ task.title }}</div>
-                            <div class="task-description">{{ task.description }}</div>
-                            <!-- Subtask Progress Bar -->
-                            <div class="subtask-progress" *ngIf="task.subtasks && task.subtasks.length > 0">
-                                <div class="progress-bar">
-                                    <div class="progress-fill"
-                                        [style.width.%]="getCompletedSubtasksCount(task) / task.subtasks.length * 100">
-                                    </div>
-                                </div>
-                                <p class="subtask-count">{{ getCompletedSubtasksCount(task) }}/{{ task.subtasks.length
-                                    }}
-                                    Subtasks</p>
-                            </div>
-                            <!-- Assignees & Priority -->
-                            <div class="task-footer">
-                                <div class="assignees">
-                                    <div *ngFor="let assignee of task.assignees" class="assignee-avatar"
-                                        [style.background-color]="getAssigneeColor(assignee)">
-                                        {{ getAssigneeInitials(assignee) }}
-                                    </div>
-                                </div>
-                                <img [src]="getPriorityIcon(task.priority)" alt="Priority" class="priority-icon">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="no-tasks" *ngIf="done.length === 0">
-                        <p>No tasks Done</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Keine Aufgaben gefunden - zentrierte Anzeige -->
-        <div *ngIf="searchQuery && !todo.length && !inProgress.length && !awaitFeedback.length && !done.length"
-            class="no-results">
-            <div class="no-results-icon">
-                <img src="img/icons/no-found.png" alt="Keine Aufgaben gefunden">
-            </div>
-            <h3 class="no-results-title">Keine Ergebnisse gefunden zu</h3>
-            <div class="no-results-search">
-                <img src="img/icons/search.svg" alt="Suche" class="search-icon">
-                <span>"{{searchQuery}}"</span>
-            </div>
-        </div>
-    </div> <!-- Ende board-main -->
-
-    <app-add-task-board *ngIf="isAddDialogOpen" (close)="onAddClose()" (create)="onAddCreate($event)">
-    </app-add-task-board>
-
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+</div>
