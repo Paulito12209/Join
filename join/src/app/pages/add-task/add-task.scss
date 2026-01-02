@@ -569,7 +569,6 @@ select.ng-invalid.ng-touched {
 .subtask-list li:has(.edit-wrapper) {
   background-color: white;
   border-radius: 0;
- 
 }
 
 .subtask-title {
@@ -903,5 +902,12 @@ select {
   to {
     transform: translate(-50%, 100vh);
     opacity: 0;
+  }
+}
+
+@media (max-width: 370px) {
+  .actions .clear,
+  .actions .submit {
+    padding: 12px 12px;
   }
 }
