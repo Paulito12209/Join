@@ -125,7 +125,7 @@
 
   .board-content {
     width: 100%;
-    @include dFlex($ai: start, $jc: space-between, $g: 24px);
+    @include dFlex($ai: stretch, $jc: space-between, $g: 24px); // stretch für gleiche Höhe
     flex-wrap: wrap;
     padding-bottom: 56px;
   }
@@ -217,6 +217,7 @@
 
   .example-list {
     min-height: 100px; // Sicherstellen der Größe des Ablagebereichs
+    flex: 1; // Füllt die volle verfügbare Höhe im status-container
 
     // Hintergrund/Rahmen vom Listencontainer entfernen, damit es wie Spalten aussieht
     background: transparent;
@@ -514,6 +515,8 @@
       width: 100%;
       max-width: 100%;
       gap: 8px;
+      min-height: auto; // Mobile: nur nötige Höhe
+      align-items: flex-start; // Mobile: Kinder nicht strecken
 
       .status-header {
         h2 {
@@ -532,12 +535,22 @@
         overflow-x: auto;
         gap: 16px;
         padding: 4px 4px 32px 4px;
+        flex: none; // Mobile: nur nötige Höhe
+        min-height: auto;
+        width: 100%; // Volle Breite bei Mobile
 
         -ms-overflow-style: none;
         scrollbar-width: none;
 
         &::-webkit-scrollbar {
           display: none;
+        }
+
+        // Drag-Item Wrapper bekommt auch feste Breite
+        .drag-item {
+          width: 250px;
+          min-width: 250px;
+          flex-shrink: 0;
         }
 
         .example-box {
@@ -557,6 +570,7 @@
   }
 
   .no-tasks {
-    flex: 1;
+    flex: none; // Nur die nötige Höhe, nicht wachsen
+    width: 100%; // Volle Breite bei Mobile
   }
 }
