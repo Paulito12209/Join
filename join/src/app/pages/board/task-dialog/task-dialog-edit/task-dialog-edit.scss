@@ -380,7 +380,8 @@ input[type='date']::after {
 
 .subtask-list li {
   @include dFlex();
-  padding: 6px 12px;
+  margin-top: 6px;
+  padding: 0 12px; 
   font-size: 16px;
   border-radius: 8px;
   transition: background-color 0.1s ease;
