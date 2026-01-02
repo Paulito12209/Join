@@ -29,10 +29,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
+  margin-top: 24px;
 
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 24px;
+
+  padding-bottom: 80px;
 }
 
 .right {
@@ -226,12 +228,7 @@
   cursor: pointer;
 }
 
-.content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  margin-top: 24px;
-}
+
 
 label {
   font-weight: 400;
@@ -722,12 +719,58 @@ select {
 }
 
 @media (min-width: 769px) {
-  .add-task-page > .actions {
+  .add-task-page>.actions {
     position: sticky;
     bottom: 0;
     background: $color-neutral-bg;
     padding: 16px 0;
     z-index: 2;
+  }
+}
+
+@media (max-width: 1059px) {
+  .add-task-page {
+    max-width: 100%;
+    padding: 0 32px;
+  }
+}
+
+// Breakpoint bei 1150px für vertikales Formular-Layout (mit Sidebar sichtbar)
+// Löst das Problem, dass bei ca. 800-1100px das Formular abgeschnitten wird
+@media (max-width: 1000px) {
+  .content {
+    grid-template-columns: 1fr; // Eine Spalte statt zwei
+    gap: 24px;
+    padding-bottom: 24px;
+  }
+
+  .right {
+    padding-left: 0; // Linkes Padding entfernen
+  }
+
+  .right::before {
+    display: none; // Vertikale Trennlinie ausblenden
+  }
+
+  // Required-Hint in Actions ausblenden, stattdessen unter Subtasks anzeigen
+  .required-hint {
+    display: none;
+  }
+
+  .required-hint-mobile {
+    display: block;
+  }
+
+  .add-task-page {
+    max-width: 100%;
+
+    .actions {
+      flex-direction: row;
+      justify-content: flex-end;
+      margin: 0;
+      z-index: 10;
+      background: transparent;
+    }
   }
 }
 
@@ -740,7 +783,7 @@ select {
   .content {
     grid-template-columns: 1fr;
     gap: 24px;
-    padding-bottom: 176px;
+    padding-bottom: 24px;
   }
 
   .right {
@@ -801,9 +844,9 @@ select {
     font-size: 13px;
   }
 
-  .add-task-page > .actions {
+  .add-task-page>.actions {
     position: fixed;
-    bottom: 80px; 
+    bottom: 80px;
     left: 0;
     right: 0;
 
@@ -919,7 +962,26 @@ select {
   }
 }
 
-@media (max-width: 370px) {
+@media (max-width: 375px) {
+
+  .add-task-page {
+    padding: 12px 12px 136px 12px;
+
+    .actions {
+      padding: 12px;
+    }
+  }
+
+  .page-header h1 {
+    font-size: 47px;
+    margin-bottom: 0;
+    padding: 24px 0 0 0;
+  }
+
+  .priority {
+    gap: 6px;
+  }
+
   .actions .clear,
   .actions .submit {
     padding: 12px 12px;
