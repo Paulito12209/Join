@@ -326,7 +326,7 @@ select.ng-invalid.ng-touched {
   height: 56px;
   padding: 8px 16px;
   border-radius: 8px;
-  border: 1px solid #ccc; 
+  border: 1px solid #ccc;
   background: white;
   cursor: pointer;
   display: flex;
@@ -430,7 +430,7 @@ select.ng-invalid.ng-touched {
 .actions .submit {
   padding: 12px 24px;
   border-radius: 10px;
-  background: $color-brand-primary; 
+  background: $color-brand-primary;
   color: white;
   font-size: 20px;
   font-weight: 500;
@@ -451,7 +451,7 @@ select.ng-invalid.ng-touched {
   }
 
   &:disabled {
-    background: $color-brand-primary; 
+    background: $color-brand-primary;
     color: white;
     cursor: not-allowed;
     box-shadow: none;
@@ -460,7 +460,7 @@ select.ng-invalid.ng-touched {
 
 // Wenn Form gültig ist, bekommt Submit-Button die dunkle Farbe
 .actions .submit:not(:disabled) {
-  background: $color-brand-deep; 
+  background: $color-brand-deep;
 }
 
 .actions .clear {
@@ -724,6 +724,10 @@ select {
     background: $color-neutral-bg;
     padding: 16px 0;
     z-index: 2;
+  }
+
+  .priority {
+    justify-content: space-between;
   }
 }
 
