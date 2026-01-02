@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, ChangeDetectorRef, inject, HostListener } from '@angular/core';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -67,6 +67,15 @@ export class AddTask {
     this.contactsService.getContacts().subscribe((list) => {
       this.contacts = list;
     });
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    // Close dropdown when clicking outside
+    const target = event.target as HTMLElement;
+    if (!target.closest('.assigned-dropdown')) {
+      this.assigneeOpen = false;
+    }
   }
 
   async createTask() {
@@ -211,6 +220,10 @@ export class AddTask {
     this.taskForm.patchValue({ assignedTo: next });
   }
 
+  isAssigned(id: string): boolean {
+    return (this.taskForm.value.assignedTo || []).includes(id);
+  }
+
   toggleAssigneeDropdown(state?: boolean) {
     this.assigneeOpen = state !== undefined ? state : !this.assigneeOpen;
   }
@@ -225,6 +238,15 @@ export class AddTask {
 
   getContactColor(uid: string): string {
     return this.getContact(uid)?.color || '#6c63ff';
+  }
+
+  getContactInitials(uid: string): string {
+    const name = this.getContact(uid)?.name || '';
+    return this.getInitials(name);
+  }
+
+  getInitials(name: string): string {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase();
   }
 
   private randomId(): string {
