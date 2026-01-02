@@ -10,6 +10,7 @@ import {
 import { TasksService } from '../../core/services/tasks.service';
 import { Task } from './task';
 import { ContactsService, Contact } from '../../core/services/contacts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-task',
@@ -52,7 +53,8 @@ export class AddTask {
   constructor(
     private tasks: TasksService,
     private contactsService: ContactsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.taskForm = this.fb.group({
       title: ['', Validators.required],
@@ -125,7 +127,6 @@ export class AddTask {
 
       const created = await this.tasks.create(payload);
       this.resultMsg = `Created: ${created.id}`;
-      this.clearForm();
 
       this.showTaskAddedToast = true;
       this.hideToast = false;
@@ -141,6 +142,11 @@ export class AddTask {
       setTimeout(() => {
         this.showTaskAddedToast = false;
         this.cdr.detectChanges();
+
+        this.router.navigate(['/board']).then(() => {
+          this.clearForm(); 
+          this.cdr.detectChanges();
+        });
       }, 1500);
     } catch (e: any) {
       this.resultMsg = 'Error: ' + e?.message;
@@ -246,7 +252,11 @@ export class AddTask {
   }
 
   getInitials(name: string): string {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+      .toUpperCase();
   }
 
   private randomId(): string {
