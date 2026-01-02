@@ -519,6 +519,8 @@
       align-items: flex-start; // Mobile: Kinder nicht strecken
 
       .status-header {
+        width: 100%; // Volle Breite für space-between
+
         h2 {
           font-size: 27px;
         }
