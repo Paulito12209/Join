@@ -105,12 +105,12 @@ export class AddTask {
         ...(form.dueDate ? { dueDate: new Date(form.dueDate).toISOString() } : {}),
         ...(this.subtasks.length
           ? {
-            subtasks: this.subtasks.map((s) => ({
-              id: s.id,
-              title: s.title,
-              done: s.done,
-            })),
-          }
+              subtasks: this.subtasks.map((s) => ({
+                id: s.id,
+                title: s.title,
+                done: s.done,
+              })),
+            }
           : {}),
       };
 
@@ -175,19 +175,24 @@ export class AddTask {
     this.newSubtaskTitle = '';
   }
 
-  startEditSubtask(id: string, title: string) {
-    this.editSubtaskId = id;
+  startEditSubtask(subtaskId: string, title: string): void {
+    this.editSubtaskId = subtaskId;
     this.editSubtaskTitle = title;
   }
 
-  saveEditSubtask(id: string) {
-    this.subtasks = this.subtasks.map((s) =>
-      s.id === id ? { ...s, title: this.editSubtaskTitle } : s
-    );
+  saveEditSubtask(subtaskId: string): void {
+    const trimmedTitle = this.editSubtaskTitle.trim();
+    if (!trimmedTitle) return;
+
+    this.subtasks = this.subtasks.map((subtask) => {
+      if (subtask.id !== subtaskId) return subtask;
+      return { ...subtask, title: trimmedTitle };
+    });
+
     this.cancelEditSubtask();
   }
 
-  cancelEditSubtask() {
+  cancelEditSubtask(): void {
     this.editSubtaskId = null;
     this.editSubtaskTitle = '';
   }

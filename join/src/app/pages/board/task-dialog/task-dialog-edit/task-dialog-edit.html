@@ -153,7 +153,7 @@
 
       <ul class="subtask-list">
         @for (subtask of subtasks; track subtask.id) {
-        <li>
+        <li (dblclick)="startEditSubtask(subtask.id, subtask.title)">
           @if (editSubtaskId !== subtask.id) {
           <span class="subtask-bullet">•</span>
           <span class="subtask-title">{{ subtask.title }}</span>
@@ -167,14 +167,14 @@
               <img src="img/icons/edit-hover.svg" alt="Edit" />
             </button>
 
-            <span class="divider-small"></span>
+            <span class="divider"></span>
 
             <button type="button" class="icon-btn" (click)="removeSubtask(subtask.id)">
               <img src="img/icons/delete.svg" alt="Delete" />
             </button>
           </div>
           } @else {
-          <div class="edit-wrapper">
+          <div class="edit-wrapper" (dblclick)="$event.stopPropagation()">
             <input
               [(ngModel)]="editSubtaskTitle"
               [ngModelOptions]="{ standalone: true }"
@@ -186,7 +186,7 @@
                 <img src="img/icons/delete.svg" alt="Delete" />
               </button>
 
-              <span class="divider-small"></span>
+              <span class="divider"></span>
 
               <button type="button" class="icon-btn" (click)="saveEditSubtask(subtask.id)">
                 <img src="img/icons/check-small-dark.svg" alt="Save" />

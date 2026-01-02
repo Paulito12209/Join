@@ -221,7 +221,7 @@ input[type='date']::after {
   border-top: 4.6px solid $color-brand-primary;
 
   z-index: 1;
-  position: relative; 
+  position: relative;
 }
 
 .dropdown-arrow:hover::before {
@@ -350,7 +350,7 @@ input[type='date']::after {
   cursor: pointer;
   @include dFlex();
   border-radius: 50%;
-  transition: background-color 0.1s;
+  transition: background-color 0.1s ease;
 
   &:hover {
     background-color: $color-neutral-user-bg;
@@ -370,13 +370,6 @@ input[type='date']::after {
   margin: 0 2px;
 }
 
-.divider-small {
-  width: 0px;
-  height: 24px;
-  border: 1px solid $color-neutral-dark;
-  margin: 0 2px;
-}
-
 .subtask-list {
   list-style: none;
   margin: 0;
@@ -390,10 +383,10 @@ input[type='date']::after {
   padding: 6px 12px;
   font-size: 16px;
   border-radius: 8px;
-  transition: background 0.1s;
+  transition: background-color 0.1s ease;
 }
 
-.subtask-list li:hover {
+.subtask-list li:hover:not(:has(.edit-wrapper)) {
   background-color: $color-neutral-user-bg;
 }
 

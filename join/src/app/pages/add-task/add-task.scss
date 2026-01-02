@@ -400,7 +400,7 @@ select.ng-invalid.ng-touched {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 40px;
+  margin-top: 28px;
 }
 
 .required-hint {
@@ -538,69 +538,73 @@ select.ng-invalid.ng-touched {
 }
 
 .icon-btn {
-  background: none;
+  background-color: transparent;
   border: none;
   padding: 4px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include dFlex();
   border-radius: 50%;
-  transition: background 0.1s ease;
-}
+  transition: background-color 0.1s ease;
 
-.icon-btn:hover {
-  background: #eeeeee;
-}
+  &:hover {
+    background-color: $color-neutral-user-bg;
+  }
 
-.icon-btn img {
-  width: 14px;
-  height: 14px;
+  img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
 }
 
 .divider {
-  width: 1px;
-  height: 16px;
-  background: $color-neutral-light;
-  margin: 0 4px;
-}
-
-.divider-small {
-  width: 1px;
-  height: 16px;
-  background: $color-neutral-light;
-  margin: 0 3px;
+  width: 0px;
+  height: 24px;
+  border: 1px solid $color-neutral-light;
+  margin: 0 2px;
 }
 
 .subtask-list {
   list-style: none;
-  margin: 12px 0 0 0;
+  margin: 0;
   padding: 0;
+  max-height: 80px;
+  overflow-y: auto;
 }
 
 .subtask-list li {
-  display: flex;
-  align-items: center;
-  padding: 6px 12px;
+  @include dFlex();
+  margin-top: 6px;
+  padding: 0 12px;
+  font-size: 16px;
   border-radius: 8px;
-  transition: background 0.1s ease;
+  transition: background-color 0.1s ease;
 }
 
-.subtask-list li:hover {
-  background: #f0f5fc;
+.subtask-list li:hover:not(:has(.edit-wrapper)) {
+  background-color: $color-neutral-user-bg;
+}
+
+.subtask-list li:has(.edit-wrapper) {
+  background-color: white;
+  border-radius: 0;
+ 
 }
 
 .subtask-title {
   flex: 1;
-  font-size: 14px;
+  word-break: break-word;
 }
 
 .item-actions {
-  display: flex;
-  align-items: center;
-  gap: 0px;
+  @include dFlex();
   opacity: 0;
-  transition: opacity 0.2s ease;
+
+  img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
 }
 
 .item-actions img {
@@ -609,13 +613,32 @@ select.ng-invalid.ng-touched {
 
 .subtask-list li:hover .item-actions {
   opacity: 1;
+  pointer-events: auto;
 }
 
-.subtask-list li::before {
-  content: '•';
+.edit-wrapper {
+  @include dFlex();
+  width: 100%;
+  border-bottom: 1px solid $color-brand-highlight;
+  padding-bottom: 2px;
+}
+
+.edit-input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  flex: 1;
+  font-size: 16px;
+  padding: 0;
+}
+
+.edit-actions {
+  @include dFlex();
+}
+
+.subtask-bullet {
   margin-right: 10px;
-  font-size: 18px;
-  line-height: 1;
+  font-weight: bold;
 }
 
 input[type='date'] {

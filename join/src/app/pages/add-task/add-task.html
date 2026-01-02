@@ -152,35 +152,65 @@
             class="icon-btn"
             (click)="clearSubtaskInput(); subtaskFocus = false"
           >
-            <img src="img/icons/close_black.svg" alt="Clear" />
+            <img src="img/icons/close-small-dark.svg" alt="Clear" />
           </button>
 
           <span class="divider"></span>
 
           <button type="button" class="icon-btn" (click)="addSubtask()">
-            <img src="img/icons/check-hover.svg" alt="Add" />
+            <img src="img/icons/check-small-dark.svg" alt="Add" />
           </button>
         </div>
         }
       </div>
 
       <ul class="subtask-list">
-        <li *ngFor="let s of subtasks">
-          <span class="subtask-title">{{ s.title }}</span>
+        @for (subtask of subtasks; track subtask.id) {
+        <li (dblclick)="startEditSubtask(subtask.id, subtask.title)">
+          @if (editSubtaskId !== subtask.id) {
+          <span class="subtask-bullet">•</span>
+          <span class="subtask-title">{{ subtask.title }}</span>
 
           <div class="item-actions">
-            <button type="button" class="icon-btn" (click)="startEditSubtask(s.id, s.title)">
-              <img src="img/icons/edit.svg" alt="Edit" />
+            <button
+              type="button"
+              class="icon-btn"
+              (click)="startEditSubtask(subtask.id, subtask.title)"
+            >
+              <img src="img/icons/edit-hover.svg" alt="Edit" />
             </button>
 
-            <span class="divider-small"></span>
+            <span class="divider"></span>
 
-            <button type="button" class="icon-btn" (click)="removeSubtask(s.id)">
+            <button type="button" class="icon-btn" (click)="removeSubtask(subtask.id)">
               <img src="img/icons/delete.svg" alt="Delete" />
             </button>
           </div>
+          } @else {
+          <div class="edit-wrapper" (dblclick)="$event.stopPropagation()">
+            <input
+              [(ngModel)]="editSubtaskTitle"
+              [ngModelOptions]="{ standalone: true }"
+              class="edit-input"
+            />
+
+            <div class="edit-actions">
+              <button type="button" class="icon-btn" (click)="removeSubtask(subtask.id)">
+                <img src="img/icons/delete.svg" alt="Delete" />
+              </button>
+
+              <span class="divider"></span>
+
+              <button type="button" class="icon-btn" (click)="saveEditSubtask(subtask.id)">
+                <img src="img/icons/check-small-dark.svg" alt="Save" />
+              </button>
+            </div>
+          </div>
+          }
         </li>
+        }
       </ul>
+
       <!-- Required-Hint für Mobile View (unter Subtasks) -->
       <span class="required-hint-mobile"
         ><span class="asterisk">*</span>This field is required</span
