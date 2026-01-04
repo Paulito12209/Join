@@ -1,0 +1,54 @@
+<div class="register-container">
+    <header>
+        <img src="img/logo-dark.svg" alt="Join Logo" class="logo">
+    </header>
+
+    <main>
+        <div class="register-card">
+            <div class="title-container">
+                <a routerLink="/login" class="back-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="#29ABE2" />
+                    </svg>
+                </a>
+                <h1>Sign up</h1>
+                <div class="underline"></div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" placeholder="Name" [(ngModel)]="name" class="input-field icon-person">
+            </div>
+
+            <div class="input-group">
+                <input type="email" placeholder="Email" [(ngModel)]="email" class="input-field icon-email">
+            </div>
+
+            <div class="input-group">
+                <input type="password" placeholder="Password" [(ngModel)]="password" class="input-field icon-lock">
+            </div>
+
+            <div class="input-group">
+                <input type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword"
+                    class="input-field icon-lock">
+            </div>
+
+            <div class="policy-checkbox">
+                <input type="checkbox" id="privacyPolicy" [(ngModel)]="privacyPolicyAccepted">
+                <label for="privacyPolicy">I accept the <a routerLink="/privacy-policy">Privacy policy</a></label>
+            </div>
+
+            <div class="error-message" *ngIf="errorMessage">
+                {{ errorMessage }}
+            </div>
+
+            <div class="actions">
+                <button (click)="register()" [disabled]="!isFormValid" class="btn-primary">Sign up</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <a routerLink="/privacy-policy">Privacy Policy</a>
+        <a routerLink="/legal-notice">Legal notice</a>
+    </footer>
+</div>

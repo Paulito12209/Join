@@ -13,7 +13,7 @@
       </a>
 
       <button class="header-user" type="button" aria-label="Open user menu" (click)="toggleUserMenu($event)">
-        <span class="header-user-initials">G</span>
+        <span class="header-user-initials">{{ userInitials$ | async }}</span>
       </button>
 
       <div class="user-menu" [class.is-open]="isUserMenuOpen">
@@ -29,7 +29,7 @@
           Privacy Policy
         </a>
 
-        <a routerLink="/logout" class="user-menu-item" (click)="isUserMenuOpen = false">
+        <a class="user-menu-item" (click)="logout()">
           Log out
         </a>
       </div>

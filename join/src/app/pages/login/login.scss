@@ -1,0 +1,202 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: $color-neutral-bg;
+    padding: 48px;
+
+    header {
+        @include dFlex(row, space-between, center);
+        width: 100%;
+        margin-bottom: 48px;
+
+        .logo {
+            height: 80px;
+        }
+
+        .signup-prompt {
+            @include dFlex(row, center, center, 32px);
+
+            span {
+                font-size: 20px;
+            }
+
+            .btn-primary {
+                background-color: $color-brand-primary;
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-weight: 700;
+                transition: background-color 0.2s;
+
+                &:hover {
+                    background-color: $color-brand-highlight;
+                    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+                }
+            }
+        }
+    }
+
+    main {
+        flex: 1;
+        @include dFlex(column, center, center);
+    }
+
+    .login-card {
+        background: white;
+        padding: 48px;
+        border-radius: 30px;
+        box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+        width: 100%;
+        max-width: 652px;
+        @include dFlex(column, center, center, 24px);
+
+        .title-container {
+            @include dFlex(column, center, center, 16px);
+            margin-bottom: 24px;
+
+            h1 {
+                font-size: 61px;
+                font-weight: 700;
+                text-align: center;
+            }
+
+            .underline {
+                width: 150px;
+                height: 3px;
+                background-color: $color-brand-highlight;
+            }
+        }
+
+        .input-group {
+            width: 100%;
+            max-width: 422px;
+            position: relative;
+
+            .input-field {
+                width: 100%;
+                padding: 12px 21px;
+                border: 1px solid $color-neutral-light;
+                border-radius: 10px;
+                font-size: 20px;
+                outline: none;
+
+                &::placeholder {
+                    color: $color-neutral-light;
+                }
+
+                &:focus {
+                    border-color: $color-brand-highlight;
+                }
+
+                &.icon-email {
+                    background-image: url("/img/icons/mail.svg");
+                    background-repeat: no-repeat;
+                    background-position: right 21px center;
+                    background-size: 24px;
+                }
+
+                &.icon-lock {
+                    background-image: url("/img/icons/lock.svg");
+                    background-repeat: no-repeat;
+                    background-position: right 21px center;
+                    background-size: 24px;
+                }
+            }
+        }
+
+        .error-message {
+            color: $color-error;
+            font-size: 14px;
+        }
+
+        .actions {
+            @include dFlex(row, center, center, 32px);
+            margin-top: 24px;
+
+            button {
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 21px;
+                font-weight: 700;
+                cursor: pointer;
+                transition: all 0.2s;
+
+                &.login-btn {
+                    background-color: $color-brand-primary;
+                    color: white;
+                    border: none;
+
+                    &:hover {
+                        background-color: $color-brand-highlight;
+                        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+                    }
+                }
+
+                &.guest-btn {
+                    background-color: white;
+                    color: $color-brand-primary;
+                    border: 1px solid $color-brand-primary;
+
+                    &:hover {
+                        border-color: $color-brand-highlight;
+                        color: $color-brand-highlight;
+                        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+                    }
+                }
+            }
+        }
+    }
+
+    footer {
+        @include dFlex(row, center, center, 32px);
+        margin-top: 48px;
+
+        a {
+            color: $color-neutral-dark;
+            text-decoration: none;
+            font-size: 16px;
+
+            &:hover {
+                color: $color-brand-primary;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    @media (max-width: 800px) {
+        padding: 24px;
+
+        header {
+            .logo {
+                height: 60px;
+            }
+
+            .signup-prompt {
+                display: none; // Often hidden on mobile or simplified
+            }
+        }
+
+        .login-card {
+            padding: 32px;
+
+            .title-container h1 {
+                font-size: 48px;
+            }
+
+            .actions {
+                flex-direction: column;
+                gap: 16px;
+                width: 100%;
+
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
