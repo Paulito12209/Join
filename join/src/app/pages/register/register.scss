@@ -1,0 +1,183 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.register-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: $color-neutral-bg;
+    padding: 48px;
+
+    header {
+        width: 100%;
+        margin-bottom: 24px;
+
+        .logo {
+            height: 80px;
+        }
+    }
+
+    main {
+        flex: 1;
+        @include dFlex(column, center, center);
+    }
+
+    .register-card {
+        background: white;
+        padding: 48px;
+        border-radius: 30px;
+        box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+        width: 100%;
+        max-width: 652px;
+        @include dFlex(column, center, center, 24px);
+
+        .title-container {
+            position: relative;
+            @include dFlex(column, center, center, 16px);
+            margin-bottom: 16px;
+            width: 100%;
+
+            .back-arrow {
+                position: absolute;
+                left: 0;
+                top: 10px;
+                cursor: pointer;
+                transition: transform 0.2s;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+
+            h1 {
+                font-size: 61px;
+                font-weight: 700;
+                text-align: center;
+            }
+
+            .underline {
+                width: 150px;
+                height: 3px;
+                background-color: $color-brand-highlight;
+            }
+        }
+
+        .input-group {
+            width: 100%;
+            max-width: 422px;
+            position: relative;
+
+            .input-field {
+                width: 100%;
+                padding: 12px 21px;
+                border: 1px solid $color-neutral-light;
+                border-radius: 10px;
+                font-size: 20px;
+                outline: none;
+
+                &::placeholder {
+                    color: $color-neutral-light;
+                }
+
+                &:focus {
+                    border-color: $color-brand-highlight;
+                }
+
+                &.icon-person {
+                    background-image: url("/img/icons/person.svg");
+                    background-repeat: no-repeat;
+                    background-position: right 21px center;
+                    background-size: 24px;
+                }
+
+                &.icon-email {
+                    background-image: url("/img/icons/mail.svg");
+                    background-repeat: no-repeat;
+                    background-position: right 21px center;
+                    background-size: 24px;
+                }
+
+                &.icon-lock {
+                    background-image: url("/img/icons/lock.svg");
+                    background-repeat: no-repeat;
+                    background-position: right 21px center;
+                    background-size: 24px;
+                }
+            }
+        }
+
+        .policy-checkbox {
+            @include dFlex(row, center, center, 8px);
+
+            input[type="checkbox"] {
+                width: 16px;
+                height: 16px;
+                cursor: pointer;
+            }
+
+            label {
+                font-size: 16px;
+                color: $color-neutral-dark;
+            }
+
+            a {
+                color: $color-brand-highlight;
+                text-decoration: none;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .error-message {
+            color: $color-error;
+            font-size: 14px;
+        }
+
+        .actions {
+            margin-top: 16px;
+
+            button {
+                padding: 12px 24px;
+                border-radius: 8px;
+                font-size: 21px;
+                font-weight: 700;
+                cursor: pointer;
+                transition: all 0.2s;
+
+                &.btn-primary {
+                    background-color: $color-brand-primary;
+                    color: white;
+                    border: none;
+
+                    &:hover:not(:disabled) {
+                        background-color: $color-brand-highlight;
+                        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+                    }
+
+                    &:disabled {
+                        background-color: $color-neutral-mid;
+                        cursor: not-allowed;
+                    }
+                }
+            }
+        }
+    }
+
+    footer {
+        @include dFlex(row, center, center, 32px);
+        margin-top: 48px;
+
+        a {
+            color: $color-neutral-dark;
+            text-decoration: none;
+            font-size: 16px;
+
+            &:hover {
+                color: $color-brand-primary;
+                text-decoration: underline;
+            }
+        }
+    }
+}
