@@ -1,33 +1,16 @@
-/**
- * @fileoverview Sidebar Component Styles
- * @description Styles for the main navigation sidebar, including desktop
- *              vertical layout and mobile bottom navigation bar.
- * 
- * @section z-index Hierarchy
- * The sidebar uses z-index: 2 in the global stacking context (mobile only):
- *   - Header:         z-index: 1 (base navigation layer)
- *   - Sidebar:        z-index: 2 (above header on mobile bottom nav)
- *   - Dialog Overlay: z-index: 3 (covers entire viewport)
- *   - Dialog Content: z-index: 4+ (interactive elements above overlay)
- * 
- * @see header.scss - Header z-index: 1
- * @see dialog-contact.scss - Dialog overlay z-index: 3
- */
-
 @use '../../../../styles.scss' as *;
 
 /* ===============================
-   SIDEBAR WRAPPER
+   Desktop Layout
 ================================ */
 
 .sidebar {
   @include dFlex($fd: column, $jc: space-between, $ai: stretch);
-
   width: 232px;
   min-height: 100vh;
+  padding: 64px 0;
   background-color: $color-brand-primary;
   color: white;
-  padding: 64px 0;
 }
 
 .sidebar-top {
@@ -40,7 +23,7 @@
 }
 
 /* ===============================
-   SIDEBAR LOG IN
+   Desktop Public Login Link
 ================================ */
 
 .sidebar-login-nav {
@@ -56,12 +39,11 @@
   li a {
     @include dFlex($jc: flex-start, $g: 8px);
     width: 100%;
+    padding: 8px 0 8px 64px;
     font-size: 16px;
     color: $color-neutral-mid;
     text-decoration: none;
     cursor: pointer;
-    padding: 8px 0;
-    padding-left: 64px;
 
     img {
       width: 30px;
@@ -84,20 +66,10 @@
   display: none;
 }
 
-@media (max-width: 1024px) {
-  .sidebar-login-nav li a {
-    padding-left: 32px;
-  }
-}
-
 /* ===============================
-   RESPONSIVE (BOTTOM NAV LAYOUT)
+   Responsive: Intermediate Desktop
 ================================ */
 
-/**
- * @breakpoint 950px - Intermediate Desktop
- * Reduces sidebar width to 164px to save space.
- */
 @media (max-width: 1024px) {
   .sidebar {
     width: 164px;
@@ -106,16 +78,16 @@
   .sidebar-logo {
     margin-left: 32px;
   }
+
+  .sidebar-login-nav li a {
+    padding-left: 32px;
+  }
 }
 
-/**
- * @breakpoint 768px - Mobile Bottom Navigation
- * Completely changes layout from vertical sidebar to horizontal bottom bar.
- * - Position: Fixed at bottom
- * - Width: 100%
- * - Height: 80px relative min-height
- * - Z-Index: 2 (sits above content but below dialogs)
- */
+/* ===============================
+   Responsive: Mobile Bottom Navigation
+================================ */
+
 @media (max-width: 768px) {
   .sidebar-login-nav {
     display: none;
@@ -134,10 +106,6 @@
 
     @include dFlex($fd: column, $jc: center, $ai: stretch);
     z-index: 2;
-  }
-
-  .sidebar-top {
-    width: 100%;
   }
 
   .sidebar-logo {
@@ -208,17 +176,9 @@
   }
 }
 
-// @media (max-width: 350px) {
-//   .public-bottom-nav ul {
-//     padding: 0 10px;
-//   }
-
-//   .public-bottom-nav li,
-//   .public-bottom-nav a {
-//     width: 70px;
-//   }
-
-//   .public-bottom-nav .nav-text {
-//     font-size: 14px;
-//   }
-// }
+@media (max-width: 370px) {
+  .nav-right .nav-text {
+    white-space: normal;
+    text-align: center;
+  }
+}

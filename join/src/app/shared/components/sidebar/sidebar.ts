@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { MainNav } from './main-nav/main-nav';
@@ -9,11 +9,12 @@ import { AuthService } from '../../../core/services/auth.service';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, MainNav, LegalNav],
+  imports: [AsyncPipe, RouterLink, RouterLinkActive, MainNav, LegalNav],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })
 export class Sidebar {
   private authService = inject(AuthService);
+
   isLoggedIn$ = this.authService.user$.pipe(map((user) => !!user));
 }

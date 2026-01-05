@@ -5,7 +5,6 @@
     @if (isLoggedIn$ | async) {
     <app-main-nav></app-main-nav>
     } @else {
-    <!-- Desktop public: show only "Log In" like a nav item -->
     <nav class="sidebar-login-nav" aria-label="Login navigation">
       <ul>
         <li>
@@ -20,10 +19,11 @@
   </div>
 
   <footer>
-    @if (isLoggedIn$ | async) {
+    <!-- Desktop (always rendered, hidden on mobile via CSS) -->
     <app-legal-nav></app-legal-nav>
-    } @else {
-    <!-- Mobile public: bottom nav with 3 items -->
+
+    <!-- Mobile public bottom nav (only when NOT logged in) -->
+    @if (!(isLoggedIn$ | async)) {
     <nav class="public-bottom-nav" aria-label="Public bottom navigation">
       <ul>
         <li class="nav-left">
@@ -44,8 +44,6 @@
         </li>
       </ul>
     </nav>
-    <app-legal-nav></app-legal-nav>
-
     }
   </footer>
 </aside>
