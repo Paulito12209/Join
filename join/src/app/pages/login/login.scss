@@ -72,6 +72,11 @@
             }
         }
 
+        .login-form {
+            width: 100%;
+            @include dFlex(column, center, center, 24px);
+        }
+
         .input-group {
             width: 100%;
             max-width: 422px;
