@@ -9,6 +9,8 @@ import { Help } from './pages/help/help';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  
   {
     path: 'login',
     loadComponent: () => import('./pages/login/login').then((m) => m.Login),
@@ -17,8 +19,18 @@ export const routes: Routes = [
     path: 'register',
     loadComponent: () => import('./pages/register/register').then((m) => m.Register),
   },
-  { path: 'privacy-policy', component: PrivacyPolicy },
-  { path: 'legal-notice', component: LegalNotes },
+
+  // Public pages WITH layout (sidebar/header visible)
+  {
+    path: '',
+    component: MainLayout,
+    children: [
+      { path: 'privacy-policy', component: PrivacyPolicy },
+      { path: 'legal-notice', component: LegalNotes },
+    ],
+  },
+
+  // Protected app area WITH layout
   {
     path: '',
     component: MainLayout,
@@ -27,8 +39,6 @@ export const routes: Routes = [
       { path: 'contacts', component: Contacts },
       { path: 'summary', component: Summary },
       { path: 'add-task', component: AddTask },
-      { path: 'privacy-policy', component: PrivacyPolicy },
-      { path: 'legal-notice', component: LegalNotes },
       { path: 'help', component: Help },
       { path: '', redirectTo: 'summary', pathMatch: 'full' },
 
@@ -47,15 +57,16 @@ export const routes: Routes = [
         children: [
           {
             path: ':id',
-            loadComponent: () => import('./pages/board/task-dialog/task-dialog').then((m) => m.TaskDialog),
+            loadComponent: () =>
+              import('./pages/board/task-dialog/task-dialog').then((m) => m.TaskDialog),
           },
           {
             path: ':id/edit',
-            loadComponent: () => import('./pages/board/task-dialog/task-dialog').then((m) => m.TaskDialog),
+            loadComponent: () =>
+              import('./pages/board/task-dialog/task-dialog').then((m) => m.TaskDialog),
           },
         ],
       },
     ],
   },
 ];
-
