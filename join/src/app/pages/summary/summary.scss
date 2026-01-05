@@ -4,7 +4,7 @@
 // ==== Container ====
 
 .summary-container {
-  @include dFlex(column, start, stretch, 40px);
+  @include dFlex($fd: column, $jc: start, $ai: stretch, $g: 40px);
   padding: 80px 96px;
   min-height: calc(100vh - 96px);
   max-width: 1440px;
@@ -13,20 +13,20 @@
 // ==== Content-Bereich ====
 
 .summary-content {
-  @include dFlex(row, start, start, 40px);
+  @include dFlex($jc: start, $ai: start, $g: 40px);
 }
 
 // ==== Linke Seite: Statistik-Karten ====
 
 .summary-left {
   flex: 1;
-  @include dFlex(column, start, stretch, 32px);
+  @include dFlex($fd: column, $jc: start, $ai: stretch, $g: 32px);
 }
 
 // ==== Header ====
 
 .summary-header {
-  @include dFlex(row, start, center, 24px);
+  @include dFlex($jc: start, $g: 24px);
 
   h1 {
     font-family: "Inter-Bold";
@@ -104,7 +104,7 @@
 // ==== Obere Reihe: To-do und Done Karten ====
 
 .stats-row--top {
-  @include dFlex(row, start, stretch, 28px);
+  @include dFlex($jc: start, $ai: stretch, $g: 28px);
   width: 100%;
 
   // Linke Karte (To-do): wächst nach rechts
@@ -120,20 +120,20 @@
 
 .stat-card--icon {
   flex: 1;
-  @include dFlex(row, start, center, 24px);
+  @include dFlex($jc: start, $g: 24px);
   padding: 32px 40px;
   min-width: 0;
 }
 
 .stat-content {
-  @include dFlex(column, center, center, 8px);
+  @include dFlex($fd: column, $g: 8px);
 }
 
 .stat-icon {
   width: 69px;
   height: 69px;
   border-radius: 50%;
-  @include dFlex(row, center, center, 0);
+  @include dFlex();
 
   img {
     width: 32px;
@@ -161,7 +161,7 @@
 // ==== Mittlere Reihe: Priority Karte mit Deadline ====
 
 .stat-card--urgent {
-  @include dFlex(row, start, center, 24px);
+  @include dFlex($jc: start, $g: 24px);
   padding: 32px 48px;
   width: 100%;
   transform-origin: top left;
@@ -172,7 +172,7 @@
 }
 
 .urgent-left {
-  @include dFlex(row, start, center, 18px);
+  @include dFlex($jc: start, $g: 18px);
 }
 
 .stat-icon--urgent {
@@ -180,7 +180,7 @@
   height: 69px;
   border-radius: 50%;
   background: $color-priority-urgent;
-  @include dFlex(row, center, center, 0);
+  @include dFlex();
 
   img {
     width: 32px;
@@ -194,7 +194,7 @@
   height: 69px;
   border-radius: 50%;
   background: $color-priority-medium;
-  @include dFlex(row, center, center, 0);
+  @include dFlex();
 
   img {
     width: 32px;
@@ -208,7 +208,7 @@
   height: 69px;
   border-radius: 50%;
   background: $color-priority-low;
-  @include dFlex(row, center, center, 0);
+  @include dFlex();
 
   img {
     width: 32px;
@@ -225,7 +225,7 @@
 }
 
 .urgent-right {
-  @include dFlex(column, start, start, 12px);
+  @include dFlex($fd: column, $jc: start, $ai: start, $g: 12px);
 }
 
 .deadline-date {
@@ -244,7 +244,7 @@
 // ==== Untere Reihe: Kleine Statistik-Karten ===
 
 .stats-row--bottom {
-  @include dFlex(row, start, stretch, 28px);
+  @include dFlex($jc: start, $ai: stretch, $g: 28px);
   width: 100%;
 
   // Linke Karte: wächst nach rechts
@@ -265,8 +265,8 @@
 
 .stat-card--small {
   flex: 1;
-  @include dFlex(column, center, center, 8px);
-  padding: 28px 24px;
+  @include dFlex($fd: column, $g: 8px);
+  padding: 24px 28px;
   min-width: 0;
   text-align: center;
 }
@@ -275,12 +275,12 @@
 
 .summary-right {
   flex: 1;
-  @include dFlex(row, center, center, 0);
+  @include dFlex();
   padding-top: 120px;
 }
 
 .greeting {
-  @include dFlex(column, start, start, 8px);
+  @include dFlex($fd: column, $jc: start, $ai: start, $g: 8px);
 }
 
 .greeting-text {
