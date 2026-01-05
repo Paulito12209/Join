@@ -8,8 +8,8 @@ import {
     User,
     updateProfile
 } from '@angular/fire/auth';
-import { Observable, from, BehaviorSubject, merge, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, from, BehaviorSubject, combineLatest, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -19,9 +19,11 @@ export class AuthService {
     private guestUserSubject = new BehaviorSubject<User | null>(null);
 
     // Observable for current user state (Firebase User OR Guest User)
-    user$: Observable<User | null> = merge(
+    user$: Observable<User | null> = combineLatest([
         user(this.auth),
         this.guestUserSubject.asObservable()
+    ]).pipe(
+        map(([firebaseUser, guestUser]) => firebaseUser || guestUser)
     );
 
     constructor() { }

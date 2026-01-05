@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { filter, take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-login',
@@ -18,15 +19,37 @@ export class Login {
 
     private authService = inject(AuthService);
     private router = inject(Router);
+    private ngZone = inject(NgZone);
 
-    login() {
+    login(event?: Event) {
+        if (event) {
+            event.preventDefault();
+        }
+        if (!this.email || !this.password) {
+            this.errorMessage = 'Please enter email and password';
+            return;
+        }
+
         this.authService.signIn(this.email, this.password).subscribe({
             next: () => {
-                this.router.navigate(['/summary']);
+                // Wait for the auth state to update in the global observable before navigating
+                this.authService.user$.pipe(
+                    filter(u => !!u),
+                    take(1)
+                ).subscribe(() => {
+                    this.ngZone.run(() => {
+                        this.router.navigate(['/summary']);
+                    });
+                });
             },
             error: (err) => {
-                console.error('Login failed', err);
-                this.errorMessage = 'Email or password is incorrect';
+                if (err.code === 'auth/configuration-not-found') {
+                    this.errorMessage = 'Firebase Email/Password login is NOT enabled in Console!';
+                } else if (err.code === 'auth/invalid-credential') {
+                    this.errorMessage = 'Wrong email or password.';
+                } else {
+                    this.errorMessage = 'Login failed: ' + err.message;
+                }
             }
         });
     }
