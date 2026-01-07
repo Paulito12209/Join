@@ -17,16 +17,34 @@ export class Login {
   password = '';
   errorMessage = '';
   showIntroLogo = true;
+  introLogoSrc = 'img/logo-dark.svg';
+showWhiteLogo = false;
+
 
   private authService = inject(AuthService);
   private router = inject(Router);
   private ngZone = inject(NgZone);
 
-  ngOnInit() {
+ngOnInit() {
+  const isMobile = window.innerWidth <= 800;
+
+  if (isMobile) {
+    this.showWhiteLogo = true;
+
+    // Wechsel auf dunkles Logo auf halber Strecke
     setTimeout(() => {
-      this.showIntroLogo = false;
-    }, 1200);
+      this.showWhiteLogo = false;
+    }, 600);
   }
+
+  // Intro beenden
+  setTimeout(() => {
+    this.showIntroLogo = false;
+  }, 1200);
+}
+
+
+
 
   login(event?: Event) {
     if (event) {

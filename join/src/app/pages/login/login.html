@@ -1,6 +1,19 @@
 <div class="intro-overlay" *ngIf="showIntroLogo"></div>
 
-<img src="img/logo-dark.svg" alt="Join Logo" class="logo-intro" *ngIf="showIntroLogo" />
+<img
+  src="img/logo-white.svg"
+  alt="Join Logo White"
+  class="logo-intro logo-white"
+  *ngIf="showIntroLogo && showWhiteLogo"
+/>
+
+<img
+  src="img/logo-dark.svg"
+  alt="Join Logo Dark"
+  class="logo-intro logo-dark"
+  *ngIf="showIntroLogo && !showWhiteLogo"
+/>
+
 
 <div class="login-container">
   <header>
