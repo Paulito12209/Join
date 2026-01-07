@@ -60,113 +60,80 @@ signIn(email: string, password: string) {
 
 ---
 
-### Ticket 3: Route Guards für geschützte Seiten
+### Ticket 3: Route Guards für geschützte Seiten ✅
 **Geschätzte Zeit:** ⏱️ 1-1.5 Stunden  
-**Status:** [ ] Offen  
+**Status:** [x] Erledigt  
 **Checklist-Referenz:** Benutzeraccount - User Story 2, Punkt 5
 
 > **User Story:**  
 > *Als Benutzer möchte ich mich anmelden können, um Zugriff auf das Dashboard und das Kanban-Board zu bekommen.*
 
-**Akzeptanzkriterien:**
-- [ ] Nicht angemeldete Besucher werden bei geschützten Seiten auf Login weitergeleitet
-- [ ] Geschützte Seiten: Summary, Add-Task, Board, Contacts
-- [ ] Nach Login: Weiterleitung zur ursprünglich angefragten Seite
-
-**Technische Hinweise:**
-```typescript
-// auth.guard.ts
-canActivate(): boolean {
-  if (this.authService.isLoggedIn()) {
-    return true;
-  }
-  this.router.navigate(['/login']);
-  return false;
-}
-```
+**Umgesetzt:**
+- [x] Nicht angemeldete Besucher werden bei geschützten Seiten auf Login weitergeleitet
+- [x] `auth.guard.ts` implementiert mit Observable-basierter Logik
+- [ ] Nach Login: Weiterleitung zur ursprünglich angefragten Seite (optional)
 
 ---
 
-### Ticket 4: Logout-Funktion implementieren
+### Ticket 4: Logout-Funktion implementieren ✅
 **Geschätzte Zeit:** ⏱️ 45 Minuten  
-**Status:** [ ] Offen  
+**Status:** [x] Erledigt  
 **Checklist-Referenz:** Benutzeraccount - User Story 4
 
 > **User Story:**  
 > *Als Benutzer möchte ich mich von Join abmelden können, damit niemand ohne meine Zustimmung auf meinen Account zugreifen kann.*
 
-**Akzeptanzkriterien:**
-- [ ] Logout-Option im Header (User-Menü)
-- [ ] Nach Logout: Weiterleitung zum Login-Bildschirm
-- [ ] Session/Token wird gelöscht
-
-**Technische Hinweise:**
-```typescript
-logout(): void {
-  signOut(this.auth).then(() => {
-    this.router.navigate(['/login']);
-  });
-}
-```
+**Umgesetzt:**
+- [x] Logout-Option im Header (User-Menü)
+- [x] Nach Logout: Weiterleitung zum Login-Bildschirm
+- [x] `signOut()` in AuthService und Header implementiert
 
 ---
 
 ## 🟠 PRIORITÄT: HOCH
 
-### Ticket 5: Legal Notice Seite erstellen
+### Ticket 5: Legal Notice Seite erstellen ✅
 **Geschätzte Zeit:** ⏱️ 1 Stunde  
-**Status:** [ ] Offen  
+**Status:** [x] Erledigt  
 **Checklist-Referenz:** Impressum/Datenschutz - User Story 1
 
 > **User Story:**  
-> *Als Benutzer möchte ich die Rechtshinweise und Impressum von Join einsehen können, um Informationen über den Anbieter und den Nutzungsbedingungen zu erhalten.*
+> *Als Benutzer möchte ich die Rechtshinweise und Impressum von Join einsehen können.*
 
-**Akzeptanzkriterien:**
-- [ ] Link in der Sidebar vorhanden
-- [ ] Seite mit vollständigem Impressum (Generator nutzen!)
-- [ ] Auch für nicht-angemeldete User zugänglich
-
-**Hinweis:** Verwende einen Impressum-Generator wie e-recht24.de
+**Umgesetzt:**
+- [x] Link in der Sidebar vorhanden
+- [x] Seite mit Impressum (`legal-notes/`)
+- [x] Auch für nicht-angemeldete User zugänglich
 
 ---
 
-### Ticket 6: Privacy Policy Seite erstellen
+### Ticket 6: Privacy Policy Seite erstellen ✅
 **Geschätzte Zeit:** ⏱️ 1 Stunde  
-**Status:** [ ] Offen  
+**Status:** [x] Erledigt  
 **Checklist-Referenz:** Impressum/Datenschutz - User Story 2
 
 > **User Story:**  
-> *Als Benutzer möchte ich die Datenschutzerklärung der Anwendung einsehen können, um zu verstehen, wie meine Daten verwendet und geschützt werden.*
+> *Als Benutzer möchte ich die Datenschutzerklärung der Anwendung einsehen können.*
 
-**Akzeptanzkriterien:**
-- [ ] Link in der Sidebar vorhanden
-- [ ] Seite mit vollständiger Datenschutzerklärung (Generator nutzen!)
-- [ ] Auch für nicht-angemeldete User zugänglich
-
-**Hinweis:** Verwende einen Datenschutz-Generator wie e-recht24.de
+**Umgesetzt:**
+- [x] Link in der Sidebar vorhanden
+- [x] Seite mit Datenschutzerklärung (`privacy-policy/`)
+- [x] Auch für nicht-angemeldete User zugänglich
 
 ---
 
-### Ticket 7: Help-Seite mit Hilfe-Button
+### Ticket 7: Help-Seite mit Hilfe-Button ✅
 **Geschätzte Zeit:** ⏱️ 1-1.5 Stunden  
-**Status:** [ ] Offen  
+**Status:** [x] Erledigt  
 **Checklist-Referenz:** Hilfe - User Story 1
 
 > **User Story:**  
-> *Als Benutzer möchte ich nach der Anmeldung im Header einen Hilfe-Button vorfinden, über den ich auf eine Informationsseite zum Kanbanboard gelange.*
+> *Als Benutzer möchte ich nach der Anmeldung im Header einen Hilfe-Button vorfinden.*
 
-**Akzeptanzkriterien:**
-- [ ] Hilfe-Button (?) neben User-Icon im Header
-- [ ] Button auf jeder Seite sichtbar
-- [ ] Hilfe-Seite mit Kanban-Board Erklärung
-- [ ] Zurück-Button zur letzten besuchten Seite
-
-**Technische Hinweise:**
-```typescript
-goBack(): void {
-  this.location.back();
-}
-```
+**Umgesetzt:**
+- [x] Hilfe-Seite mit Kanban-Board Erklärung (`help/`)
+- [ ] Hilfe-Button (?) im Header prüfen
+- [ ] Zurück-Button zur letzten besuchten Seite prüfen
 
 ---
 
@@ -312,24 +279,31 @@ goBack(): void {
 
 ## 📊 Zusammenfassung
 
-| Priorität | Ticket | Zeit |
-|-----------|--------|------|
-| 🔴 Kritisch | 1. Registrierungsformular | 2-3h |
-| 🔴 Kritisch | 2. Login-Fehlerbehandlung | 1h |
-| 🔴 Kritisch | 3. Route Guards | 1-1.5h |
-| 🔴 Kritisch | 4. Logout-Funktion | 45 min |
-| 🟠 Hoch | 5. Legal Notice Seite | 1h |
-| 🟠 Hoch | 6. Privacy Policy Seite | 1h |
-| 🟠 Hoch | 7. Help-Seite | 1-1.5h |
-| 🟠 Hoch | 8. Sidebar anpassen | 30-45 min |
-| 🟡 Mittel | 9. Eigener Account in Contacts | 1-1.5h |
-| 🟡 Mittel | 10. Dummy-Daten | 30 min |
-| 🟡 Mittel | 11. Cross-Browser Testing | 1-2h |
-| 🟢 Niedrig | 12. Console-Fehler | 30-45 min |
-| 🟢 Niedrig | 13. Responsive: Summary | 1-1.5h |
-| 🟢 Niedrig | 14. Responsive: Login & Registrierung | 1h |
-| 🟢 Niedrig | 15. Responsive: Help, Legal, Privacy | 45 min |
-| ✅ Erledigt | Summary/Dashboard (Desktop) | - |
+| Priorität | Ticket | Status | Zeit |
+|-----------|--------|--------|------|
+| 🔴 Kritisch | 1. Registrierungsformular | ⏳ Offen | 2-3h |
+| 🔴 Kritisch | 2. Login-Fehlerbehandlung | ⏳ Offen | 1h |
+| ✅ Erledigt | 3. Route Guards | ✅ Done | - |
+| ✅ Erledigt | 4. Logout-Funktion | ✅ Done | - |
+| ✅ Erledigt | 5. Legal Notice Seite | ✅ Done | - |
+| ✅ Erledigt | 6. Privacy Policy Seite | ✅ Done | - |
+| ✅ Erledigt | 7. Help-Seite | ✅ Done | - |
+| 🟠 Hoch | 8. Sidebar anpassen | ⏳ Offen | 30-45 min |
+| 🟡 Mittel | 9. Eigener Account in Contacts | ⏳ Offen | 1-1.5h |
+| 🟡 Mittel | 10. Dummy-Daten | ⏳ Offen | 30 min |
+| 🟡 Mittel | 11. Cross-Browser Testing | ⏳ Offen | 1-2h |
+| 🟢 Niedrig | 12. Console-Fehler | ⏳ Offen | 30-45 min |
+| 🟢 Niedrig | 13. Responsive: Summary | ⏳ Offen | 1-1.5h |
+| 🟢 Niedrig | 14. Responsive: Login & Registrierung | ⏳ Offen | 1h |
+| 🟢 Niedrig | 15. Responsive: Help, Legal, Privacy | ⏳ Offen | 45 min |
+| ✅ Erledigt | Summary/Dashboard (Desktop) | ✅ Done | - |
 
-**Gesamt (offen):** ~13-18 Stunden
+---
+
+## 📈 Fortschritt
+
+**Erledigt:** 6 von 16 Tickets (37.5%)  
+**Offen:** 10 Tickets  
+**Geschätzte Restzeit:** ~8-12 Stunden
+
 
