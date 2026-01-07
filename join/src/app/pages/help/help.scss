@@ -21,6 +21,10 @@
     width: 32px;
     height: 32px;
     cursor: pointer;
+
+    &:hover {
+      content: url('../../../../public/img/bow-hover.svg');
+    }
   }
 }
 
@@ -100,7 +104,7 @@
   content: counter(step) '.';
   position: absolute;
   left: 0;
-  top: 0; 
+  top: 0;
   font-family: 'Inter-Bold';
   font-size: 27px;
   font-weight: 700;

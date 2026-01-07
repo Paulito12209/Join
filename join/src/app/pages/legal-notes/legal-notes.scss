@@ -21,7 +21,7 @@
     width: 32px;
     height: 32px;
     cursor: pointer;
-    display: none; 
+    display: none;
   }
 }
 
@@ -84,6 +84,10 @@
 
     img {
       display: block;
+
+      &:hover {
+        content: url('../../../../public/img/bow-hover.svg');
+      }
     }
   }
 
