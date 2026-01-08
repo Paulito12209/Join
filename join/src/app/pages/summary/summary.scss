@@ -1,7 +1,4 @@
-// ==== Summary-Seite Styles ====
 @use '../../../styles.scss' as *;
-
-// ==== Container ====
 
 .summary-container {
   @include dFlex($fd: column, $jc: start, $ai: stretch, $g: 40px);
@@ -10,20 +7,14 @@
   max-width: 1440px;
 }
 
-// ==== Content-Bereich ====
-
 .summary-content {
   @include dFlex($jc: start, $ai: start, $g: 40px);
 }
-
-// ==== Linke Seite: Statistik-Karten ====
 
 .summary-left {
   flex: 1;
   @include dFlex($fd: column, $jc: start, $ai: stretch, $g: 32px);
 }
-
-// ==== Header ====
 
 .summary-header {
   @include dFlex($jc: start, $g: 24px);
@@ -49,8 +40,6 @@
     margin: 0;
   }
 }
-
-// ==== Statistik-Karten gemeinsame Styles ====
 
 .stat-card {
   background: white;
@@ -81,10 +70,6 @@
         filter: brightness(0) saturate(100%);
       }
     }
-
-    .priority-divider {
-      background: $color-neutral-light;
-    }
   }
 }
 
@@ -100,8 +85,6 @@
   font-weight: 400;
   color: $color-brand-primary;
 }
-
-// ==== Obere Reihe: To-do und Done Karten ====
 
 .stats-row--top {
   @include dFlex($jc: start, $ai: stretch, $g: 28px);
@@ -151,8 +134,6 @@
   }
 }
 
-// ==== Mittlere Reihe: Priority Karte mit Deadline ====
-
 .stat-card--urgent {
   @include dFlex($g: 24px);
   padding: 32px 48px;
@@ -196,9 +177,9 @@
 }
 
 .priority-divider {
-  width: 3px;
-  height: 100%;
-  min-height: 80px;
+  width: 2px;
+  align-self: stretch;
+  transform: scaleY(0.9);
   background: $color-neutral-light;
 }
 
@@ -218,8 +199,6 @@
   font-weight: 400;
   color: $color-brand-primary;
 }
-
-// ==== Untere Reihe: Kleine Statistik-Karten ===
 
 .stats-row--bottom {
   @include dFlex($jc: start, $ai: stretch, $g: 28px);
@@ -249,8 +228,6 @@
   text-align: center;
 }
 
-// ==== Rechte Seite: Begrüßung ===
-
 .summary-right {
   flex: 1;
   @include dFlex();
@@ -273,9 +250,6 @@
   color: $color-brand-highlight;
 }
 
-
-// ==== Responsive Design ===
-
 @media (max-width: 1200px) {
   .summary-container {
     flex-direction: column;
@@ -293,7 +267,6 @@
   }
 }
 
-// Mobile Layout ab 1000px
 @media (max-width: 1000px) {
   .summary-container {
     padding: 40px 24px;
@@ -301,116 +274,30 @@
     align-items: stretch;
   }
 
-  .summary-content {
-    flex-direction: column;
-    gap: 32px;
-  }
-
-  .summary-left {
-    width: 100%;
-    max-width: unset;
-    gap: 16px;
-  }
-
-  // Begrüßung in Mobile ausblenden
   .summary-right {
     display: none;
   }
 
-  // Header: Schriftgrößen wie Mobile, Layout bleibt horizontal
   .summary-header {
-    h1 {
-      font-size: 47px;
-    }
-
     p {
-      font-size: $btn-secondary;
+      font-size: 23px;
     }
   }
 
-  // Obere Reihe: To-do und Done nebeneinander bleiben
-  .stats-row--top {
-    gap: 16px;
-  }
-
-  .stat-card--icon {
-    padding: 20px 16px;
-    gap: 16px;
-  }
-
-  .stat-icon {
-    width: 50px;
-    height: 50px;
-
-    img {
-      width: 24px;
-      height: 24px;
-    }
-  }
-
-  .stat-number {
-    font-size: 47px;
-  }
-
-  .stat-label {
-    font-size: $p;
-  }
-
-  // Urgent Karte
   .stat-card--urgent {
-    padding: 20px 24px;
-    gap: 16px;
-  }
+    transform-origin: center center;
 
-  .stat-icon--urgent,
-  .stat-icon--medium,
-  .stat-icon--low {
-    width: 50px;
-    height: 50px;
-
-    img {
-      width: 24px;
-      height: 24px;
-    }
-  }
-
-  .priority-divider {
-    min-height: 60px;
-  }
-
-  .deadline-date {
-    font-size: 18px;
-  }
-
-  .deadline-label {
-    font-size: 14px;
-  }
-
-  // Untere Reihe: 3 Karten nebeneinander
-  .stats-row--bottom {
-    gap: 16px;
-  }
-
-  .stat-card--small {
-    padding: 20px 12px;
-    gap: 4px;
-
-    .stat-number {
-      font-size: 36px;
-    }
-
-    .stat-label {
-      font-size: 12px;
+    &:hover {
+      transform: scale(1.04);
     }
   }
 }
 
 @media (max-width: 768px) {
   .summary-container {
-    padding: 36px 12px 100px;
+    padding: 64px 16px 100px;
   }
 
-  // Header: Vertikal mit Unterstreichung unter Subtitle
   .summary-header {
     flex-direction: column;
     align-items: flex-start;
@@ -434,23 +321,89 @@
     }
   }
 
+  .summary-left {
+    gap: 16px;
+  }
+
   .stats-row--top,
   .stats-row--bottom {
-    flex-direction: row;
-    width: 100%;
+    gap: 16px;
   }
 
-  .stat-card--icon,
+  .stat-card--icon {
+    padding: 16px 12px;
+    gap: 12px;
+  }
+
   .stat-card--small {
-    min-width: unset;
-    width: 100%;
+    padding: 16px 8px;
+    gap: 4px;
   }
 
-  .urgent-right {
-    align-items: center;
+  .stat-icon,
+  .stat-icon--urgent,
+  .stat-icon--medium,
+  .stat-icon--low {
+    width: 40px;
+    height: 40px;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
   }
 
   .stat-number {
     font-size: $h3;
+  }
+
+  .stat-label,
+  .deadline-label {
+    font-size: 16px;
+  }
+
+  .deadline-date {
+    font-size: 21px;
+  }
+
+  .stat-card {
+    min-height: 110px;
+  }
+
+  .stat-card--urgent {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .urgent-left {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .summary-container {
+    padding: 36px 12px 100px;
+  }
+
+  .stat-number {
+    font-size: 40px;
+  }
+
+  .stat-label,
+  .deadline-label {
+    font-size: 14px;
+  }
+
+  .deadline-date {
+    font-size: 18px;
+  }
+
+  .stat-card--small {
+    padding: 12px 6px;
+  }
+
+  .stat-card--urgent {
+    padding: 16px 12px;
+    gap: 12px;
   }
 }
