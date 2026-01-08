@@ -5,7 +5,7 @@ import {
   transferArrayItem,
   CdkDrag,
   CdkDropList,
-} from "@angular/cdk/drag-drop";
+} from '@angular/cdk/drag-drop';
 import { TasksService } from '../../core/services/tasks.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -27,7 +27,7 @@ export class Board {
   private router = inject(Router);
 
   // Erkennt ob Touch-Gerät (für Drag-Delay)
-  isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   dragDelay = this.isMobile ? 400 : 0;
 
   // All tasks (unfiltered)
@@ -58,7 +58,7 @@ export class Board {
 
     this.contactsService.getContacts().subscribe((contacts) => {
       this.contactsMap.clear();
-      contacts.forEach(c => {
+      contacts.forEach((c) => {
         if (c.id) this.contactsMap.set(c.id, c);
       });
       this.cdr.detectChanges();
@@ -71,16 +71,17 @@ export class Board {
 
     if (this.searchQuery.trim().length > 0) {
       const query = this.searchQuery.toLowerCase();
-      filtered = this.allTasks.filter(t =>
-        t.title.toLowerCase().includes(query) ||
-        (t.description && t.description.toLowerCase().includes(query))
+      filtered = this.allTasks.filter(
+        (t) =>
+          t.title.toLowerCase().includes(query) ||
+          (t.description && t.description.toLowerCase().includes(query))
       );
     }
 
-    this.todo = filtered.filter(t => t.status === 'todo');
-    this.inProgress = filtered.filter(t => t.status === 'in-progress');
-    this.awaitFeedback = filtered.filter(t => t.status === 'awaiting-feedback');
-    this.done = filtered.filter(t => t.status === 'done');
+    this.todo = filtered.filter((t) => t.status === 'todo');
+    this.inProgress = filtered.filter((t) => t.status === 'in-progress');
+    this.awaitFeedback = filtered.filter((t) => t.status === 'awaiting-feedback');
+    this.done = filtered.filter((t) => t.status === 'done');
   }
 
   // ++++++ dialog function: onaddclose openAddTask onAddCreate+++++++++++
@@ -103,9 +104,9 @@ export class Board {
 
     const subtasks: Subtask[] = Array.isArray(formValue.subtasks) ? formValue.subtasks : [];
     if (formValue?.subtask && typeof formValue.subtask === 'string' && formValue.subtask.trim()) {
-      // Optional: Add the one in the input if user forgot to click add? 
-      // Start with existing logic: User said "it does not save in the array". 
-      // I should probably prioritize the array. 
+      // Optional: Add the one in the input if user forgot to click add?
+      // Start with existing logic: User said "it does not save in the array".
+      // I should probably prioritize the array.
       // If I assume the component handles the list, then subtasks array is all that matters.
       // But keeping the old logic as a fallback or addition might use the leftover input.
       // However, since I fixed the array logic, let's trust the array.
@@ -117,9 +118,9 @@ export class Board {
       title: formValue.title,
       description: formValue.description ?? '',
       status: this.currentAddStatus,
-      priority: (priorityMap[formValue.priority] ?? 'medium'),
+      priority: priorityMap[formValue.priority] ?? 'medium',
       dueDate: formValue.dueDate ?? undefined,
-      category: 'user-story',
+      category: formValue.category === 'Technical Task' ? 'technical-task' : 'user-story',
       assignees: (formValue.assignedTo ?? []).map((uid: string) => ({ uid })),
       ...(subtasks.length ? { subtasks } : {}),
     };
@@ -184,7 +185,7 @@ export class Board {
    */
   getCompletedSubtasksCount(task: Task): number {
     if (!task.subtasks || task.subtasks.length === 0) return 0;
-    return task.subtasks.filter(s => s.done).length;
+    return task.subtasks.filter((s) => s.done).length;
   }
 
   /**
@@ -233,7 +234,7 @@ export class Board {
       urgent: 'img/icons/prio-urgent.svg',
       high: 'img/icons/prio-urgent.svg',
       medium: 'img/icons/prio-medium.svg',
-      low: 'img/icons/prio-low.svg'
+      low: 'img/icons/prio-low.svg',
     };
     return icons[priority] || icons['medium'];
   }
