@@ -75,13 +75,20 @@ export class ContactsService {
   async createContact(input: Pick<Contact, 'name'> & Partial<Contact>): Promise<Contact> {
     const fixedName = this.capitalizeName(input.name);
     const index = await this.nextPaletteIndex();
-    const payload: Omit<Contact, 'id'> = {
+    const payload: any = {
       name: fixedName,
-      email: input.email?.trim(),
-      phone: input.phone?.trim(),
       color: this.avatarPalette[index]
     };
-    const ref = await addDoc(this.colRef, payload as any);
+
+    // Only add email and phone if they are defined
+    if (input.email?.trim()) {
+      payload.email = input.email.trim();
+    }
+    if (input.phone?.trim()) {
+      payload.phone = input.phone.trim();
+    }
+
+    const ref = await addDoc(this.colRef, payload);
 
     return {
       id: ref.id,

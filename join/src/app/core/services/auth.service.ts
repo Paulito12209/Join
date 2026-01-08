@@ -1,21 +1,15 @@
 import { Injectable, inject } from '@angular/core';
-import {
-    Auth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signOut,
-    user,
-    User,
-    updateProfile
-} from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, user, User, updateProfile } from '@angular/fire/auth';
 import { Observable, from, BehaviorSubject, combineLatest, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, switchMap } from 'rxjs/operators';
+import { ContactsService } from './contacts.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
     private auth: Auth = inject(Auth);
+    private contactsService = inject(ContactsService);
     private guestUserSubject = new BehaviorSubject<User | null>(null);
 
     // Observable for current user state (Firebase User OR Guest User)
@@ -30,11 +24,14 @@ export class AuthService {
 
     // Sign up with email and password
     signUp(email: string, password: string, name: string): Observable<void> {
-        const promise = createUserWithEmailAndPassword(this.auth, email, password)
-            .then(userCredential => {
-                return updateProfile(userCredential.user, { displayName: name });
-            });
-        return from(promise);
+        return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
+            switchMap(userCredential => from(updateProfile(userCredential.user, { displayName: name }))),
+            switchMap(() => from(this.contactsService.createContact({
+                name: name,
+                email: email
+            }))),
+            map(() => void 0)
+        );
     }
 
     // Sign in with email and password
