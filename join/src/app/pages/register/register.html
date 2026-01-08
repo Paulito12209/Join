@@ -23,13 +23,24 @@
                 <input type="email" placeholder="Email" [(ngModel)]="email" class="input-field icon-email">
             </div>
 
-            <div class="input-group">
-                <input type="password" placeholder="Password" [(ngModel)]="password" class="input-field icon-lock">
+            <div class="input-group password-group">
+                <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" [(ngModel)]="password"
+                    class="input-field icon-lock" #passwordField>
+                <button type="button" class="visibility-toggle" (click)="togglePasswordVisibility()"
+                    *ngIf="passwordField.value">
+                    <img [src]="showPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
+                        alt="Toggle password visibility">
+                </button>
             </div>
 
-            <div class="input-group">
-                <input type="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword"
-                    class="input-field icon-lock">
+            <div class="input-group password-group">
+                <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
+                    [(ngModel)]="confirmPassword" class="input-field icon-lock" #confirmPasswordField>
+                <button type="button" class="visibility-toggle" (click)="toggleConfirmPasswordVisibility()"
+                    *ngIf="confirmPasswordField.value">
+                    <img [src]="showConfirmPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
+                        alt="Toggle password visibility">
+                </button>
             </div>
 
             <div class="policy-checkbox">

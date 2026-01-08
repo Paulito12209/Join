@@ -18,6 +18,8 @@ export class Register {
     confirmPassword = '';
     privacyPolicyAccepted = false;
     errorMessage = '';
+    showPassword = false;
+    showConfirmPassword = false;
 
     private authService = inject(AuthService);
     private router = inject(Router);
@@ -48,5 +50,13 @@ export class Register {
                 }
             }
         });
+    }
+
+    togglePasswordVisibility() {
+        this.showPassword = !this.showPassword;
+    }
+
+    toggleConfirmPasswordVisibility() {
+        this.showConfirmPassword = !this.showConfirmPassword;
     }
 }

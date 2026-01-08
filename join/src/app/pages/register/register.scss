@@ -104,6 +104,44 @@
                     background-size: 24px;
                 }
             }
+
+            &.password-group {
+                .input-field {
+                    padding-right: 56px;
+                    background-image: url("/img/icons/lock.svg");
+                    background-repeat: no-repeat;
+                    background-position: right 21px center;
+                    background-size: 24px;
+
+                    &:not(:placeholder-shown) {
+                        background-image: none;
+                    }
+                }
+
+                .visibility-toggle {
+                    position: absolute;
+                    right: 21px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    padding: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: opacity 0.2s;
+
+                    &:hover {
+                        opacity: 0.7;
+                    }
+
+                    img {
+                        width: 24px;
+                        height: 24px;
+                    }
+                }
+            }
         }
 
         .policy-checkbox {
