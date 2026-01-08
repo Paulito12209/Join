@@ -20,7 +20,11 @@
         aria-label="Open user menu"
         (click)="toggleUserMenu($event)"
       >
-        <span class="header-user-initials">{{ userInitials$ | async }}</span>
+        @if (userInitials$ | async; as initials) {
+        <span class="header-user-initials" [class.is-guest]="initials === 'G'">
+          {{ initials }}
+        </span>
+        }
       </button>
 
       <div class="user-menu" [class.is-open]="isUserMenuOpen">

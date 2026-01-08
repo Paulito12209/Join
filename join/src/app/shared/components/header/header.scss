@@ -99,9 +99,13 @@
 }
 
 .header-user-initials {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: $color-brand-highlight;
+
+  &.is-guest {
+    font-size: 28px;
+  }
 }
 
 /* ===============================
