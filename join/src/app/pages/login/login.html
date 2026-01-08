@@ -14,12 +14,11 @@
   *ngIf="showIntroLogo && !showWhiteLogo"
 />
 
-
 <div class="login-container">
   <header>
     <img src="img/logo-dark.svg" alt="Join Logo" class="logo" [class.logo-hidden]="showIntroLogo" />
 
-    <div class="signup-prompt">
+    <div class="signup-prompt signup-desktop">
       <span>Not a Join user?</span>
       <a routerLink="/register" class="btn-primary">Sign up</a>
     </div>
@@ -68,6 +67,11 @@
       </form>
     </div>
   </main>
+
+  <div class="signup-prompt signup-mobile">
+    <span>Not a Join user?</span>
+    <a routerLink="/register" class="btn-primary">Sign up</a>
+  </div>
 
   <footer>
     <a routerLink="/privacy-policy">Privacy Policy</a>
