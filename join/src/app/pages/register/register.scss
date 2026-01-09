@@ -89,16 +89,26 @@
         &:focus {
           border-color: $color-brand-highlight;
         }
+
+        &.error {
+          border-color: $color-error;
+        }
       }
 
       .input-icon {
         position: absolute;
         right: 21px;
-        top: 50%;
-        transform: translateY(-50%);
+        top: 12px;
         width: 24px;
         height: 24px;
         pointer-events: none;
+      }
+
+      .error-message {
+        color: $color-error;
+        font-size: 14px;
+        text-align: left;
+        margin-top: 8px;
       }
 
       &.password-group {
@@ -109,8 +119,7 @@
         .visibility-toggle {
           position: absolute;
           right: 21px;
-          top: 50%;
-          transform: translateY(-50%);
+          top: 12px; // Fixed position to match input padding
           background: none;
           border: none;
           cursor: pointer;
@@ -128,6 +137,13 @@
             width: 24px;
             height: 24px;
           }
+        }
+
+        .error-message {
+          color: $color-error;
+          font-size: 14px;
+          text-align: left;
+          margin-top: 8px;
         }
       }
     }

@@ -17,9 +17,14 @@ export class Register implements OnDestroy {
   password = '';
   confirmPassword = '';
   privacyPolicyAccepted = false;
-  errorMessage = '';
   showPassword = false;
   showConfirmPassword = false;
+
+  // Field-specific error messages
+  nameErrorMessage = '';
+  emailErrorMessage = '';
+  passwordErrorMessage = '';
+  confirmPasswordErrorMessage = '';
 
   showTaskAddedToast = false;
   hideToast = false;
@@ -31,19 +36,54 @@ export class Register implements OnDestroy {
   private cdr = inject(ChangeDetectorRef);
 
   get isFormValid(): boolean {
-    return (
-      this.name.trim() !== '' &&
-      this.email.trim() !== '' &&
-      this.password.length >= 6 &&
-      this.password === this.confirmPassword &&
-      this.privacyPolicyAccepted
-    );
+    return this.privacyPolicyAccepted;
   }
 
   register() {
-    if (!this.isFormValid) return;
+    // Clear previous error states
+    this.nameErrorMessage = '';
+    this.emailErrorMessage = '';
+    this.passwordErrorMessage = '';
+    this.confirmPasswordErrorMessage = '';
 
-    this.errorMessage = '';
+    let hasError = false;
+
+    // Validate name (minimum 3 characters)
+    if (!this.name.trim() || this.name.trim().length < 3) {
+      this.nameErrorMessage = 'Name must be at least 3 characters long.';
+      hasError = true;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!this.email.trim() || !emailRegex.test(this.email)) {
+      this.emailErrorMessage = 'Please enter a valid email address.';
+      hasError = true;
+    }
+
+    // Validate password is filled and length
+    if (!this.password) {
+      this.passwordErrorMessage = 'Please enter a password.';
+      hasError = true;
+    } else if (this.password.length < 6) {
+      this.passwordErrorMessage = 'Password must be at least 6 characters long.';
+      hasError = true;
+    }
+
+    // Validate confirm password
+    if (!this.confirmPassword) {
+      this.confirmPasswordErrorMessage = 'Please confirm your password.';
+      hasError = true;
+    } else if (this.password !== this.confirmPassword) {
+      this.confirmPasswordErrorMessage = "Your passwords don't match. Please try again.";
+      hasError = true;
+    }
+
+    // If any validation failed, stop here
+    if (hasError) {
+      this.cdr.detectChanges();
+      return;
+    }
 
     this.authService.signUp(this.email, this.password, this.name).subscribe({
       next: () => {
@@ -60,10 +100,11 @@ export class Register implements OnDestroy {
       error: (err) => {
         console.error('Registration failed', err);
 
-        this.errorMessage =
-          err.code === 'auth/email-already-in-use'
-            ? 'Email is already in use'
-            : 'Registration failed. Please try again.';
+        if (err.code === 'auth/email-already-in-use') {
+          this.emailErrorMessage = 'Email is already in use';
+        } else {
+          this.emailErrorMessage = 'Registration failed. Please try again.';
+        }
 
         this.closeToastImmediately();
         this.cdr.detectChanges();

@@ -1,81 +1,93 @@
 <div class="register-container">
-  <header>
-    <img src="img/logo-dark.svg" alt="Join Logo" class="logo" />
-  </header>
+    <header>
+        <img src="img/logo-dark.svg" alt="Join Logo" class="logo" />
+    </header>
 
-  <main>
-    <div class="register-card">
-      <div class="title-container">
-        <a routerLink="/login" class="back-arrow" aria-label="Zurück zur Anmeldung">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true">
-            <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="#29ABE2" />
-          </svg>
-        </a>
-        <h1>Sign up</h1>
-        <div class="underline"></div>
-      </div>
+    <main>
+        <div class="register-card">
+            <div class="title-container">
+                <a routerLink="/login" class="back-arrow" aria-label="Zurück zur Anmeldung">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true">
+                        <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="#29ABE2" />
+                    </svg>
+                </a>
+                <h1>Sign up</h1>
+                <div class="underline"></div>
+            </div>
 
-      <form class="register-form" (ngSubmit)="register()">
-        <div class="input-group">
-          <input type="text" placeholder="Name" [(ngModel)]="name" name="name" class="input-field" aria-label="Name"
-            autocomplete="name">
-          <img src="img/icons/person.svg" alt="Name Icon" class="input-icon">
+            <form class="register-form" (ngSubmit)="register()">
+                <div class="input-group">
+                    <input type="text" placeholder="Name" [(ngModel)]="name" name="name" class="input-field"
+                        [class.error]="nameErrorMessage" aria-label="Name" autocomplete="name">
+                    <img src="img/icons/person.svg" alt="Name Icon" class="input-icon">
+                    <div class="error-message" role="alert" *ngIf="nameErrorMessage">
+                        {{ nameErrorMessage }}
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <input type="email" placeholder="Email" [(ngModel)]="email" name="email" class="input-field"
+                        [class.error]="emailErrorMessage" aria-label="E-Mail Adresse" autocomplete="email">
+                    <img src="img/icons/mail.svg" alt="E-Mail Icon" class="input-icon">
+                    <div class="error-message" role="alert" *ngIf="emailErrorMessage">
+                        {{ emailErrorMessage }}
+                    </div>
+                </div>
+
+                <div class="input-group password-group">
+                    <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" [(ngModel)]="password"
+                        name="password" class="input-field" [class.error]="passwordErrorMessage" #passwordField
+                        aria-label="Passwort" autocomplete="new-password">
+                    <img src="img/icons/lock.svg" alt="Passwort Icon" class="input-icon" *ngIf="!passwordField.value">
+                    <button type="button" class="visibility-toggle" (click)="togglePasswordVisibility()"
+                        *ngIf="passwordField.value" aria-label="Passwort anzeigen/verbergen">
+                        <img [src]="showPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
+                            alt="Passwort Sichtbarkeit umschalten">
+                    </button>
+                    <div class="error-message" role="alert" *ngIf="passwordErrorMessage">
+                        {{ passwordErrorMessage }}
+                    </div>
+                </div>
+
+                <div class="input-group password-group">
+                    <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
+                        [(ngModel)]="confirmPassword" name="confirmPassword" class="input-field"
+                        [class.error]="confirmPasswordErrorMessage" #confirmPasswordField
+                        aria-label="Passwort bestätigen" autocomplete="new-password">
+                    <img src="img/icons/lock.svg" alt="Passwort Icon" class="input-icon"
+                        *ngIf="!confirmPasswordField.value">
+                    <button type="button" class="visibility-toggle" (click)="toggleConfirmPasswordVisibility()"
+                        *ngIf="confirmPasswordField.value" aria-label="Bestätigungspasswort anzeigen/verbergen">
+                        <img [src]="showConfirmPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
+                            alt="Passwort Sichtbarkeit umschalten">
+                    </button>
+                    <div class="error-message" role="alert" *ngIf="confirmPasswordErrorMessage">
+                        {{ confirmPasswordErrorMessage }}
+                    </div>
+                </div>
+
+                <div class="policy-checkbox">
+                    <input type="checkbox" id="privacyPolicy" [(ngModel)]="privacyPolicyAccepted"
+                        name="privacyPolicy" />
+                    <label for="privacyPolicy">I accept the <a routerLink="/privacy-policy">Privacy policy</a></label>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" [disabled]="!isFormValid" class="btn-primary">Sign up</button>
+                </div>
+            </form>
         </div>
+    </main>
 
-        <div class="input-group">
-          <input type="email" placeholder="Email" [(ngModel)]="email" name="email" class="input-field"
-            aria-label="E-Mail Adresse" autocomplete="email">
-          <img src="img/icons/mail.svg" alt="E-Mail Icon" class="input-icon">
-        </div>
-
-        <div class="input-group password-group">
-          <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" [(ngModel)]="password"
-            name="password" class="input-field" #passwordField aria-label="Passwort" autocomplete="new-password">
-          <img src="img/icons/lock.svg" alt="Passwort Icon" class="input-icon" *ngIf="!passwordField.value">
-          <button type="button" class="visibility-toggle" (click)="togglePasswordVisibility()"
-            *ngIf="passwordField.value" aria-label="Passwort anzeigen/verbergen">
-            <img [src]="showPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
-              alt="Passwort Sichtbarkeit umschalten">
-          </button>
-        </div>
-
-        <div class="input-group password-group">
-          <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
-            [(ngModel)]="confirmPassword" name="confirmPassword" class="input-field" #confirmPasswordField
-            aria-label="Passwort bestätigen" autocomplete="new-password">
-          <img src="img/icons/lock.svg" alt="Passwort Icon" class="input-icon" *ngIf="!confirmPasswordField.value">
-          <button type="button" class="visibility-toggle" (click)="toggleConfirmPasswordVisibility()"
-            *ngIf="confirmPasswordField.value" aria-label="Bestätigungspasswort anzeigen/verbergen">
-            <img [src]="showConfirmPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
-              alt="Passwort Sichtbarkeit umschalten">
-          </button>
-        </div>
-
-        <div class="policy-checkbox">
-          <input type="checkbox" id="privacyPolicy" [(ngModel)]="privacyPolicyAccepted" name="privacyPolicy" />
-          <label for="privacyPolicy">I accept the <a routerLink="/privacy-policy">Privacy policy</a></label>
-        </div>
-
-        <div class="error-message" role="alert" *ngIf="errorMessage">
-          {{ errorMessage }}
-        </div>
-
-        <div class="actions">
-          <button type="submit" [disabled]="!isFormValid" class="btn-primary">Sign up</button>
-        </div>
-      </form>
-    </div>
-  </main>
-
-  <footer>
-    <a routerLink="/privacy-policy">Privacy Policy</a>
-    <a routerLink="/legal-notice">Legal notice</a>
-  </footer>
+    <footer>
+        <a routerLink="/privacy-policy">Privacy Policy</a>
+        <a routerLink="/legal-notice">Legal notice</a>
+    </footer>
 </div>
 
 @if (showTaskAddedToast) {
 <div class="toast" [class.toast--hide]="hideToast">
-  <span>You Signed Up successfully</span>
+    <span>You Signed Up successfully</span>
 </div>
 }
