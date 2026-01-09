@@ -42,27 +42,31 @@ export class Register implements OnDestroy {
 
   register() {
     if (!this.isFormValid) return;
-    this.showTaskAddedToast = true;
-    this.hideToast = false;
-    this.cdr.detectChanges();
 
-    this.startToastAutoClose();
+    this.errorMessage = '';
 
     this.authService.signUp(this.email, this.password, this.name).subscribe({
       next: () => {
-        this.errorMessage = '';
-        this.router.navigate(['/summary']);
+        this.showTaskAddedToast = true;
+        this.hideToast = false;
+        this.cdr.detectChanges();
+
+        this.startToastAutoClose();
+
+        setTimeout(() => {
+          this.router.navigate(['/summary']);
+        }, 3500);
       },
       error: (err) => {
         console.error('Registration failed', err);
 
-        this.closeToastImmediately();
+        this.errorMessage =
+          err.code === 'auth/email-already-in-use'
+            ? 'Email is already in use'
+            : 'Registration failed. Please try again.';
 
-        if (err.code === 'auth/email-already-in-use') {
-          this.errorMessage = 'Email is already in use';
-        } else {
-          this.errorMessage = 'Registration failed. Please try again.';
-        }
+        this.closeToastImmediately();
+        this.cdr.detectChanges();
       },
     });
   }
