@@ -83,18 +83,19 @@
 
     .login-form {
       width: 100%;
-      @include dFlex(column, center, center, 24px);
+      @include dFlex(column, center, center, 0); // Kein gap, stattdessen margin-bottom
     }
 
     .input-group {
       width: 100%;
       max-width: 422px;
       position: relative;
+      margin-bottom: 4px; // Gleich wie Register
 
       .input-field {
         width: 100%;
         padding: 12px 21px;
-        padding-right: 56px; // Make space for the icon
+        padding-right: 56px;
         border: 1px solid $color-neutral-light;
         border-radius: 10px;
         font-size: 20px;
@@ -116,17 +117,19 @@
       .input-icon {
         position: absolute;
         right: 21px;
-        top: 12px; // Fixed position from top, matching input padding
+        top: 12px;
         width: 24px;
         height: 24px;
-        pointer-events: none; // Allow clicking through the icon to the input
+        pointer-events: none;
       }
 
       .error-message {
+        min-height: 18px; // Reserviert Platz, wächst bei mehr Text
+        margin-top: 4px;
         color: $color-error;
         font-size: 14px;
         text-align: left;
-        margin-top: 8px;
+        line-height: 1.3;
       }
     }
 
@@ -186,20 +189,22 @@
   }
 
   @media (max-width: 800px) {
-    padding: 24px;
+    padding: 16px;
 
     header {
       .logo {
-        height: 60px;
+        height: 78px;
+        margin-left: 12px;
+        margin-top: 12px;
       }
 
       .signup-prompt {
-        display: none; // Often hidden on mobile or simplified
+        display: none;
       }
     }
 
     .login-card {
-      padding: 32px;
+      padding: 32px 16px;
 
       .title-container h1 {
         font-size: 48px;
@@ -212,10 +217,25 @@
         align-items: center;
 
         button {
-          width: 50%;
-          min-width: 200px;
+          width: 200px; // Feste Breite auf Mobile
         }
       }
+    }
+  }
+
+  // Extra kleine Geräte
+  @media (max-width: 375px) {
+    padding: 12px;
+
+    header {
+      .logo {
+        margin-left: 12px;
+        margin-top: 12px;
+      }
+    }
+
+    .login-card {
+      padding: 32px 12px;
     }
   }
 }
@@ -286,8 +306,12 @@
   transition: opacity 0.3s ease;
 
   @media (max-width: 800px) {
-    height: 60px; // Passend zum Header-Logo auf Mobile
+    height: 78px;
     animation: logoFlyMobile 1.2s ease-in-out forwards;
+  }
+
+  @media (max-width: 375px) {
+    animation: logoFlySmall 1.2s ease-in-out forwards;
   }
 }
 
@@ -303,8 +327,23 @@
   }
 
   100% {
-    top: 24px;
-    left: 24px;
+    top: 28px; // 16px container padding + 12px margin
+    left: 28px; // 16px container padding + 12px margin
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+// Animation für extra kleine Geräte (≤375px)
+@keyframes logoFlySmall {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(3.5);
+  }
+
+  100% {
+    top: 24px; // 12px container padding + 12px margin
+    left: 24px; // 12px container padding + 12px margin
     transform: translate(0, 0) scale(1);
   }
 }

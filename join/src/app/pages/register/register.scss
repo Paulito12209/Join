@@ -34,7 +34,7 @@
     .register-form {
       width: 100%;
       max-width: 422px;
-      @include dFlex(column, center, center, 24px);
+      @include dFlex(column, center, center, 0);
     }
 
     .title-container {
@@ -72,6 +72,7 @@
       width: 100%;
       max-width: 422px;
       position: relative;
+      margin-bottom: 4px;
 
       .input-field {
         width: 100%;
@@ -105,45 +106,34 @@
       }
 
       .error-message {
+        min-height: 18px;
+        margin-top: 4px;
         color: $color-error;
         font-size: 14px;
         text-align: left;
-        margin-top: 8px;
+        line-height: 1.3;
       }
 
-      &.password-group {
-        .input-field {
-          padding-right: 56px;
+      &.password-group .visibility-toggle {
+        position: absolute;
+        right: 21px;
+        top: 12px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.2s;
+
+        &:hover {
+          opacity: 0.7;
         }
 
-        .visibility-toggle {
-          position: absolute;
-          right: 21px;
-          top: 12px; // Fixed position to match input padding
-          background: none;
-          border: none;
-          cursor: pointer;
-          padding: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: opacity 0.2s;
-
-          &:hover {
-            opacity: 0.7;
-          }
-
-          img {
-            width: 24px;
-            height: 24px;
-          }
-        }
-
-        .error-message {
-          color: $color-error;
-          font-size: 14px;
-          text-align: left;
-          margin-top: 8px;
+        img {
+          width: 24px;
+          height: 24px;
         }
       }
     }
@@ -172,12 +162,10 @@
       }
     }
 
-    .error-message {
-      color: $color-error;
-      font-size: 14px;
-    }
-
     .actions {
+      display: flex;
+      justify-content: center;
+      width: 100%;
       margin-top: 16px;
 
       button {
@@ -189,6 +177,8 @@
         transition: all 0.2s;
 
         &.btn-primary {
+          width: 50%;
+          min-width: 200px;
           background-color: $color-brand-primary;
           color: white;
           border: none;
@@ -242,22 +232,21 @@
   border-radius: 20px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
   z-index: 8;
-
   --toast-y: -50%;
   transform: translate(-50%, 100vh);
   animation: toast-in 0.5s ease-out forwards;
-}
 
-.toast span {
-  max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  font-size: 20px;
-  line-height: 1.2;
-}
+  span {
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 20px;
+    line-height: 1.2;
+  }
 
-.toast--hide {
-  animation: toast-out 0.5s ease-in forwards;
+  &--hide {
+    animation: toast-out 0.5s ease-in forwards;
+  }
 }
 
 @keyframes toast-in {
@@ -284,21 +273,18 @@
   }
 }
 
-// Mobile responsive styles
 @media (max-width: 768px) {
   .register-container {
-    padding: 24px 16px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    padding: 16px;
 
     header {
       margin-bottom: 32px;
       text-align: left;
 
       .logo {
-        width: 64px;
-        height: auto;
+        height: 78px;
+        margin-left: 12px;
+        margin-top: 12px;
       }
     }
 
@@ -309,10 +295,9 @@
     }
 
     .register-card {
-      padding: 24px 20px;
+      padding: 24px 16px;
       border-radius: 20px;
       box-shadow: none;
-      background: white;
 
       .title-container {
         margin-bottom: 24px;
@@ -329,12 +314,10 @@
 
         h1 {
           font-size: 47px;
-          font-weight: 700;
         }
 
         .underline {
           width: 90px;
-          height: 3px;
         }
       }
 
@@ -350,7 +333,6 @@
           padding-right: 48px;
           font-size: 16px;
           border-radius: 8px;
-          border: 1px solid #d1d1d1;
         }
 
         .input-icon {
@@ -359,18 +341,12 @@
           height: 20px;
         }
 
-        &.password-group {
-          .input-field {
-            padding-right: 48px;
-          }
+        &.password-group .visibility-toggle {
+          right: 16px;
 
-          .visibility-toggle {
-            right: 16px;
-
-            img {
-              width: 20px;
-              height: 20px;
-            }
+          img {
+            width: 20px;
+            height: 20px;
           }
         }
       }
@@ -379,8 +355,6 @@
         margin: 8px 0;
 
         input[type='checkbox'] {
-          width: 16px;
-          height: 16px;
           flex-shrink: 0;
         }
 
@@ -392,13 +366,11 @@
 
       .actions {
         margin-top: 24px;
-        width: 100%;
 
         button {
-          width: 100%;
+          width: 200px;
           padding: 14px 24px;
           font-size: 18px;
-          border-radius: 8px;
         }
       }
     }
@@ -420,18 +392,15 @@
   }
 }
 
-// Extra small mobile devices
-@media (max-width: 480px) {
+@media (max-width: 375px) {
   .register-container {
-    padding: 16px 12px;
+    padding: 12px;
 
     .register-card {
-      padding: 20px 16px;
+      padding: 20px 12px;
 
-      .title-container {
-        h1 {
-          font-size: 28px;
-        }
+      .title-container h1 {
+        font-size: 28px;
       }
     }
 
@@ -439,14 +408,12 @@
       gap: 16px;
     }
   }
-}
 
-@media (max-width: 350px) {
   .toast {
     padding: 20px 12px;
-  }
 
-  .toast span {
-    font-size: 18px;
+    span {
+      font-size: 18px;
+    }
   }
 }

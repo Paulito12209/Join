@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { IntroAnimationService } from '../../core/services/intro-animation.service';
 import { filter, take } from 'rxjs/operators';
 
 @Component({
@@ -18,15 +19,25 @@ export class Login {
   errorMessage = '';
   showIntroLogo = true;
   showWhiteLogo = true;
-  showHeaderLogo = false; // Wird früher eingeblendet für sanften Übergang
+  showHeaderLogo = false;
 
   private authService = inject(AuthService);
   private router = inject(Router);
   private ngZone = inject(NgZone);
   private cdr = inject(ChangeDetectorRef);
+  private introAnimationService = inject(IntroAnimationService);
 
   ngOnInit() {
-    // Start: weißes Logo sichtbar, Header-Logo versteckt
+    // Prüfe, ob die Animation bereits gezeigt wurde (in dieser Session)
+    if (this.introAnimationService.hasAnimationBeenShown()) {
+      // Animation überspringen - direkt finalen Zustand setzen
+      this.showIntroLogo = false;
+      this.showWhiteLogo = false;
+      this.showHeaderLogo = true;
+      return;
+    }
+
+    // Animation wurde noch nicht gezeigt - starte sie
     this.showIntroLogo = true;
     this.showWhiteLogo = true;
     this.showHeaderLogo = false;
@@ -46,6 +57,8 @@ export class Login {
     // Intro-Logo später ausblenden (nachdem Header-Logo sichtbar ist)
     setTimeout(() => {
       this.showIntroLogo = false;
+      // Markiere Animation als gezeigt für diese Session
+      this.introAnimationService.markAnimationAsShown();
       this.cdr.detectChanges();
     }, 1700);
   }
