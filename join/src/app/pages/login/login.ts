@@ -18,6 +18,7 @@ export class Login {
   errorMessage = '';
   showIntroLogo = true;
   showWhiteLogo = true;
+  showHeaderLogo = false; // Wird früher eingeblendet für sanften Übergang
 
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -25,19 +26,28 @@ export class Login {
   private cdr = inject(ChangeDetectorRef);
 
   ngOnInit() {
-    // Start: weißes Logo sichtbar
+    // Start: weißes Logo sichtbar, Header-Logo versteckt
     this.showIntroLogo = true;
     this.showWhiteLogo = true;
+    this.showHeaderLogo = false;
 
-    // Wechsel zu dunklem Logo während der Animation
+    // Wechsle zu dunklem Logo während der Animation
     setTimeout(() => {
       this.showWhiteLogo = false;
+      this.cdr.detectChanges();
     }, 600);
 
-    // Intro ausblenden
+    // Header-Logo einblenden (kurz bevor das Intro-Logo ausfadet)
+    setTimeout(() => {
+      this.showHeaderLogo = true;
+      this.cdr.detectChanges();
+    }, 1100);
+
+    // Intro-Logo später ausblenden (nachdem Header-Logo sichtbar ist)
     setTimeout(() => {
       this.showIntroLogo = false;
-    }, 1300);
+      this.cdr.detectChanges();
+    }, 1700);
   }
 
   login(event?: Event) {

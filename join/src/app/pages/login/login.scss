@@ -42,7 +42,11 @@
     }
 
     .logo-hidden {
-      visibility: hidden;
+      opacity: 0;
+    }
+
+    .logo {
+      transition: opacity 0.3s ease;
     }
   }
 
@@ -209,6 +213,7 @@
 
         button {
           width: 50%;
+          min-width: 200px;
         }
       }
     }
@@ -260,6 +265,14 @@
   inset: 0;
   z-index: 2000;
   pointer-events: none;
+  animation: fadeOutWrapper 0.3s ease 1.6s forwards;
+}
+
+@keyframes fadeOutWrapper {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .logo-intro {
@@ -273,6 +286,7 @@
   transition: opacity 0.3s ease;
 
   @media (max-width: 800px) {
+    height: 60px; // Passend zum Header-Logo auf Mobile
     animation: logoFlyMobile 1.2s ease-in-out forwards;
   }
 }
@@ -327,7 +341,7 @@
     justify-content: center;
     align-items: center;
     gap: 16px;
-    margin: 24px 0;
+    margin-top: 48px;
 
     span {
       font-size: 16px;
