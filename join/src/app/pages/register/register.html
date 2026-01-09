@@ -16,16 +16,19 @@
             </div>
 
             <div class="input-group">
-                <input type="text" placeholder="Name" [(ngModel)]="name" class="input-field icon-person">
+                <input type="text" placeholder="Name" [(ngModel)]="name" class="input-field">
+                <img src="img/icons/person.svg" alt="" class="input-icon">
             </div>
 
             <div class="input-group">
-                <input type="email" placeholder="Email" [(ngModel)]="email" class="input-field icon-email">
+                <input type="email" placeholder="Email" [(ngModel)]="email" class="input-field">
+                <img src="img/icons/mail.svg" alt="" class="input-icon">
             </div>
 
             <div class="input-group password-group">
                 <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" [(ngModel)]="password"
-                    class="input-field icon-lock" #passwordField>
+                    class="input-field" #passwordField>
+                <img src="img/icons/lock.svg" alt="" class="input-icon" *ngIf="!passwordField.value">
                 <button type="button" class="visibility-toggle" (click)="togglePasswordVisibility()"
                     *ngIf="passwordField.value">
                     <img [src]="showPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
@@ -35,7 +38,8 @@
 
             <div class="input-group password-group">
                 <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
-                    [(ngModel)]="confirmPassword" class="input-field icon-lock" #confirmPasswordField>
+                    [(ngModel)]="confirmPassword" class="input-field" #confirmPasswordField>
+                <img src="img/icons/lock.svg" alt="" class="input-icon" *ngIf="!confirmPasswordField.value">
                 <button type="button" class="visibility-toggle" (click)="toggleConfirmPasswordVisibility()"
                     *ngIf="confirmPasswordField.value">
                     <img [src]="showConfirmPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
