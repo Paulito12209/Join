@@ -31,6 +31,12 @@
     max-width: 652px;
     @include dFlex(column, center, center, 24px);
 
+    .register-form {
+      width: 100%;
+      max-width: 422px;
+      @include dFlex(column, center, center, 24px);
+    }
+
     .title-container {
       position: relative;
       @include dFlex(column, center, center, 16px);
@@ -316,6 +322,10 @@
         }
       }
 
+      .register-form {
+        max-width: 100%;
+      }
+
       .input-group {
         max-width: 100%;
 
@@ -386,6 +396,7 @@
       }
     }
   }
+
   .toast {
     top: auto;
     bottom: 140px;

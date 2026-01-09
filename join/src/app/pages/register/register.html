@@ -16,50 +16,55 @@
         <div class="underline"></div>
       </div>
 
-      <div class="input-group">
-        <input type="text" placeholder="Name" [(ngModel)]="name" class="input-field" aria-label="Name">
-        <img src="img/icons/person.svg" alt="Name Icon" class="input-icon">
-      </div>
+      <form class="register-form" (ngSubmit)="register()">
+        <div class="input-group">
+          <input type="text" placeholder="Name" [(ngModel)]="name" name="name" class="input-field" aria-label="Name"
+            autocomplete="name">
+          <img src="img/icons/person.svg" alt="Name Icon" class="input-icon">
+        </div>
 
-      <div class="input-group">
-        <input type="email" placeholder="Email" [(ngModel)]="email" class="input-field" aria-label="E-Mail Adresse">
-        <img src="img/icons/mail.svg" alt="E-Mail Icon" class="input-icon">
-      </div>
+        <div class="input-group">
+          <input type="email" placeholder="Email" [(ngModel)]="email" name="email" class="input-field"
+            aria-label="E-Mail Adresse" autocomplete="email">
+          <img src="img/icons/mail.svg" alt="E-Mail Icon" class="input-icon">
+        </div>
 
-      <div class="input-group password-group">
-        <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" [(ngModel)]="password"
-          class="input-field" #passwordField aria-label="Passwort">
-        <img src="img/icons/lock.svg" alt="Passwort Icon" class="input-icon" *ngIf="!passwordField.value">
-        <button type="button" class="visibility-toggle" (click)="togglePasswordVisibility()" *ngIf="passwordField.value"
-          aria-label="Passwort anzeigen/verbergen">
-          <img [src]="showPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
-            alt="Passwort Sichtbarkeit umschalten">
-        </button>
-      </div>
+        <div class="input-group password-group">
+          <input [type]="showPassword ? 'text' : 'password'" placeholder="Password" [(ngModel)]="password"
+            name="password" class="input-field" #passwordField aria-label="Passwort" autocomplete="new-password">
+          <img src="img/icons/lock.svg" alt="Passwort Icon" class="input-icon" *ngIf="!passwordField.value">
+          <button type="button" class="visibility-toggle" (click)="togglePasswordVisibility()"
+            *ngIf="passwordField.value" aria-label="Passwort anzeigen/verbergen">
+            <img [src]="showPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
+              alt="Passwort Sichtbarkeit umschalten">
+          </button>
+        </div>
 
-      <div class="input-group password-group">
-        <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
-          [(ngModel)]="confirmPassword" class="input-field" #confirmPasswordField aria-label="Passwort bestätigen">
-        <img src="img/icons/lock.svg" alt="Passwort Icon" class="input-icon" *ngIf="!confirmPasswordField.value">
-        <button type="button" class="visibility-toggle" (click)="toggleConfirmPasswordVisibility()"
-          *ngIf="confirmPasswordField.value" aria-label="Bestätigungspasswort anzeigen/verbergen">
-          <img [src]="showConfirmPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
-            alt="Passwort Sichtbarkeit umschalten">
-        </button>
-      </div>
+        <div class="input-group password-group">
+          <input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirm Password"
+            [(ngModel)]="confirmPassword" name="confirmPassword" class="input-field" #confirmPasswordField
+            aria-label="Passwort bestätigen" autocomplete="new-password">
+          <img src="img/icons/lock.svg" alt="Passwort Icon" class="input-icon" *ngIf="!confirmPasswordField.value">
+          <button type="button" class="visibility-toggle" (click)="toggleConfirmPasswordVisibility()"
+            *ngIf="confirmPasswordField.value" aria-label="Bestätigungspasswort anzeigen/verbergen">
+            <img [src]="showConfirmPassword ? 'img/icons/visibility.svg' : 'img/icons/visibility_off.svg'"
+              alt="Passwort Sichtbarkeit umschalten">
+          </button>
+        </div>
 
-      <div class="policy-checkbox">
-        <input type="checkbox" id="privacyPolicy" [(ngModel)]="privacyPolicyAccepted" />
-        <label for="privacyPolicy">I accept the <a routerLink="/privacy-policy">Privacy policy</a></label>
-      </div>
+        <div class="policy-checkbox">
+          <input type="checkbox" id="privacyPolicy" [(ngModel)]="privacyPolicyAccepted" name="privacyPolicy" />
+          <label for="privacyPolicy">I accept the <a routerLink="/privacy-policy">Privacy policy</a></label>
+        </div>
 
-      <div class="error-message" role="alert" *ngIf="errorMessage">
-        {{ errorMessage }}
-      </div>
+        <div class="error-message" role="alert" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
 
-      <div class="actions">
-        <button (click)="register()" [disabled]="!isFormValid" class="btn-primary">Sign up</button>
-      </div>
+        <div class="actions">
+          <button type="submit" [disabled]="!isFormValid" class="btn-primary">Sign up</button>
+        </div>
+      </form>
     </div>
   </main>
 
