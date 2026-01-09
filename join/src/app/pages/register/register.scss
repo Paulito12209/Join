@@ -70,6 +70,7 @@
       .input-field {
         width: 100%;
         padding: 12px 21px;
+        padding-right: 56px;
         border: 1px solid $color-neutral-light;
         border-radius: 10px;
         font-size: 20px;
@@ -82,40 +83,21 @@
         &:focus {
           border-color: $color-brand-highlight;
         }
+      }
 
-        &.icon-person {
-          background-image: url('/img/icons/person.svg');
-          background-repeat: no-repeat;
-          background-position: right 21px center;
-          background-size: 24px;
-        }
-
-        &.icon-email {
-          background-image: url('/img/icons/mail.svg');
-          background-repeat: no-repeat;
-          background-position: right 21px center;
-          background-size: 24px;
-        }
-
-        &.icon-lock {
-          background-image: url('/img/icons/lock.svg');
-          background-repeat: no-repeat;
-          background-position: right 21px center;
-          background-size: 24px;
-        }
+      .input-icon {
+        position: absolute;
+        right: 21px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        pointer-events: none;
       }
 
       &.password-group {
         .input-field {
           padding-right: 56px;
-          background-image: url('/img/icons/lock.svg');
-          background-repeat: no-repeat;
-          background-position: right 21px center;
-          background-size: 24px;
-
-          &:not(:placeholder-shown) {
-            background-image: none;
-          }
         }
 
         .visibility-toggle {
@@ -280,11 +262,156 @@
   }
 }
 
+// Mobile responsive styles
 @media (max-width: 768px) {
+  .register-container {
+    padding: 24px 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    header {
+      margin-bottom: 32px;
+      text-align: left;
+
+      .logo {
+        width: 64px;
+        height: auto;
+      }
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .register-card {
+      padding: 24px 20px;
+      border-radius: 20px;
+      box-shadow: none;
+      background: white;
+
+      .title-container {
+        margin-bottom: 24px;
+
+        .back-arrow {
+          left: -4px;
+          top: 8px;
+
+          svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+
+        h1 {
+          font-size: 47px;
+          font-weight: 700;
+        }
+
+        .underline {
+          width: 90px;
+          height: 3px;
+        }
+      }
+
+      .input-group {
+        max-width: 100%;
+
+        .input-field {
+          padding: 10px 16px;
+          padding-right: 48px;
+          font-size: 16px;
+          border-radius: 8px;
+          border: 1px solid #d1d1d1;
+        }
+
+        .input-icon {
+          right: 16px;
+          width: 20px;
+          height: 20px;
+        }
+
+        &.password-group {
+          .input-field {
+            padding-right: 48px;
+          }
+
+          .visibility-toggle {
+            right: 16px;
+
+            img {
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+      }
+
+      .policy-checkbox {
+        margin: 8px 0;
+
+        input[type='checkbox'] {
+          width: 16px;
+          height: 16px;
+          flex-shrink: 0;
+        }
+
+        label {
+          font-size: 14px;
+          line-height: 1.4;
+        }
+      }
+
+      .actions {
+        margin-top: 24px;
+        width: 100%;
+
+        button {
+          width: 100%;
+          padding: 14px 24px;
+          font-size: 18px;
+          border-radius: 8px;
+        }
+      }
+    }
+
+    footer {
+      margin-top: 32px;
+      gap: 24px;
+
+      a {
+        font-size: 14px;
+      }
+    }
+  }
   .toast {
     top: auto;
     bottom: 140px;
     --toast-y: 0;
+  }
+}
+
+// Extra small mobile devices
+@media (max-width: 480px) {
+  .register-container {
+    padding: 16px 12px;
+
+    .register-card {
+      padding: 20px 16px;
+
+      .title-container {
+        h1 {
+          font-size: 28px;
+        }
+      }
+    }
+
+    footer {
+      flex-direction: column;
+      gap: 16px;
+    }
   }
 }
 
