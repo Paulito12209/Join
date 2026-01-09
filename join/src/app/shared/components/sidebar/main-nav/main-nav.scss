@@ -47,6 +47,7 @@
 
   &:nth-child(1) {
     a {
+
       &:hover img,
       &.active img {
         content: url('../../../../../../public/img/icons/summary-active.svg');
@@ -56,6 +57,7 @@
 
   &:nth-child(2) {
     a {
+
       &:hover img,
       &.active img {
         content: url('../../../../../../public/img/icons/add_task-active.svg');
@@ -65,6 +67,7 @@
 
   &:nth-child(3) {
     a {
+
       &:hover img,
       &.active img {
         content: url('../../../../../../public/img/icons/board-active.svg');
@@ -74,6 +77,7 @@
 
   &:nth-child(4) {
     a {
+
       &:hover img,
       &.active img {
         content: url('../../../../../../public/img/icons/contacts-active.svg');
@@ -107,7 +111,7 @@
   .navigation ul {
     @include dFlex($fd: row, $jc: space-between, $ai: center);
     margin: 0;
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
   .navigation li {
@@ -138,9 +142,9 @@
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 375px) {
   .navigation ul {
-    padding: 0 10px;
+    padding: 0 12px;
   }
 
   .navigation li a {
