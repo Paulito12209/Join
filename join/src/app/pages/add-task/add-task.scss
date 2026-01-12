@@ -1,5 +1,6 @@
 @use '../../../styles.scss' as *;
 
+/* Page */
 .add-task-page {
   padding: 0 56px;
   max-width: 1100px;
@@ -13,9 +14,7 @@
 }
 
 .page-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include dFlex($jc: space-between, $ai: center);
 }
 
 .page-header h1 {
@@ -30,10 +29,8 @@
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   margin-top: 24px;
-
   flex: 1;
   overflow-y: auto;
-
   padding-bottom: 80px;
 }
 
@@ -52,20 +49,125 @@
   background-color: $color-neutral-light;
 }
 
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
+/* Form controls */
+label {
+  font-weight: 400;
+  font-size: 20px;
+  color: black;
+  margin-top: 16px;
+  display: block;
+  font-family: 'Inter', sans-serif;
+
+  span {
+    color: $color-required-star;
+  }
 }
 
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid $color-neutral-light;
+  margin-top: 8px;
+  font-size: 20px;
+
+  &:focus {
+    outline: none;
+    border-color: $color-brand-highlight;
+  }
+
+  &.ng-invalid.ng-touched {
+    border-color: $color-error;
+  }
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: $color-neutral-light;
+  font-size: 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+  max-height: 150px;
+}
+
+.subtask-input-wrapper:focus-within,
+.assigned-input:focus-within,
+.assigned-input:focus {
+  border-color: $color-brand-highlight;
+}
+
+.error {
+  display: block;
+  color: $color-error;
+  font-size: 12px;
+  margin-top: 4px;
+  min-height: 16px;
+}
+
+/* Date input */
+input[type='date'] {
+  position: relative;
+  padding-right: 44px;
+  color: $color-neutral-light;
+
+  &:valid {
+    color: black;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    position: absolute;
+    right: 14px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-image: url('../../../../public/img/icons/due_date.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: none;
+  }
+}
+
+/* Select */
+select:invalid,
+select option[value=''] {
+  color: $color-neutral-light;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none;
+  padding-right: 44px;
+  position: relative;
+}
+
+/* Assigned dropdown */
 .assigned-dropdown {
   position: relative;
   cursor: pointer;
 }
 
 .assigned-input {
-  display: flex;
-  align-items: center;
+  @include dFlex($ai: center);
   border: 1px solid $color-neutral-light;
   border-radius: 8px;
   padding: 12px 12px 12px 16px;
@@ -82,35 +184,31 @@
   cursor: pointer;
   font-size: 20px;
   color: black;
-}
 
-.assigned-input input[readonly] {
-  color: black;
-  font-size: 20px;
-}
-
-.assigned-input input[readonly]::placeholder {
-  color: black;
-  font-size: 20px;
+  &::placeholder {
+    color: black;
+  }
 }
 
 .assigned-badges {
-  display: flex;
+  @include dFlex($ai: center);
   flex-wrap: wrap;
   margin-top: 8px;
   padding-left: 8px;
 }
 
+.avatar,
+.badge-avatar {
+  @include dFlex($ai: center, $jc: center);
+  border-radius: 50%;
+  color: white;
+  font-weight: 500;
+}
+
 .badge-avatar {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: 12px;
-  font-weight: 500;
   border: 2px solid white;
   margin-left: -8px;
 }
@@ -120,23 +218,26 @@
 }
 
 .avatar {
+  display: inline-flex;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 500;
   margin-right: 12px;
   font-size: 12px;
 }
 
 .dropdown-arrow {
   margin-left: auto;
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   object-fit: contain;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 50%;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    background-color: $color-neutral-user-bg;
+  }
 }
 
 .dropdown-list {
@@ -155,31 +256,29 @@
 }
 
 .dropdown-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include dFlex($jc: space-between, $ai: center);
   padding: 8px 12px;
   cursor: pointer;
   transition: background 0.1s;
   border-radius: 8px;
   margin: 1px 0;
-}
 
-.dropdown-item:hover {
-  background: #f3f6fb;
-}
+  &:hover {
+    background: #f3f6fb;
+  }
 
-.dropdown-item.selected {
-  background: $color-brand-deep;
-  color: white;
-}
+  &.selected {
+    background: $color-brand-deep;
+    color: white;
 
-.dropdown-item.selected .checkbox-icon {
-  filter: brightness(0) invert(1);
-}
+    .checkbox-icon {
+      filter: brightness(0) invert(1);
+    }
 
-.dropdown-item.selected:hover {
-  background: lighten($color-brand-deep, 5%);
+    &:hover {
+      background: lighten($color-brand-deep, 5%);
+    }
+  }
 }
 
 .dropdown-item .avatar {
@@ -198,190 +297,63 @@
   cursor: pointer;
 }
 
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.dialog {
-  background: white;
-  border-radius: 16px;
-  width: 900px;
-  padding: 24px;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.close {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-
-
-label {
-  font-weight: 400;
-  font-size: 20px; // Desktop: 20px wie im Board-Dialog
-  color: black;
-  margin-top: 16px;
-  display: block;
-  font-family: 'Inter', sans-serif;
-}
-
-label span {
-  color: $color-required-star;
-}
-
-input,
-textarea,
-select {
-  width: 100%;
-  padding: 12px 16px; // Padding wie im Board-Dialog
-  border-radius: 8px;
-  border: 1px solid $color-neutral-light;
-  margin-top: 8px;
-  font-size: 20px; // Desktop: 20px
-}
-
-textarea {
-  min-height: 100px;
-  resize: vertical;
-  max-height: 150px;
-}
-
-// Placeholder-Styles - Desktop: 20px, Farbe #D1D1D1
-input::placeholder,
-textarea::placeholder {
-  color: $color-neutral-light;
-  font-size: 20px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-}
-
-// Date Input - hellgrau wenn leer, schwarz wenn Datum ausgewählt
-// Das "required" Attribut muss im HTML gesetzt sein, damit :valid funktioniert
-input[type='date'] {
-  color: $color-neutral-light; // Standard: Hellgrau (kein Datum ausgewählt)
-}
-
-input[type='date']:valid {
-  color: black; // Schwarz wenn ein gültiges Datum ausgewählt wurde
-}
-
-// Select Placeholder-Option - grau wenn leer
-select:invalid,
-select option[value=''] {
-  color: $color-neutral-light;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: $color-brand-highlight;
-  border-color: $color-brand-highlight;
-}
-
-.subtask-input-wrapper:focus-within,
-.assigned-input:focus-within,
-.assigned-input:focus {
-  border-color: $color-brand-highlight;
-}
-
-// Validierungsfehler
-input.ng-invalid.ng-touched,
-textarea.ng-invalid.ng-touched,
-select.ng-invalid.ng-touched {
-  border-color: $color-error;
-}
-
-.error {
-  display: block;
-  color: $color-error;
-  font-size: 12px;
-  margin-top: 4px;
-  min-height: 16px;
-}
-
+/* Priority */
 .priority {
-  display: flex;
-  gap: 12px;
+  @include dFlex($ai: center, $jc: flex-start, $g: 12px);
   margin-top: 8px;
+
+  button {
+    min-width: 136px;
+    height: 56px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    @include dFlex($ai: center, $jc: center, $g: 8px);
+    font-size: 20px;
+
+    img {
+      width: 20px;
+      height: 14px;
+      object-fit: contain;
+    }
+
+    &:not(.active):hover {
+      box-shadow: 0px 4px 4px 0px #00000040;
+    }
+
+    &.active {
+      color: white;
+      font-family: 'Inter-Bold', sans-serif;
+      font-weight: 700;
+      font-size: 21px;
+
+      img {
+        filter: brightness(0) invert(1);
+      }
+    }
+
+    &.prio-urgent.active {
+      background: $color-priority-urgent;
+      border-color: $color-priority-urgent;
+    }
+
+    &.prio-medium.active {
+      background: $color-priority-medium;
+      border-color: $color-priority-medium;
+    }
+
+    &.prio-low.active {
+      background: $color-priority-low;
+      border-color: $color-priority-low;
+    }
+  }
 }
 
-// Priority Buttons - Design wie im Board-Dialog
-.priority button {
-  min-width: 136px;
-  height: 56px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  background: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 20px;
-}
-
-.priority button img {
-  width: 20px;
-  height: 14px;
-  object-fit: contain;
-}
-
-.priority button:not(.active):hover {
-  box-shadow: 0px 4px 4px 0px #00000040;
-}
-
-// Aktive Priority-Buttons mit fetter Schrift (Inter-Bold)
-.priority button.prio-urgent.active {
-  background: $color-priority-urgent;
-  color: white;
-  font-family: 'Inter-Bold', sans-serif;
-  font-weight: 700;
-  font-size: 21px;
-  border-color: $color-priority-urgent;
-}
-
-.priority button.prio-medium.active {
-  background: $color-priority-medium;
-  color: white;
-  font-family: 'Inter-Bold', sans-serif;
-  font-weight: 700;
-  font-size: 21px;
-  border-color: $color-priority-medium;
-}
-
-.priority button.prio-low.active {
-  background: $color-priority-low;
-  color: white;
-  font-family: 'Inter-Bold', sans-serif;
-  font-weight: 700;
-  font-size: 21px;
-  border-color: $color-priority-low;
-}
-
-.priority button.active img {
-  filter: brightness(0) invert(1);
-}
-
+/* Actions / Footer */
 .actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include dFlex($jc: space-between, $ai: center, $g: 8px);
 }
 
 .required-hint {
@@ -394,9 +366,8 @@ select.ng-invalid.ng-touched {
   margin-right: 4px;
 }
 
-// Required-Hint für Mobile - standardmäßig ausgeblendet
 .required-hint-mobile {
-  display: none; // Auf Desktop versteckt
+  display: none;
   font-size: 16px;
   color: black;
   margin-top: 16px;
@@ -409,15 +380,11 @@ select.ng-invalid.ng-touched {
 }
 
 .action-buttons {
-  display: flex;
-  gap: 12px;
+  @include dFlex($ai: center, $jc: flex-start, $g: 12px);
 }
 
 .actions button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  @include dFlex($ai: center, $jc: center, $g: 8px);
 }
 
 .actions .btn-icon {
@@ -426,20 +393,20 @@ select.ng-invalid.ng-touched {
   object-fit: contain;
 }
 
-// Submit Button - Standard: #2A3647, Valid: #091931
-.actions .submit {
+.actions .submit,
+.actions .clear {
   padding: 12px 24px;
   border-radius: 10px;
-  background: $color-brand-primary;
-  color: white;
   font-size: 20px;
   font-weight: 500;
-  border: none;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   transition: all 0.1s;
+}
+
+.actions .submit {
+  background: $color-brand-primary;
+  color: white;
+  border: none;
 
   &:hover:not(:disabled) {
     background: $color-brand-highlight;
@@ -458,24 +425,14 @@ select.ng-invalid.ng-touched {
   }
 }
 
-// Wenn Form gültig ist, bekommt Submit-Button die dunkle Farbe
 .actions .submit:not(:disabled) {
   background: $color-brand-deep;
 }
 
 .actions .clear {
-  padding: 12px 24px;
-  border-radius: 10px;
   background: white !important;
   color: $color-brand-primary;
-  font-size: 20px;
-  font-weight: 500;
   border: 1px solid $color-brand-primary !important;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.1s;
 
   &:hover {
     border-color: $color-brand-primary-hover !important;
@@ -484,9 +441,15 @@ select.ng-invalid.ng-touched {
   }
 }
 
+/* Subtasks */
+.subtask-input-wrapper,
+.item-actions,
+.edit-wrapper,
+.edit-actions {
+  @include dFlex($ai: center);
+}
+
 .subtask-input-wrapper {
-  display: flex;
-  align-items: center;
   height: 48px;
   width: 100%;
   margin-top: 8px;
@@ -510,9 +473,7 @@ select.ng-invalid.ng-touched {
 }
 
 .subtask-actions {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  @include dFlex($ai: center, $g: 4px);
   height: 100%;
   padding: 0 12px 0 0;
   flex: 0 0 auto;
@@ -554,7 +515,7 @@ select.ng-invalid.ng-touched {
 }
 
 .subtask-list li {
-  @include dFlex();
+  @include dFlex($ai: center);
   margin-top: 6px;
   padding: 0 12px;
   font-size: 16px;
@@ -577,7 +538,6 @@ select.ng-invalid.ng-touched {
 }
 
 .item-actions {
-  @include dFlex();
   opacity: 0;
 
   img {
@@ -597,7 +557,6 @@ select.ng-invalid.ng-touched {
 }
 
 .edit-wrapper {
-  @include dFlex();
   width: 100%;
   border-bottom: 1px solid $color-brand-highlight;
   padding-bottom: 2px;
@@ -612,87 +571,12 @@ select.ng-invalid.ng-touched {
   padding: 0;
 }
 
-.edit-actions {
-  @include dFlex();
-}
-
 .subtask-bullet {
   margin-right: 10px;
   font-weight: bold;
 }
 
-input[type='date'] {
-  position: relative;
-  padding-right: 44px;
-}
-
-/* Native calendar icon ausblenden (Chrome, Edge, Safari) */
-input[type='date']::-webkit-calendar-picker-indicator {
-  opacity: 0;
-  position: absolute;
-  right: 14px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-
-/* Eigenes Icon */
-input[type='date']::after {
-  content: '';
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  background-image: url('/img/icons/due_date.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
-  pointer-events: none;
-}
-
-.assigned-item.selected {
-  background-color: $color-brand-primary;
-  color: white;
-}
-
-.assigned-item.selected .name {
-  color: white;
-}
-
-.assigned-item.selected .avatar {
-  filter: brightness(1.1);
-}
-
-.assigned-item.selected .checkbox-icon {
-  filter: brightness(0) invert(1);
-}
-
-.dropdown-arrow {
-  width: 16px;
-  height: 16px;
-  cursor: pointer;
-  flex-shrink: 0;
-  border-radius: 50%;
-  transition: background-color 0.15s ease, transform 0.15s ease;
-
-  &:hover {
-    background-color: $color-neutral-user-bg;
-  }
-}
-
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-select {
-  background-image: none;
-  padding-right: 44px;
-  position: relative;
-}
-
+/* Select arrow wrapper */
 .select-wrapper {
   position: relative;
 }
@@ -703,22 +587,20 @@ select {
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
+  transition: transform 0.15s ease, background-color 0.15s ease;
 }
 
 .select-wrapper:hover .select-arrow {
   background-color: $color-neutral-user-bg;
 }
 
-.select-arrow {
-  transition: transform 0.15s ease, background-color 0.15s ease;
-}
-
 .select-wrapper:focus-within:hover .select-arrow {
   transform: translateY(-50%) rotate(180deg) scale(1.05);
 }
 
+/* Responsive */
 @media (min-width: 769px) {
-  .add-task-page>.actions {
+  .add-task-page > .actions {
     position: sticky;
     bottom: 0;
     background: $color-neutral-bg;
@@ -740,20 +622,19 @@ select {
 
 @media (max-width: 1000px) {
   .content {
-    grid-template-columns: 1fr; // Eine Spalte statt zwei
+    grid-template-columns: 1fr;
     gap: 24px;
     padding-bottom: 24px;
   }
 
   .right {
-    padding-left: 0; // Linkes Padding entfernen
+    padding-left: 0;
   }
 
   .right::before {
-    display: none; // Vertikale Trennlinie ausblenden
+    display: none;
   }
 
-  // Required-Hint in Actions ausblenden, stattdessen unter Subtasks anzeigen
   .required-hint {
     display: none;
   }
@@ -778,21 +659,6 @@ select {
 @media (max-width: 768px) {
   .add-task-page {
     padding: 16px 16px 160px 16px;
-    max-width: 100%;
-  }
-
-  .content {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    padding-bottom: 24px;
-  }
-
-  .right {
-    padding-left: 0;
-  }
-
-  .right::before {
-    display: none;
   }
 
   .page-header h1 {
@@ -802,7 +668,6 @@ select {
   }
 
   .priority {
-    flex-direction: row;
     gap: 8px;
   }
 
@@ -814,43 +679,16 @@ select {
     height: auto;
   }
 
-  // Aktive Priority Buttons - 16px und Inter-Bold auf Mobile
   .priority button.active {
     font-size: 16px !important;
-    font-family: 'Inter-Bold' !important; // Fetter als nicht-aktive Buttons
+    font-family: 'Inter-Bold' !important;
   }
 
-  .priority .label {
-    white-space: nowrap;
-  }
-
-  .assignee-field {
-    span {
-      font-size: 16px !important;
-    }
-  }
-
-  .assignee-field .placeholder {
-    font-size: 16px !important;
-  }
-
-  .assigned-list.dropdown {
-    position: static;
-    max-height: 240px;
-  }
-
-  .assignee-avatars .avatar {
-    width: 28px;
-    height: 28px;
-    font-size: 13px;
-  }
-
-  .add-task-page>.actions {
+  .add-task-page > .actions {
     position: fixed;
     bottom: 80px;
     left: 0;
     right: 0;
-
     flex-direction: row;
     justify-content: flex-end;
     gap: 16px;
@@ -860,42 +698,24 @@ select {
     z-index: 10;
   }
 
-  // Required-Hint auf Mobile ausblenden (wird unter Subtasks angezeigt)
-  .required-hint {
-    display: none;
-  }
-
-  // Required-Hint unter Subtasks auf Mobile einblenden
-  .required-hint-mobile {
-    display: block;
-  }
-
   .action-buttons {
-    display: flex;
     flex-direction: row;
     justify-content: flex-end;
     gap: 16px;
   }
 
   .action-buttons button {
-    width: auto; // Nicht 100% - natürliche Breite
-    flex-shrink: 0; // Nicht shrinken
+    width: auto;
+    flex-shrink: 0;
     white-space: nowrap;
     padding: 12px 16px;
     font-size: 16px;
   }
 
-  // Mobile Typografie - alle auf 16px
-  label {
-    font-size: 16px;
-  }
-
+  label,
   input,
   textarea,
-  select {
-    font-size: 16px;
-  }
-
+  select,
   input::placeholder,
   textarea::placeholder {
     font-size: 16px;
@@ -907,6 +727,7 @@ select {
   }
 }
 
+/* Toast */
 .toast {
   pointer-events: auto;
   position: fixed;
@@ -914,18 +735,13 @@ select {
   top: 50%;
   height: 48px;
   width: 240px;
-
   background-color: $color-brand-primary;
   color: white;
   border-radius: 14px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
   padding: 20px 24px;
-
   z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-
+  @include dFlex($ai: center, $g: 20px);
   transform: translate(-50%, 100vh);
   animation: toast-in 0.5s ease-out forwards;
 }
@@ -964,7 +780,6 @@ select {
 }
 
 @media (max-width: 375px) {
-
   .add-task-page {
     padding: 12px 12px 136px 12px;
 
