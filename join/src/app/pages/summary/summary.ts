@@ -1,4 +1,11 @@
-import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -7,7 +14,7 @@ import { TasksService } from '../../core/services/tasks.service';
 import { Task } from '../add-task/task';
 
 /**
- * Interface für die berechneten Task-Statistiken
+ * Aggregated statistics derived from the task list.
  */
 interface TaskStats {
   todoCount: number;
@@ -19,6 +26,14 @@ interface TaskStats {
   nearestDeadline: Date | null;
 }
 
+/**
+ * Summary dashboard component.
+ *
+ * @remarks
+ * Displays aggregated task statistics, a time-based greeting,
+ * and the nearest urgent deadline. Uses OnPush change detection
+ * and manually triggers updates when async data changes.
+ */
 @Component({
   selector: 'app-summary',
   imports: [CommonModule, RouterLink],
@@ -31,10 +46,14 @@ export class Summary implements OnInit, OnDestroy {
   private tasksService = inject(TasksService);
   private cdr = inject(ChangeDetectorRef);
 
-  /** Aktueller Benutzername aus dem AuthService */
+  /**
+   * Display name of the currently authenticated user.
+   */
   userName: string = '';
 
-  /** Berechnete Task-Statistiken */
+  /**
+   * Computed task statistics used by the dashboard.
+   */
   stats: TaskStats = {
     todoCount: 0,
     doneCount: 0,
@@ -45,56 +64,68 @@ export class Summary implements OnInit, OnDestroy {
     nearestDeadline: null,
   };
 
-  /** Ladezustand für besseres UX */
+  /**
+   * Indicates whether task data is still loading.
+   */
   isLoading = true;
 
-  /** Begrüßungs-Overlay für Mobile */
+  /**
+   * Controls visibility of the greeting overlay on mobile devices.
+   */
   showGreetingOverlay = false;
+
+  /**
+   * Triggers the fade-out animation of the greeting overlay.
+   */
   greetingFadeOut = false;
 
   private userSubscription: Subscription | null = null;
   private tasksSubscription: Subscription | null = null;
 
+  /**
+   * Initializes subscriptions and greeting behavior.
+   */
   ngOnInit(): void {
     this.checkAndShowGreeting();
     this.subscribeToUser();
     this.subscribeToTasks();
   }
 
+  /**
+   * Cleans up active subscriptions.
+   */
   ngOnDestroy(): void {
     this.userSubscription?.unsubscribe();
     this.tasksSubscription?.unsubscribe();
   }
 
   /**
-   * Prüft, ob das Begrüßungs-Overlay angezeigt werden soll (nur Mobile, nur nach Login)
+   * Determines whether the greeting overlay should be shown
+   * and handles its timed fade-out sequence.
    */
   private checkAndShowGreeting(): void {
-    // Nur auf Mobile (unter 1000px, da .summary-right dort versteckt ist)
     const isMobile = window.innerWidth < 1000;
-    // Prüfe, ob wir gerade eingeloggt sind (via sessionStorage Flag)
     const justLoggedIn = sessionStorage.getItem('just_logged_in') === 'true';
 
     if (isMobile && justLoggedIn) {
       this.showGreetingOverlay = true;
-      sessionStorage.removeItem('just_logged_in'); // Nur einmal zeigen
+      sessionStorage.removeItem('just_logged_in');
 
-      // Nach 1,5 Sekunden fade-out starten
       setTimeout(() => {
         this.greetingFadeOut = true;
         this.cdr.markForCheck();
 
-        // Nach dem Fade-Out das Overlay komplett entfernen
         setTimeout(() => {
           this.showGreetingOverlay = false;
           this.cdr.markForCheck();
-        }, 500); // Fade-Out Dauer
+        }, 500);
       }, 1500);
     }
   }
 
   /**
-   * Abonniert den aktuellen User und setzt den Benutzernamen
+   * Subscribes to the authenticated user stream and
+   * updates the displayed user name.
    */
   private subscribeToUser(): void {
     this.userSubscription = this.authService.user$.subscribe((user) => {
@@ -104,7 +135,8 @@ export class Summary implements OnInit, OnDestroy {
   }
 
   /**
-   * Abonniert alle Tasks und berechnet die Statistiken
+   * Subscribes to the task list and recalculates statistics
+   * whenever tasks change.
    */
   private subscribeToTasks(): void {
     this.tasksSubscription = this.tasksService.list().subscribe({
@@ -113,8 +145,7 @@ export class Summary implements OnInit, OnDestroy {
         this.isLoading = false;
         this.cdr.markForCheck();
       },
-      error: (error) => {
-        console.error('Fehler beim Laden der Tasks:', error);
+      error: () => {
         this.isLoading = false;
         this.cdr.markForCheck();
       },
@@ -122,12 +153,11 @@ export class Summary implements OnInit, OnDestroy {
   }
 
   /**
-   * Berechnet alle Statistiken basierend auf den Tasks
+   * Calculates all dashboard statistics based on the task list.
    */
   private calculateStats(tasks: Task[]): void {
     const urgentTasks = tasks.filter((t) => t.priority === 'urgent');
 
-    // Finde die nächste Deadline unter allen dringenden Tasks
     let nearestDeadline: Date | null = null;
     for (const task of urgentTasks) {
       if (task.dueDate) {
@@ -150,21 +180,17 @@ export class Summary implements OnInit, OnDestroy {
   }
 
   /**
-   * Gibt die Begrüßung basierend auf der Tageszeit zurück
+   * Returns a greeting based on the current time of day.
    */
   getGreeting(): string {
     const hour = new Date().getHours();
-    if (hour < 12) {
-      return 'Good morning';
-    } else if (hour < 18) {
-      return 'Good afternoon';
-    } else {
-      return 'Good evening';
-    }
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
   }
 
   /**
-   * Formatiert das Datum für die Anzeige (z.B. "October 16, 2022")
+   * Formats a date for display.
    */
   formatDate(date: Date | null): string {
     if (!date) return '';
@@ -176,17 +202,16 @@ export class Summary implements OnInit, OnDestroy {
   }
 
   /**
-   * Gibt das passende Label für die Deadline zurück
-   * - Zukunft: "Upcoming Deadline"
-   * - Vergangenheit: "Deadline"
-   * - Keine: "No Upcoming Deadline"
+   * Returns the label describing the nearest deadline state.
    */
   getDeadlineLabel(): string {
     if (!this.stats.nearestDeadline) {
       return 'No Upcoming Deadline';
     }
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
+
     const deadline = new Date(this.stats.nearestDeadline);
     deadline.setHours(0, 0, 0, 0);
 
