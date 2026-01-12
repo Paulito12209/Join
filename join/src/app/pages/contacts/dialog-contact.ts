@@ -10,10 +10,17 @@ import {
 import { ContactsService, Contact } from '../../core/services/contacts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-// AsyncPipe not needed here
 
 type Mode = 'create' | 'edit';
 
+/**
+ * Dialog component for creating and editing contacts.
+ *
+ * @remarks
+ * Supports both overlay-based usage via input bindings and
+ * route-based usage via URL parameters. Emits events to inform
+ * parent components about create, update, and close actions.
+ */
 @Component({
   selector: 'app-dialog-contact',
   standalone: true,
@@ -27,32 +34,65 @@ export class DialogContact {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  /** Contact to edit (passed from parent). If null, creates new contact. */
+  /**
+   * Contact data to edit.
+   *
+   * @remarks
+   * If null, the dialog operates in create mode.
+   */
   @Input() contact:
     | Contact
     | { id?: string; name: string; email?: string; phone?: string; color?: string }
     | null = null;
 
-  /** Emits when dialog should be closed (cancel or after save) */
+  /**
+   * Emits when the dialog should be closed.
+   */
   @Output() closed = new EventEmitter<void>();
-  /** Emits when a new contact was created (immediate UI update). */
+
+  /**
+   * Emits when a new contact has been created.
+   */
   @Output() created = new EventEmitter<Contact>();
-  /** Emits when an existing contact was updated (immediate UI update). */
+
+  /**
+   * Emits when an existing contact has been updated.
+   */
   @Output('contact-updated') updated = new EventEmitter<Contact>();
 
+  /**
+   * Current dialog mode.
+   */
   mode: Mode = 'create';
+
+  /**
+   * ID of the contact currently being edited.
+   */
   contactId: string | null = null;
+
+  /**
+   * Indicates whether a save or delete operation is in progress.
+   */
   loading = false;
+
+  /**
+   * Indicates whether the closing animation is active.
+   */
   isClosing = false;
 
+  /**
+   * Reactive form for contact data.
+   */
   form = this.fb.nonNullable.group({
     name: ['', [Validators.required, fullNameValidator, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
     phone: ['', [Validators.required, Validators.pattern(/^\d{8,}$/)]],
   });
 
+  /**
+   * Initializes the dialog state based on input data or route parameters.
+   */
   async ngOnInit() {
-    // Priority 1: Check if contact was passed via Input (overlay mode)
     if (this.contact && 'id' in this.contact && this.contact.id) {
       this.mode = 'edit';
       this.contactId = this.contact.id;
@@ -63,6 +103,7 @@ export class DialogContact {
       });
       return;
     }
+
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.mode = 'edit';
@@ -83,9 +124,11 @@ export class DialogContact {
     }
   }
 
+  /**
+   * Cancels the dialog and triggers the closing animation.
+   */
   cancel() {
     this.form.reset({ name: '', email: '', phone: '' });
-    // Trigger closing animation; emit after 1000ms to match CSS duration
     this.isClosing = true;
     setTimeout(() => {
       this.isClosing = false;
@@ -93,10 +136,14 @@ export class DialogContact {
     }, 400);
   }
 
+  /**
+   * Submits the form and creates or updates a contact.
+   */
   async submit() {
     if (this.loading) return;
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
+
     this.loading = true;
     const v = this.form.getRawValue();
     const payload = {
@@ -104,6 +151,7 @@ export class DialogContact {
       email: v.email.trim() || undefined,
       phone: v.phone.trim() || undefined,
     };
+
     try {
       if (this.mode === 'edit' && this.contactId) {
         await this.contacts.updateContact(this.contactId, payload);
@@ -126,12 +174,18 @@ export class DialogContact {
     }
   }
 
+  /**
+   * Deletes the currently edited contact.
+   */
   async remove() {
     if (this.mode !== 'edit' || !this.contactId) return;
     await this.contacts.deleteContact(this.contactId);
     this.cancel();
   }
 
+  /**
+   * Returns uppercase initials derived from a contact name.
+   */
   getInitials(name: string): string {
     const parts = name.trim().split(/\s+/);
     const first = parts[0]?.charAt(0) ?? '';
@@ -140,14 +194,18 @@ export class DialogContact {
   }
 }
 
-// Custom Validators
+/**
+ * Validator ensuring that a full name with at least two parts is provided.
+ */
 export const fullNameValidator: ValidatorFn = (control: AbstractControl) => {
   const value = (control.value ?? '').toString().trim();
-  if (!value) return null; // required handled separately
-  // Require at least two name parts with letters (allowing spaces, hyphen, apostrophe)
+  if (!value) return null;
+
   const parts = value.split(/\s+/).filter(Boolean);
   if (parts.length < 2) return { fullName: true };
+
   const word = /^(?=.{2,})[A-Za-zÄÖÜäöüß'-]+$/;
   if (!word.test(parts[0]) || !word.test(parts[1])) return { fullName: true };
+
   return null;
 };
