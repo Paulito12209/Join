@@ -14,6 +14,11 @@ import { Task, Subtask } from '../add-task/task';
 import { Router, RouterOutlet } from '@angular/router';
 import { AddTaskBoard } from './add-task-board';
 
+/**
+ * Board component for the Kanban board.
+ * Displays tasks in four columns (ToDo, In Progress, Awaiting Feedback, Done)
+ * and enables drag & drop between columns.
+ */
 @Component({
   selector: 'app-board',
   imports: [CdkDropList, CdkDrag, CommonModule, RouterOutlet, FormsModule, AddTaskBoard],
@@ -21,34 +26,47 @@ import { AddTaskBoard } from './add-task-board';
   styleUrl: './board.scss',
 })
 export class Board {
+  /** Service for CRUD operations on tasks */
   private tasksService = inject(TasksService);
+  /** Service for contact data (assignees) */
   private contactsService = inject(ContactsService);
+  /** Angular ChangeDetectorRef for manual change detection */
   private cdr = inject(ChangeDetectorRef);
+  /** Angular Router for navigation */
   private router = inject(Router);
 
-  // Erkennt ob Touch-Gerät (für Drag-Delay)
+  /** Detects if device is touch-enabled (for drag delay) */
   isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  /** Delay in ms before drag starts (prevents accidental drag on mobile) */
   dragDelay = this.isMobile ? 400 : 0;
 
-  // All tasks (unfiltered)
+  /** All tasks (unfiltered) from Firestore */
   private allTasks: Task[] = [];
 
-  // Contacts map for resolving assignee details
+  /** Map of contact IDs to contact objects for fast resolution of assignee details */
   private contactsMap: Map<string, Contact> = new Map();
 
-  // Search query
+  /** Current search term for task filtering */
   searchQuery: string = '';
 
-  // Displayed arrays
+  /** Filtered tasks with status 'todo' */
   todo: Task[] = [];
+  /** Filtered tasks with status 'in-progress' */
   inProgress: Task[] = [];
+  /** Filtered tasks with status 'awaiting-feedback' */
   awaitFeedback: Task[] = [];
+  /** Filtered tasks with status 'done' */
   done: Task[] = [];
 
-  // ++++++++Dialog state for Add Task +++++++++++++++++++++++++++++++
+  /** Controls visibility of the Add Task dialog */
   isAddDialogOpen = false;
+  /** Status assigned to new task (depends on column from which dialog was opened) */
   currentAddStatus: Task['status'] = 'todo';
 
+  /**
+   * Initializes the Board component.
+   * Subscribes to tasks and contacts from Firestore for live updates.
+   */
   constructor() {
     this.tasksService.list().subscribe((tasks) => {
       this.allTasks = tasks;
@@ -65,8 +83,11 @@ export class Board {
     });
   }
 
-  // Filter tasks based on searchQuery
-  filterTasks() {
+  /**
+   * Filters all tasks based on the current search term
+   * and distributes them to the corresponding status arrays.
+   */
+  filterTasks(): void {
     let filtered = this.allTasks;
 
     if (this.searchQuery.trim().length > 0) {
@@ -84,17 +105,26 @@ export class Board {
     this.done = filtered.filter((t) => t.status === 'done');
   }
 
-  // ++++++ dialog function: onaddclose openAddTask onAddCreate+++++++++++
-
+  /**
+   * Opens the Add Task dialog for a specific column.
+   * @param status - The status to assign to the new task (default: 'todo')
+   */
   openAddTask(status: Task['status'] = 'todo'): void {
     this.currentAddStatus = status;
     this.isAddDialogOpen = true;
   }
 
+  /**
+   * Closes the Add Task dialog without saving.
+   */
   onAddClose(): void {
     this.isAddDialogOpen = false;
   }
 
+  /**
+   * Processes the form from the Add Task dialog and creates a new task.
+   * @param formValue - The form data from the dialog
+   */
   async onAddCreate(formValue: any): Promise<void> {
     const priorityMap: Record<string, Task['priority']> = {
       Urgent: 'urgent',
@@ -134,11 +164,20 @@ export class Board {
     }
   }
 
+  /**
+   * Generates a random ID for local use.
+   * @returns A randomly generated alphanumeric ID
+   */
   private randomId(): string {
     return Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2);
   }
 
-  drop(event: CdkDragDrop<Task[]>) {
+  /**
+   * Handles the drop event during drag & drop of tasks.
+   * Updates the task status in Firestore and moves the element in the array.
+   * @param event - The CDK Drag-Drop event with source and target container
+   */
+  drop(event: CdkDragDrop<Task[]>): void {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -173,14 +212,18 @@ export class Board {
     }
   }
 
+  /**
+   * Opens the detail view of a task.
+   * @param task - The task whose details should be displayed
+   */
   openTask(task: Task): void {
     if (!task.id) return;
     this.router.navigate(['/board', task.id]);
   }
 
   /**
-   * Get the count of completed subtasks for a given task
-   * @param task The task to count completed subtasks for
+   * Counts the completed subtasks of a task.
+   * @param task - The task whose subtasks should be counted
    * @returns Number of completed subtasks
    */
   getCompletedSubtasksCount(task: Task): number {
@@ -189,9 +232,9 @@ export class Board {
   }
 
   /**
-   * Get initials from a name (e.g., "Max Mustermann" → "MM")
-   * @param name Full name of the assignee
-   * @returns Initials (max 2 characters)
+   * Extracts initials from a name (e.g., "Max Mustermann" → "MM").
+   * @param name - Full name of the assignee
+   * @returns Initials (max. 2 characters) or "?" if no name provided
    */
   getInitials(name: string | undefined): string {
     if (!name) return '?';
@@ -203,7 +246,9 @@ export class Board {
   }
 
   /**
-   * Resolve initials for a given assignee by checking ContactsService
+   * Resolves initials for an assignee based on contact data.
+   * @param assignee - Object with UID and optional name
+   * @returns Initials of the assignee
    */
   getAssigneeInitials(assignee: { uid: string; name?: string }): string {
     const contact = this.contactsMap.get(assignee.uid);
@@ -214,20 +259,22 @@ export class Board {
   }
 
   /**
-   * Resolve color for a given assignee by checking ContactsService
+   * Resolves the avatar color for an assignee based on contact data.
+   * @param assignee - Object with UID and optional color
+   * @returns Hex color code of the assignee or default gray (#ccc)
    */
   getAssigneeColor(assignee: { uid: string; color?: string }): string {
     const contact = this.contactsMap.get(assignee.uid);
     if (contact?.color) {
       return contact.color;
     }
-    return assignee.color || '#ccc'; // Default gray if nothing found
+    return assignee.color || '#ccc';
   }
 
   /**
-   * Get the icon path for a given priority
-   * @param priority Task priority level
-   * @returns Path to the priority icon
+   * Returns the path to the priority icon.
+   * @param priority - Priority level of the task
+   * @returns Path to the corresponding SVG icon
    */
   getPriorityIcon(priority: Task['priority']): string {
     const icons: Record<Task['priority'], string> = {
