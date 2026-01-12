@@ -4,11 +4,58 @@ import { Firestore } from '@angular/fire/firestore';
 import { collection, addDoc, updateDoc, deleteDoc, doc, query, orderBy, onSnapshot } from 'firebase/firestore'; // Add onSnapshot
 import { Task } from '../../pages/add-task/task';
 
+/**
+ * Tasks Service
+ * 
+ * Manages task data in Firestore with real-time synchronization.
+ * 
+ * **Features:**
+ * - Real-time task updates using Firestore snapshots
+ * - Automatic timestamp management (createdAt, updatedAt)
+ * - Task filtering by status
+ * - Live updates across all connected clients
+ * - Angular Zone integration for proper change detection
+ * 
+ * **Real-time Updates:**
+ * All query methods use Firestore's `onSnapshot` listener to provide live updates.
+ * When any client creates, updates, or deletes a task, all subscribed components
+ * automatically receive the updated data without manual refresh.
+ * 
+ * **Change Detection:**
+ * The service runs all Firestore callbacks inside Angular's NgZone to ensure
+ * that UI updates are triggered automatically when data changes.
+ * 
+ * @injectable
+ * 
+ * @example
+ * // Inject the service
+ * constructor(private tasksService: TasksService) {}
+ * 
+ * // Subscribe to all tasks with live updates
+ * this.tasksService.list().subscribe(tasks => {
+ *   console.log('Tasks updated:', tasks);
+ * });
+ * 
+ * // Create a new task
+ * await this.tasksService.create({
+ *   title: 'New Task',
+ *   description: 'Task description',
+ *   status: 'todo',
+ *   priority: 'medium',
+ *   assignedTo: [],
+ *   category: 'Development',
+ *   subtasks: [],
+ *   dueDate: '2024-12-31'
+ * });
+ */
 @Injectable({ providedIn: 'root' })
 export class TasksService {
+  /** Firestore instance for database operations */
   private firestore = inject(Firestore);
-  private ngZone = inject(NgZone); // Inject NgZone
+  /** NgZone for running callbacks inside Angular's change detection */
+  private ngZone = inject(NgZone);
 
+  /** Firestore collection path for tasks */
   private readonly collectionPath = 'tasks';
 
   /**

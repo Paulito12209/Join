@@ -17,7 +17,40 @@ export interface Contact {
   color?: string;
 }
 
-/** Service providing CRUD operations for `contacts` in Firestore. */
+/**
+ * Contacts Service
+ * 
+ * Provides CRUD operations for managing contacts in Firestore.
+ * 
+ * **Features:**
+ * - Real-time contact list with sorting capabilities
+ * - Automatic name capitalization
+ * - Color-coded avatars with round-robin palette assignment
+ * - Thread-safe color assignment using Firestore transactions
+ * 
+ * **Color Assignment:**
+ * Each new contact is automatically assigned a color from a predefined palette.
+ * Colors are assigned sequentially and cycle through the palette using a
+ * global counter stored in Firestore, ensuring consistent colors across all clients.
+ * 
+ * @injectable
+ * 
+ * @example
+ * // Inject the service
+ * constructor(private contactsService: ContactsService) {}
+ * 
+ * // Get all contacts
+ * this.contactsService.getContacts('name', 'asc').subscribe(contacts => {
+ *   console.log('Contacts:', contacts);
+ * });
+ * 
+ * // Create a new contact
+ * await this.contactsService.createContact({
+ *   name: 'john doe',
+ *   email: 'john@example.com',
+ *   phone: '+1234567890'
+ * });
+ */
 @Injectable({ providedIn: 'root' })
 export class ContactsService {
   /** Firestore collection reference for `contacts`. */
