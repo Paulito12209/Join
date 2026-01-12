@@ -37,14 +37,17 @@ export class AuthService {
      * This combines both Firebase authentication state and guest user state,
      * prioritizing Firebase users over guest users.
      */
-    user$: Observable<User | null> = combineLatest([
-        user(this.auth),
-        this.guestUserSubject.asObservable()
-    ]).pipe(
-        map(([firebaseUser, guestUser]) => firebaseUser || guestUser)
-    );
+    user$: Observable<User | null>;
 
-    constructor() { }
+    constructor() {
+        // Initialize user$ in constructor to ensure proper injection context
+        this.user$ = combineLatest([
+            user(this.auth),
+            this.guestUserSubject.asObservable()
+        ]).pipe(
+            map(([firebaseUser, guestUser]) => firebaseUser || guestUser)
+        );
+    }
 
     /**
      * Registers a new user with email and password.
