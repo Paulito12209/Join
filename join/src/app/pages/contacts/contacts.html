@@ -17,7 +17,12 @@
               {{ getInitials(c.name) }}
             </div>
             <div class="contact-info">
-              <div class="name">{{ c.name }}</div>
+              <div class="name">
+                {{ c.name }}
+                <span *ngIf="currentUserEmail$ | async as currentEmail" class="you-label">
+                  {{ isCurrentUser(c.email, currentEmail) ? ' (YOU)' : '' }}
+                </span>
+              </div>
               <div class="email">{{ c.email }}</div>
             </div>
           </div>
