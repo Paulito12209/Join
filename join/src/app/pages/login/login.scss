@@ -1,12 +1,24 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
 
+// Custom Property für dynamische Logo-Position
+// Berechnet die linke Position des Logos basierend auf der Container-Zentrierung
+:host {
+  --logo-target-left: max(48px, calc((100vw - 1440px) / 2 + 48px));
+  display: block;
+  background-color: $color-neutral-bg;
+  min-height: 100vh;
+}
+
 .login-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-color: $color-neutral-bg;
   padding: 48px;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
 
   .signup-prompt {
     @include dFlex(row, center, center, 32px);
@@ -245,7 +257,7 @@
 @keyframes logoFly {
   to {
     top: 48px;
-    left: 48px;
+    left: var(--logo-target-left, 48px);
     transform: scale(1);
   }
 }
