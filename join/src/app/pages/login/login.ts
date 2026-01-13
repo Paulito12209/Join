@@ -34,7 +34,6 @@ export class Login {
 
   /** Animation state */
   showIntroLogo = true;
-  showWhiteLogo = true;
   showHeaderLogo = false;
 
   /** Injected services */
@@ -54,21 +53,13 @@ export class Login {
     // Skip animation if already shown in this session
     if (this.introAnimationService.hasAnimationBeenShown()) {
       this.showIntroLogo = false;
-      this.showWhiteLogo = false;
       this.showHeaderLogo = true;
       return;
     }
 
     // Initial animation state
     this.showIntroLogo = true;
-    this.showWhiteLogo = true;
     this.showHeaderLogo = false;
-
-    // Switch from white logo to dark logo
-    setTimeout(() => {
-      this.showWhiteLogo = false;
-      this.cdr.detectChanges();
-    }, 600);
 
     // Fade in header logo before intro disappears
     setTimeout(() => {

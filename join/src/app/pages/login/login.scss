@@ -1,13 +1,27 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
 
-// Custom Property für dynamische Logo-Position
-// Berechnet die linke Position des Logos basierend auf der Container-Zentrierung
+// Custom Properties für dynamische Logo-Position
+// Berechnet die Zielposition des Logos basierend auf Container-Padding und Viewport
 :host {
+  // Desktop: 48px Padding, zentriert bei >1440px
   --logo-target-left: max(48px, calc((100vw - 1440px) / 2 + 48px));
+  --logo-target-top: 48px;
   display: block;
   background-color: $color-neutral-bg;
   min-height: 100vh;
+
+  // Mobile: 16px Padding + 12px Margin
+  @media (max-width: 800px) {
+    --logo-target-left: 28px;
+    --logo-target-top: 28px;
+  }
+
+  // Extra klein: 12px Padding + 12px Margin
+  @media (max-width: 375px) {
+    --logo-target-left: 24px;
+    --logo-target-top: 24px;
+  }
 }
 
 .login-container {
@@ -254,27 +268,29 @@
 
 
 
+// Animation für das Intro-Logo
+// Nutzt top/left mit CSS-Variablen für responsive Positionierung
 @keyframes logoFly {
-  to {
-    top: 48px;
-    left: var(--logo-target-left, 48px);
-    transform: scale(1);
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(3.5);
+  }
+
+  100% {
+    top: var(--logo-target-top);
+    left: var(--logo-target-left);
+    transform: translate(0, 0) scale(1);
   }
 }
 
 .intro-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(245, 247, 250, 0.95); // Desktop
+  background-color: rgba(245, 247, 250, 0.95);
   z-index: 1500;
-
   animation: fadeOut 1.2s ease forwards;
-
-  @media (max-width: 800px) {
-    background-color: #2a3647;
-  }
 }
-
 
 @keyframes fadeOut {
   0% {
@@ -313,61 +329,14 @@
   left: 50%;
   height: 80px;
   transform: translate(-50%, -50%) scale(3.5);
-  opacity: 0;
+  opacity: 1;
+  // GPU-Beschleunigung für top/left Animation
+  will-change: top, left, transform;
   animation: logoFly 1s ease-in-out forwards;
-  transition: opacity 0.3s ease;
 
   @media (max-width: 800px) {
     height: 78px;
-    animation: logoFlyMobile 1.2s ease-in-out forwards;
   }
-
-  @media (max-width: 375px) {
-    animation: logoFlySmall 1.2s ease-in-out forwards;
-  }
-}
-
-.logo-visible {
-  opacity: 1;
-}
-
-@keyframes logoFlyMobile {
-  0% {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(3.5);
-  }
-
-  100% {
-    top: 28px; // 16px container padding + 12px margin
-    left: 28px; // 16px container padding + 12px margin
-    transform: translate(0, 0) scale(1);
-  }
-}
-
-// Animation für extra kleine Geräte (≤375px)
-@keyframes logoFlySmall {
-  0% {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(3.5);
-  }
-
-  100% {
-    top: 24px; // 12px container padding + 12px margin
-    left: 24px; // 12px container padding + 12px margin
-    transform: translate(0, 0) scale(1);
-  }
-}
-
-.logo-white {
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-.logo-dark {
-  opacity: 1;
-  transition: opacity 0.3s ease;
 }
 
 .signup-desktop {
