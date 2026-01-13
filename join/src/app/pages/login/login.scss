@@ -1,6 +1,8 @@
 @use '../../styles/variables' as *;
 @use '../../styles/mixins' as *;
 
+// Custom Property für dynamische Logo-Position
+// Berechnet die linke Position des Logos basierend auf der Container-Zentrierung
 :host {
   --logo-target-left: max(48px, calc((100vw - 1440px) / 2 + 48px));
   display: block;
@@ -41,6 +43,7 @@
     }
   }
 
+
   header {
     @include dFlex(row, space-between, center);
     width: 100%;
@@ -48,11 +51,14 @@
 
     .logo {
       height: 80px;
-      transition: opacity 0.3s ease;
     }
 
     .logo-hidden {
       opacity: 0;
+    }
+
+    .logo {
+      transition: opacity 0.3s ease;
     }
   }
 
@@ -89,14 +95,14 @@
 
     .login-form {
       width: 100%;
-      @include dFlex(column, center, center, 0);
+      @include dFlex(column, center, center, 0); // Kein gap, stattdessen margin-bottom
     }
 
     .input-group {
       width: 100%;
       max-width: 422px;
       position: relative;
-      margin-bottom: 4px;
+      margin-bottom: 4px; // Gleich wie Register
 
       .input-field {
         width: 100%;
@@ -130,7 +136,7 @@
       }
 
       .error-message {
-        min-height: 18px;
+        min-height: 18px; // Reserviert Platz, wächst bei mehr Text
         margin-top: 4px;
         color: $color-error;
         font-size: 14px;
@@ -223,12 +229,13 @@
         align-items: center;
 
         button {
-          width: 200px;
+          width: 200px; // Feste Breite auf Mobile
         }
       }
     }
   }
 
+  // Extra kleine Geräte
   @media (max-width: 375px) {
     padding: 12px;
 
@@ -245,6 +252,8 @@
   }
 }
 
+
+
 @keyframes logoFly {
   to {
     top: 48px;
@@ -256,14 +265,16 @@
 .intro-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(245, 247, 250, 0.95);
+  background-color: rgba(245, 247, 250, 0.95); // Desktop
   z-index: 1500;
+
   animation: fadeOut 1.2s ease forwards;
 
   @media (max-width: 800px) {
     background-color: #2a3647;
   }
 }
+
 
 @keyframes fadeOut {
   0% {
@@ -303,17 +314,11 @@
   height: 80px;
   transform: translate(-50%, -50%) scale(3.5);
   opacity: 0;
+  animation: logoFly 1s ease-in-out forwards;
   transition: opacity 0.3s ease;
 
   @media (max-width: 800px) {
     height: 78px;
-  }
-}
-
-.intro-animate .logo-intro {
-  animation: logoFly 1s ease-in-out forwards;
-
-  @media (max-width: 800px) {
     animation: logoFlyMobile 1.2s ease-in-out forwards;
   }
 
@@ -334,12 +339,13 @@
   }
 
   100% {
-    top: 28px;
-    left: 28px;
+    top: 28px; // 16px container padding + 12px margin
+    left: 28px; // 16px container padding + 12px margin
     transform: translate(0, 0) scale(1);
   }
 }
 
+// Animation für extra kleine Geräte (≤375px)
 @keyframes logoFlySmall {
   0% {
     top: 50%;
@@ -348,8 +354,8 @@
   }
 
   100% {
-    top: 24px;
-    left: 24px;
+    top: 24px; // 12px container padding + 12px margin
+    left: 24px; // 12px container padding + 12px margin
     transform: translate(0, 0) scale(1);
   }
 }
@@ -368,11 +374,13 @@
   display: flex;
 }
 
+/* DESKTOP – IMMER AUSBLENDEN */
 @media (min-width: 801px) {
   .signup-mobile {
     display: none !important;
   }
 }
+
 
 @media (max-width: 800px) {
   .signup-desktop {

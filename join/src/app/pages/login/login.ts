@@ -37,9 +37,6 @@ export class Login {
   showWhiteLogo = true;
   showHeaderLogo = false;
 
-  /** controls when the CSS intro animation actually starts */
-  introAnimate = false;
-
   /** Injected services */
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -66,16 +63,6 @@ export class Login {
     this.showIntroLogo = true;
     this.showWhiteLogo = true;
     this.showHeaderLogo = false;
-
-    /**
-     * IMPORTANT:
-     * Trigger intro animation one frame after the logo
-     * is mounted to ensure reliable CSS animation on mobile devices.
-     */
-    requestAnimationFrame(() => {
-      this.introAnimate = true;
-      this.cdr.detectChanges();
-    });
 
     // Switch from white logo to dark logo
     setTimeout(() => {
