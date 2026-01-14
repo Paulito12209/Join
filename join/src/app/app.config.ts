@@ -10,6 +10,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes), provideFirebaseApp(() => initializeApp({ projectId: "join-e9b30", appId: "1:600355908800:web:7d13b83805563671d95125", storageBucket: "join-e9b30.firebasestorage.app", apiKey: "AIzaSyCaCIW59UqKhqqGE7zrxJmohgA0nkq1C6s", authDomain: "join-e9b30.firebaseapp.com", messagingSenderId: "600355908800", })), provideFirestore(() => getFirestore()), provideAuth(() => getAuth())
+    provideRouter(routes), provideFirebaseApp(() => initializeApp({ projectId: "join-main-4c561", appId: "1:439753953442:web:65a4bdc9aca859602b07fb", storageBucket: "join-main-4c561.firebasestorage.app", apiKey: "AIzaSyBzvcgonWeMJUphPB1kVE1USJuXmUMS8dA", authDomain: "join-main-4c561.firebaseapp.com", messagingSenderId: "439753953442", })), provideFirestore(() => getFirestore()), provideAuth(() => getAuth())
   ]
 };
