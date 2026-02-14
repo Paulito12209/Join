@@ -3,7 +3,7 @@
 # ----------------------------------------------------------------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /angular-projects/
+  RewriteBase /projects/join/
 
   # Content-Negotiation deaktivieren (verhindert MultiViews-Konflikte)
   Options -MultiViews
